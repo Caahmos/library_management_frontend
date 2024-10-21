@@ -3,9 +3,11 @@ import { LoginStaffRequest } from "../model/Staff/LoginStaffRequest";
 import axios, { AxiosError } from "axios";
 import api from "../utils/api";
 import useFlashMessage from "./useFlashMessages";
+import { LoginStaffResponse } from "../model/Staff/LoginStaffResponse";
 
 interface IAuthContext {
     logged: boolean;
+    userData: LoginStaffResponse | null;
     signIn(user: LoginStaffRequest): void;
     signOut(): void;
 }
@@ -27,6 +29,15 @@ const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
             return false;
         };
 
+    });
+    const [userData, setuserData] = useState<LoginStaffResponse | null>(() => {
+        const userExists = localStorage.getItem('@library_management:user');
+
+        if(userExists){
+            return JSON.parse(userExists)
+        }else{
+            return null
+        }
     });
 
     const signIn = async (staffData: LoginStaffRequest) => {
@@ -55,31 +66,39 @@ const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
     const signOut = () => {
         localStorage.removeItem('@library_management:token');
+        localStorage.removeItem('@library_management:user');
         setLogged(false);
+        setuserData(null);
         let msgText = 'Saiu com sucesso!';
         let msgType = 'success';
         setFlashMessage(msgText, msgType);
     };
 
-    const authUser = (data: any) => {
+    const authUser = (data: LoginStaffResponse) => {
         if (data.token) {
             console.log(data);
             localStorage.setItem('@library_management:token', JSON.stringify(data.token));
+            localStorage.setItem('@library_management:user', JSON.stringify(data));
             api.defaults.headers.Authorization = `Bearer ${data.token}`;
             setLogged(true);
+            setuserData(data);
         }
     };
 
     useEffect(() => {
         const token = localStorage.getItem('@library_management:token');
+        const data = localStorage.getItem('@library_management:user');
         if (token) {
             api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`;
             setLogged(true);
         }
+        if (data) {
+            setuserData(JSON.parse(data));
+        }
     }, []);
 
     return (
-        <AuthContext.Provider value={{ logged, signIn, signOut }}>
+        <AuthContext.Provider value={{ logged, userData, signIn, signOut }}>
             {children}
         </AuthContext.Provider>
     );

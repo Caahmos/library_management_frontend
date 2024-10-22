@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-// import { useTheme } from '../../../hooks/useTheme';
-
 import { IoBook, IoSettingsSharp } from "react-icons/io5";
 import { FaCartShopping } from "react-icons/fa6";
 import { BiSolidDashboard } from "react-icons/bi";
@@ -10,40 +8,71 @@ import {
   Container,
   MenuContainer,
   MenuItem,
+  AccordionContent
 } from './styles'
 
-// import ThemeChanger from '../ThemeChanger';
-
 const Aside: React.FC = () => {
-  // const { theme, changeTheme } = useTheme();
-  // const [selectTheme, setselectTheme] = useState(() => theme.title === 'dark' ? true : false);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const handleToggle = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   return (
     <Container>
-      <div>
-        <MenuContainer>
-          <MenuItem to="/">
+      <MenuContainer>
+        <li>
+          <MenuItem to='/' onClick={() => handleToggle(0)}>
             <BiSolidDashboard />
             <p>Início</p>
           </MenuItem>
-          <MenuItem to="/circulation">
+          <AccordionContent isOpen={openIndex === 0}>
+            <ul>
+              <li>Subitem 1</li>
+              <li>Subitem 2</li>
+            </ul>
+          </AccordionContent>
+        </li>
+
+        <li>
+          <MenuItem to='/circulation' onClick={() => handleToggle(1)}>
             <FaCartShopping />
             <p>Circulação</p>
           </MenuItem>
-          <MenuItem to="/catalog">
+          <AccordionContent isOpen={openIndex === 1}>
+            <ul>
+              <li>Subitem 1</li>
+              <li>Subitem 2</li>
+            </ul>
+          </AccordionContent>
+        </li>
+
+        <li>
+          <MenuItem to='/catalog' onClick={() => handleToggle(2)}>
             <IoBook />
             <p>Catálogo</p>
           </MenuItem>
-          <MenuItem to="/admin">
+          <AccordionContent isOpen={openIndex === 2}>
+            <ul>
+              <li>Subitem 1</li>
+              <li>Subitem 2</li>
+            </ul>
+          </AccordionContent>
+        </li>
+
+        <li>
+          <MenuItem to='/admin' onClick={() => handleToggle(3)}>
             <MdAdminPanelSettings />
             <p>Admin</p>
           </MenuItem>
-
-        </MenuContainer>
-      </div>
-      {/* <Theme onClick={changeTheme}>
-        <ThemeChanger theme={selectTheme} />
-      </Theme> */}
+          <AccordionContent isOpen={openIndex === 3}>
+            <ul>
+              <li>Subitem 1</li>
+              <li>Subitem 2</li>
+            </ul>
+          </AccordionContent>
+        </li>
+      </MenuContainer>
     </Container>
   );
 }

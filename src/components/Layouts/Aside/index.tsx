@@ -8,7 +8,10 @@ import {
   Container,
   MenuContainer,
   MenuItem,
-  AccordionContent
+  AccordionContent,
+  TitleContainer,
+  CircleIcon,
+  Brand
 } from './styles'
 
 const Aside: React.FC = () => {
@@ -20,10 +23,14 @@ const Aside: React.FC = () => {
 
   return (
     <Container>
+      <Brand>Library</Brand>
       <MenuContainer>
+        <TitleContainer>Menus</TitleContainer>
         <li>
           <MenuItem to='/' onClick={() => handleToggle(0)}>
-            <BiSolidDashboard />
+            <CircleIcon>
+              <BiSolidDashboard />
+            </CircleIcon>
             <p>Início</p>
           </MenuItem>
           <AccordionContent isOpen={openIndex === 0}>
@@ -36,7 +43,9 @@ const Aside: React.FC = () => {
 
         <li>
           <MenuItem to='/circulation' onClick={() => handleToggle(1)}>
-            <FaCartShopping />
+            <CircleIcon>
+              <FaCartShopping />
+            </CircleIcon>
             <p>Circulação</p>
           </MenuItem>
           <AccordionContent isOpen={openIndex === 1}>
@@ -49,7 +58,9 @@ const Aside: React.FC = () => {
 
         <li>
           <MenuItem to='/catalog' onClick={() => handleToggle(2)}>
-            <IoBook />
+            <CircleIcon>
+              <IoBook />
+            </CircleIcon>
             <p>Catálogo</p>
           </MenuItem>
           <AccordionContent isOpen={openIndex === 2}>
@@ -62,7 +73,9 @@ const Aside: React.FC = () => {
 
         <li>
           <MenuItem to='/admin' onClick={() => handleToggle(3)}>
-            <MdAdminPanelSettings />
+            <CircleIcon>
+              <MdAdminPanelSettings />
+            </CircleIcon>
             <p>Admin</p>
           </MenuItem>
           <AccordionContent isOpen={openIndex === 3}>

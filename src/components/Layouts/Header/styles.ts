@@ -7,7 +7,7 @@ export const Container = styled.header`
     justify-content: space-between;
     align-items: center;
     color: ${props => props.theme.colors.white};
-    background-color: ${props => props.theme.colors.darkblue};
+    background-color: ${props => props.theme.colors.secondary};
 
 `
 
@@ -28,6 +28,7 @@ export const User = styled.div`
     };
 
     > span {
+        color: ${props => props.theme.colors.success};
         font-weight: bold;
     }
 `
@@ -44,6 +45,16 @@ export const Button = styled.div`
     }
 
     &:hover {
+        transition: ease 0.4s all;
+        color: ${props => props.theme.colors.success}; 
         cursor: pointer;
+
+        svg {
+            color: ${props => props.theme.colors.success}; 
+        }
     }
+`
+
+export const Theme = styled.div`
+
 `

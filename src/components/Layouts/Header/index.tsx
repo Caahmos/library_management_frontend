@@ -1,29 +1,41 @@
 import { useAuth } from '../../../hooks/useAuth';
 import { IoLogOutOutline } from "react-icons/io5";
+import { useTheme } from '../../../hooks/useTheme';
+import { IoIosSearch } from "react-icons/io";
+import { useState } from 'react';
 
 import {
   Container,
   Profile,
   User,
-  Button
+  Button,
+  Theme
 } from './styles'
+import ThemeChanger from '../ThemeChanger';
+import InputForm from '../Forms/Input';
+import SearchInput from '../Forms/SearchInput';
 
 const Header: React.FC = () => {
   const { signOut, userData } = useAuth();
+  const { theme, changeTheme } = useTheme();
+  const [selectTheme, setselectTheme] = useState(() => theme.title === 'dark' ? true : false);
 
   return (
     <Container>
-      <h2>Library Management</h2>
+      <SearchInput icon={<IoIosSearch/>} placeholder='Pesquise por algum livro'/>
       <Profile>
+        <Theme onClick={changeTheme}>
+          <ThemeChanger theme={selectTheme} />
+        </Theme>
         <User>
           <p>Bem vindo(a)</p>
           <span>
             {
-              userData 
-              ? userData.first_name
-              : <p>Carlos</p>
+              userData
+                ? userData.first_name
+                : <p>Carlos</p>
             }
-            </span>
+          </span>
         </User>
         <Button onClick={signOut}>
           <IoLogOutOutline />

@@ -8,7 +8,7 @@ export const Container = styled.form`
   min-width: 350px;
   width: 400px;
   padding: 30px;
-  background-color: ${(props) => props.theme.colors.white};
+  background-color: ${(props) => props.theme.colors.black};
   border-radius: 15px;
   -webkit-box-shadow: 42px 35px 58px -36px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 42px 35px 58px -36px rgba(0, 0, 0, 0.9);
@@ -17,14 +17,14 @@ export const Container = styled.form`
 
 export const Title = styled.h2`
   font-size: 1.4em;
-  color: ${(props) => props.theme.colors.darkblue};
+  color: ${(props) => props.theme.colors.white};
   margin-bottom: 20px;
 `;
 
 export const Button = styled.button`
   width: 100%;
   padding: 18px;
-  background-color: ${(props) => props.theme.colors.darkblue};
+  background-color: ${(props) => props.theme.colors.gray};
   color: ${(props) => props.theme.colors.white};
   border-radius: 12px;
   margin-top: 20px;

@@ -17,7 +17,7 @@ export const Container = styled.div<IContainer>`
     flex-direction: column;
     justify-content: center;
     padding: 15px 20px;
-    background-color: ${props => props.theme.colors.white};
+    background-color: ${props => props.theme.colors.black};
     color: ${props => props.$type === 'success' ? props.theme.colors.success : 'red'};
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;

@@ -14,7 +14,7 @@ declare module 'styled-components' {
 
             success: string;
             info: string;
-            darkblue: string;
+            warning: string;
         },
     }
 }

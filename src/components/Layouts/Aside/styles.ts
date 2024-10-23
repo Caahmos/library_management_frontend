@@ -7,12 +7,15 @@ export const Container = styled.aside`
     flex-direction: column;
     justify-content: flex-start;
     padding: 20px;
-    background-color: ${props => props.theme.colors.white};
-    box-shadow: -21px -2px 49px 0px rgba(0,0,0,0.3);
+    background-color: ${props => props.theme.colors.secondary};
 
     @media (max-width: 1000px) {
         display: none;
     }
+`;
+
+export const Brand = styled.h2`
+    color: ${props => props.theme.colors.success};
 `;
 
 export const MenuContainer = styled.nav`
@@ -20,6 +23,8 @@ export const MenuContainer = styled.nav`
     flex-direction: column;
     align-items: flex-start;
     margin-top: 10px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid ${props => props.theme.colors.gray};
 
     li {
         list-style: none;
@@ -27,18 +32,46 @@ export const MenuContainer = styled.nav`
     }
 `;
 
+export const TitleContainer = styled.p`
+    color: ${props => props.theme.colors.gray};
+`;
+
+export const CircleIcon = styled.div`
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: ${props => props.theme.colors.primary};
+`
+
 export const MenuItem = styled(Link)`
     display: flex;
+    align-items: center;
     margin-top: 15px;
     font-size: 23px;
-    color: ${props => props.theme.colors.darkblue};
+    color: ${props => props.theme.colors.white};
     text-decoration: none;
-    align-items: center;
+    padding: 8px;
     cursor: pointer;
+    
+    svg {
+        color: ${props => props.theme.colors.white};
+        font-size: 16px; 
+    }
 
     &:hover {
-        transition: .4s all;
-        color: ${props => props.theme.colors.primary};
+        transition: ease .4s all;
+        color: ${props => props.theme.colors.success}; 
+        
+        svg {
+            color: ${props => props.theme.colors.black}; 
+        }
+
+        ${CircleIcon} {
+            background-color: ${props => props.theme.colors.success}; 
+        }
     }
 
     p {
@@ -64,3 +97,4 @@ export const AccordionContent = styled.div<{ isOpen: boolean }>`
         font-size: 14px;
     }
 `;
+

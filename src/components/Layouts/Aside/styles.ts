@@ -6,7 +6,7 @@ export const Container = styled.aside`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 20px;
+    padding: 30px;
     background-color: ${props => props.theme.colors.secondary};
 
     @media (max-width: 1000px) {

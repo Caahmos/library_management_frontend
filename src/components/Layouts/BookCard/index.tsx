@@ -9,15 +9,15 @@ import {
 import { FaStar } from "react-icons/fa6";;
 
 interface BookCard {
-  img: string;
+  img?: string;
   title: string;
   author: string;
-  rank: number;
+  rank?: number;
 }
 
 const BookCard: React.FC<BookCard> = ({img, title, author, rank}) => {
 
-  const imagemFormatada = `http://localhost:5000/imgs/biblio/${img}` || '';
+  const imagemFormatada = `http://localhost:5000/imgs/biblio/${img}`;
   console.log(imagemFormatada);
 
   return (

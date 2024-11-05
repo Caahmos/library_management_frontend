@@ -25,7 +25,7 @@ export interface Biblio {
     createdAt: string;
     updatedAt: string;
     biblio_copy: BiblioCopy[];
-    BiblioMedia: BiblioMedia[];
+    BiblioMedia?: BiblioMedia[];
 }
 
 export interface BiblioCopy {

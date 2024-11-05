@@ -13,7 +13,7 @@ const Home: React.FC = () => {
     );
 
     useEffect(() => {
-        api.get('/biblio/search', {
+        api.get('/biblio/search?title=Moby Dick', {
             headers: {
                 Authorization: `Bearer ${JSON.parse(token)}`
             }

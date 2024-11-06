@@ -10,13 +10,14 @@ import { Swiper } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 
 interface BooksSectionProps {
+  title: string
   biblioData: Biblio[]
 }
 
-const BooksSection: React.FC<BooksSectionProps> = ({ biblioData }) => {
+const BooksSection: React.FC<BooksSectionProps> = ({ biblioData, title }) => {
   return (
     <Container>
-      <Title>Novidades na biblioteca</Title>
+      <Title>{title}</Title>
       <SwiperContainer>
         <Swiper
         spaceBetween={20}

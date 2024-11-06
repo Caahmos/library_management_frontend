@@ -1,7 +1,7 @@
 export interface ApiResponse {
-    type: string;
-    message: string;
-    biblios: Biblio[];
+  type: string;
+  message: string;
+  biblios: Biblio[];
 }
 
 export interface Biblio {
@@ -26,35 +26,40 @@ export interface Biblio {
     updatedAt: string;
     biblio_copy: BiblioCopy[];
     BiblioMedia?: BiblioMedia[];
+};
+
+export interface RandomBiblio{
+    collection: Collection
+    biblios: Biblio[]
 }
 
 export interface BiblioCopy {
-    id: number;
-    bibid: number;
-    copyid: number;
-    create_dt: string;
-    copy_desc: string;
-    barcode_nmbr: string;
-    status_cd: string;
-    status_begin_dt: string;
-    due_back_dt: string | null;
-    mbrid: number | null;
-    renewal_count: number;
+  id: number;
+  bibid: number;
+  copyid: number;
+  create_dt: string;
+  copy_desc: string;
+  barcode_nmbr: string;
+  status_cd: string;
+  status_begin_dt: string;
+  due_back_dt: string | null;
+  mbrid: number | null;
+  renewal_count: number;
 }
 
 export interface BiblioMedia {
-    id: number;
-    bibid: number;
-    imageUrl: string;
-    rank: number;
-    count_ranks: number;
-    description: string | null;
+  id: number;
+  bibid: number;
+  imageUrl: string;
+  rank: number;
+  count_ranks: number;
+  description: string | null;
 }
 
 export interface Collection {
-    code: number;
-    description: string;
-    default_flg: boolean;
-    days_due_back: number;
-    daily_late_fee: string;
+  code: number;
+  description: string;
+  default_flg: boolean;
+  days_due_back: number;
+  daily_late_fee: string;
 }

@@ -5,15 +5,18 @@ import {
 } from './styles';
 import BooksSection from "../../Layouts/BooksSection";
 import { Biblio } from "../../../model/Biblio/Biblio/SearchBiblioResponse";
+import RandomBooksSection from "../../Layouts/RandomBooksSection";
+import { RandomBiblio } from "../../../model/Biblio/Biblio/RandomSearchBiblioResponse";
 
 const Home: React.FC = () => {
     const [books, setBooks] = useState<Biblio[]>([]);
+    const [randomBooks, setRandomBooks] = useState<RandomBiblio[]>([]);
     const [token, setToken] = useState(
         localStorage.getItem("@library_management:token") || ""
     );
 
     useEffect(() => {
-        api.get('/biblio/search?title=Moby Dick', {
+        api.get('/biblio/search', {
             headers: {
                 Authorization: `Bearer ${JSON.parse(token)}`
             }
@@ -27,11 +30,26 @@ const Home: React.FC = () => {
 
     }, []);
 
+    useEffect(() => {
+        api.get('/biblio/randomsearch?method=collection&number=4', {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        })
+        .then(( respose ) => {
+            setRandomBooks(respose.data.biblios)
+        })
+        .catch(( err ) => {
+            console.log(err)
+        })
+    }, [])
+
     return (
         <Container onClick={() => {
-            console.log(books)
+            console.log(randomBooks)
         }}>
-            <BooksSection biblioData={books}/>
+            <BooksSection biblioData={books} title="Novidades na biblioteca"/>
+           <RandomBooksSection randomBiblios={randomBooks}/>
         </Container>
     );
 }

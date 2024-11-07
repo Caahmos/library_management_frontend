@@ -29,6 +29,7 @@ const BooksSection: React.FC<BooksSectionProps> = ({ biblioData, title }) => {
             biblioData && biblioData.map((biblio) => (
               <StyledSlide key={biblio.bibid}>
                 <BookCard
+                  id={biblio.bibid}
                   title={biblio.title}
                   author={biblio.author}
                   img={biblio.BiblioMedia && biblio.BiblioMedia[0]?.imageUrl || 'semcapa.png'}

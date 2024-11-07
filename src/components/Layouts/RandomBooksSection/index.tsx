@@ -13,12 +13,12 @@ interface RandomBiblios {
   randomBiblios: RandomBiblio[]
 }
 
-const RandomBooksSection: React.FC<RandomBiblios> = ({randomBiblios}) => {
+const RandomBooksSection: React.FC<RandomBiblios> = ({ randomBiblios }) => {
   return (
-    <Container>
+      <>
       {
         randomBiblios && randomBiblios.map((value) => (
-          <>
+          <Container>
             <Title>{value.collection.description}</Title>
             <SwiperContainer>
               <Swiper
@@ -31,6 +31,7 @@ const RandomBooksSection: React.FC<RandomBiblios> = ({randomBiblios}) => {
                   value.biblios && value.biblios.map((biblio) => (
                     <StyledSlide key={biblio.bibid}>
                       <BookCard
+                        id={biblio.bibid}
                         title={biblio.title}
                         author={biblio.author}
                         img={biblio.BiblioMedia && biblio.BiblioMedia[0]?.imageUrl || 'semcapa.png'}
@@ -41,11 +42,11 @@ const RandomBooksSection: React.FC<RandomBiblios> = ({randomBiblios}) => {
                 }
               </Swiper>
             </SwiperContainer>
-          </>
-        ))
+            </Container>
+            ))
       }
-    </Container>
-  );
+          </>
+        );
 }
 
-export default RandomBooksSection;
+      export default RandomBooksSection;

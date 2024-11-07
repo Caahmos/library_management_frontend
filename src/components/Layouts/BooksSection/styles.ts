@@ -12,14 +12,14 @@ export const SwiperContainer = styled.div`
 export const StyledSlide = styled(SwiperSlide)`
     width: auto;
     max-width: 300px;
-    min-height: 170px;
+    min-height: 200px;
     border-radius: 7px;
 `
 
 export const Container = styled.main`
     width: 100%;
     min-height: 300px;
-    padding: 20px;
+    padding: 5px 20px 5px 20px;
 `
 
 export const Title = styled.h3`

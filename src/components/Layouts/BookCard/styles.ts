@@ -1,16 +1,18 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 interface ImageProp {
   img: string;
 }
 
-export const Container = styled.div`
+export const Container = styled(Link)`
   width: 200px;
   min-height: 300px;
   display: flex;
   flex-direction: column;
   padding: 10px;
   color: ${(props) => props.theme.colors.white};
+  text-decoration: none;
 `;
 export const ImageBook = styled.div<ImageProp>`
   width: 200px;

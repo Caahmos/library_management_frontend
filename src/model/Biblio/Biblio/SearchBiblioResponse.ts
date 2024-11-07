@@ -26,6 +26,7 @@ export interface Biblio {
     updatedAt: string;
     biblio_copy: BiblioCopy[];
     BiblioMedia?: BiblioMedia[];
+    biblio_field?: BiblioField[];
 }
 
 export interface BiblioCopy {
@@ -41,6 +42,19 @@ export interface BiblioCopy {
     mbrid: number | null;
     renewal_count: number;
 }
+
+interface BiblioField {
+    id: number;
+    fieldid: number;
+    bibid: number;
+    tag: number;
+    ind1_cd: string;
+    ind2_cd: string;
+    subfield_cd: string;
+    field_data: string;
+    createdAt: string;
+    updatedAt: string;
+  }
 
 export interface BiblioMedia {
     id: number;

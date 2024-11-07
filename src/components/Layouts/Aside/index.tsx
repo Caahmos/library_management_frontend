@@ -27,11 +27,20 @@ const Aside: React.FC = () => {
       <MenuContainer>
         <TitleContainer>Menus</TitleContainer>
         <li>
-          <MenuItem to='/' onClick={() => handleToggle(0)}>
+          <MenuItem to='/'>
             <CircleIcon>
               <BiSolidDashboard />
             </CircleIcon>
             <p>Início</p>
+          </MenuItem>
+        </li>
+
+        <li>
+          <MenuItem to='/circulation' onClick={() => handleToggle(0)}>
+            <CircleIcon>
+              <FaCartShopping />
+            </CircleIcon>
+            <p>Circulação</p>
           </MenuItem>
           <AccordionContent isOpen={openIndex === 0}>
             <ul>
@@ -42,11 +51,11 @@ const Aside: React.FC = () => {
         </li>
 
         <li>
-          <MenuItem to='/circulation' onClick={() => handleToggle(1)}>
+          <MenuItem to='/catalog' onClick={() => handleToggle(1)}>
             <CircleIcon>
-              <FaCartShopping />
+              <IoBook />
             </CircleIcon>
-            <p>Circulação</p>
+            <p>Catálogo</p>
           </MenuItem>
           <AccordionContent isOpen={openIndex === 1}>
             <ul>
@@ -57,28 +66,13 @@ const Aside: React.FC = () => {
         </li>
 
         <li>
-          <MenuItem to='/catalog' onClick={() => handleToggle(2)}>
-            <CircleIcon>
-              <IoBook />
-            </CircleIcon>
-            <p>Catálogo</p>
-          </MenuItem>
-          <AccordionContent isOpen={openIndex === 2}>
-            <ul>
-              <li>Subitem 1</li>
-              <li>Subitem 2</li>
-            </ul>
-          </AccordionContent>
-        </li>
-
-        <li>
-          <MenuItem to='/admin' onClick={() => handleToggle(3)}>
+          <MenuItem to='/admin' onClick={() => handleToggle(2)}>
             <CircleIcon>
               <MdAdminPanelSettings />
             </CircleIcon>
             <p>Admin</p>
           </MenuItem>
-          <AccordionContent isOpen={openIndex === 3}>
+          <AccordionContent isOpen={openIndex === 2}>
             <ul>
               <li>Subitem 1</li>
               <li>Subitem 2</li>

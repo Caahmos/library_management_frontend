@@ -4,6 +4,7 @@ import axios, { AxiosError } from "axios";
 import api from "../utils/api";
 import useFlashMessage from "./useFlashMessages";
 import { LoginStaffResponse } from "../model/Staff/LoginStaffResponse";
+import { useNavigate } from "react-router-dom";
 
 interface IAuthContext {
     logged: boolean;
@@ -39,6 +40,7 @@ const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
             return null
         }
     });
+    const navigate = useNavigate();
 
     const signIn = async (staffData: LoginStaffRequest) => {
         let msgText = '';
@@ -72,6 +74,7 @@ const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
         let msgText = 'Saiu com sucesso!';
         let msgType = 'success';
         setFlashMessage(msgText, msgType);
+        navigate('/')
     };
 
     const authUser = (data: LoginStaffResponse) => {

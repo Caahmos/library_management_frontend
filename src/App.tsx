@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { AuthProvider } from './hooks/useAuth';
 import Routes from './routes';
 import { useTheme } from './hooks/useTheme';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
   const { theme } = useTheme();
@@ -10,10 +11,12 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <AuthProvider>
-          <GlobalStyles />
-          <Routes />
-        </AuthProvider>
+        <Router>
+          <AuthProvider>
+            <GlobalStyles />
+            <Routes />
+          </AuthProvider>
+        </Router>
       </ThemeProvider>
     </div>
   );

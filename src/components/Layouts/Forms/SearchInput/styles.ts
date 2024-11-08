@@ -20,7 +20,7 @@ export const StyledInput = styled.input`
     width: 100%;
     padding: 12px 12px 12px 40px; 
     margin: 3px 0 3px 0;
-    background-color: ${props => props.theme.colors.secondary};
+    background-color: ${props => props.theme.colors.primary};
     color: ${props => props.theme.colors.white};
     border-radius: 8px;
     border: 1px solid ${props => props.theme.colors.success};

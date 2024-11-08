@@ -7,7 +7,7 @@ export const Container = styled.header`
     justify-content: space-between;
     align-items: center;
     color: ${props => props.theme.colors.white};
-    background-color: ${props => props.theme.colors.secondary};
+    background-color: ${props => props.theme.colors.primary};
 
 `
 

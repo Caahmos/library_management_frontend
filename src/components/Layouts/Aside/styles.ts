@@ -7,7 +7,7 @@ export const Container = styled.aside`
     flex-direction: column;
     justify-content: flex-start;
     padding: 30px;
-    background-color: ${props => props.theme.colors.secondary};
+    background-color: ${props => props.theme.colors.primary};
 
     @media (max-width: 1000px) {
         display: none;
@@ -43,7 +43,7 @@ export const CircleIcon = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ${props => props.theme.colors.primary};
+    background-color: ${props => props.theme.colors.secondary};
 `
 
 export const MenuItem = styled(Link)`

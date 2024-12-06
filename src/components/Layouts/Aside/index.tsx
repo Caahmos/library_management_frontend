@@ -27,7 +27,7 @@ const Aside: React.FC = () => {
       <MenuContainer>
         <TitleContainer>Menus</TitleContainer>
         <li>
-          <MenuItem to='/'>
+          <MenuItem to='/' onClick={() => handleToggle(3)}>
             <CircleIcon>
               <BiSolidDashboard />
             </CircleIcon>

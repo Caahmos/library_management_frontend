@@ -9,7 +9,7 @@ export const Container = styled.aside`
     padding: 30px;
     background-color: ${props => props.theme.colors.primary};
 
-    @media (max-width: 1000px) {
+    @media (max-width: 800px) {
         display: none;
     }
 `;

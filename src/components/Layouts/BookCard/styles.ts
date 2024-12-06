@@ -37,7 +37,7 @@ export const Title = styled.span`
 
 export const Author = styled.span`
   margin-bottom: 7px;
-  font-size: 0.9rem;
+  font-size: 0.6rem;
   font-weight: bold;
 
   > span {

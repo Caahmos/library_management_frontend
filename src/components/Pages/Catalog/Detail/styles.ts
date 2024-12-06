@@ -7,33 +7,28 @@ export const Container = styled.div`
 `;
 
 export const BookSection = styled.div`
-  width: 100%;
-  display: flex;
+  justify-self: center;
+  max-width: 1100px;
   padding: 20px;
+  justify-content: space-between;
+  display: flex;
   flex-wrap: wrap;
   gap: 20px;
 `;
 
 export const BookImage = styled.div`
-  width: 40%;
-  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
 
   > img {
-    width: 200px;
-  }
-
-  @media screen and (max-width: 800px) {
-    width: 100%;
+    width: 300px;
   }
 `;
 
 export const BookInfo = styled.div`
-  width: 50%;
+  width: 60%;
   border-radius: 10px;
-  border: 1px solid ${(props) => props.theme.colors.gray};
   color: ${(props) => props.theme.colors.white};
   display: flex;
   flex-direction: column;
@@ -41,21 +36,18 @@ export const BookInfo = styled.div`
   > img {
     width: 200px;
   }
-
-  @media screen and (max-width: 800px) {
-    width: 100%;
-  }
 `;
 
 export const TextContainer = styled.div`
   padding: 20px;
   display: flex;
-  min-height: 280px;
+  height: 100%;
+  justify-content: center;
   flex-direction: column;
   gap: 10px;
 `;
 
-export const Title = styled.div`
+export const BookTitle = styled.div`
   font-size: 1.5rem;
 `;
 
@@ -73,17 +65,59 @@ export const Description = styled.div`
 `;
 
 export const DateBook = styled.div`
-  margin-top: auto;
 
   > svg {
     color: ${(props) => props.theme.colors.success};
   }
 `;
 
-export const ButtonsContainer = styled.div`
+export const BookContent = styled.div`
   width: 100%;
-  height: 70px;
-  background-color: ${props => props.theme.colors.secondary};
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  color: ${(props) => props.theme.colors.white};
+  display: flex;
+  flex-direction: column;
 `;
+
+export const Content = styled.div`
+  width: 100%;
+  color: ${(props) => props.theme.colors.white};
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Title = styled.p`
+  font-size: 2rem;
+`;
+
+export const CopyList = styled.ul`
+margin: 20px 0 20px 0;
+
+`
+
+export const CopyItem = styled.li`
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding: 20px;
+  list-style: none;
+  background-color: ${(props) => props.theme.colors.secondary};
+  display: flex;
+`
+
+export const CopyTitle = styled.div`
+  display: flex;
+`
+
+export const CopyNumber = styled.div`
+  
+`
+
+export const CopyDescription = styled.span`
+  margin-left: 30px;
+`
+
+export const CopyStatus = styled.span`
+`
+
+export const CopyButtons = styled.div`
+
+`

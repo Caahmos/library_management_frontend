@@ -9,7 +9,7 @@ export const Container = styled.div`
     "AS HD"
     "AS CT";
 
-    @media (max-width: 1000px) {
+    @media (max-width: 800px) {
     grid-template-columns: 1fr;
     grid-template-areas: 
     "HD HD"

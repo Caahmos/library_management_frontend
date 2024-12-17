@@ -7,6 +7,7 @@ import BooksSection from "../../Layouts/BooksSection";
 import { Biblio } from "../../../model/Biblio/Biblio/SearchBiblioResponse";
 import RandomBooksSection from "../../Layouts/RandomBooksSection";
 import { RandomBiblio } from "../../../model/Biblio/Biblio/RandomSearchBiblioResponse";
+import Footer from "../../Layouts/Footer";
 
 const Home: React.FC = () => {
     const [books, setBooks] = useState<Biblio[]>([]);
@@ -50,6 +51,7 @@ const Home: React.FC = () => {
         }}>
            <BooksSection biblioData={books} title="Novidades na biblioteca"/>
            <RandomBooksSection randomBiblios={randomBooks}/>
+           <Footer/>
         </Container>
     );
 }

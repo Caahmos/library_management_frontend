@@ -8,12 +8,17 @@ export const Container = styled.div`
 
 export const BookSection = styled.div`
   justify-self: center;
-  max-width: 1100px;
-  padding: 20px;
+  max-width: 70%;
+  padding: 20px 0 20px 0;
   justify-content: space-between;
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+
+  @media (max-width: 800px) {
+    padding: 20px;
+    max-width: 100%;
+  }
 `;
 
 export const BookImage = styled.div`
@@ -36,6 +41,7 @@ export const BookInfo = styled.div`
   > img {
     width: 200px;
   }
+  
 `;
 
 export const TextContainer = styled.div`

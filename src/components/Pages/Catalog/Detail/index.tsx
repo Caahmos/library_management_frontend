@@ -31,10 +31,12 @@ import {
 import ReturnButton from "../../../Layouts/ReturnButton";
 import { ViewStatusRequest } from "../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest";
 import BooksSection from "../../../Layouts/BooksSection";
+import Footer from "../../../Layouts/Footer";
 
 const Detail: React.FC = () => {
     const { id } = useParams();
     const [books, setBooks] = useState<Biblio[]>([]);
+    const [bookCollection, setBookCollection] = useState<string>("");
     const [bookInfo, setBookInfo] = useState<Biblio>();
     const [bookCopies, setBookCopies] = useState<Copies[]>([]);
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
@@ -42,19 +44,21 @@ const Detail: React.FC = () => {
     const token = localStorage.getItem("@library_management:token") || "";
 
     useEffect(() => {
-        api.get(`/biblio/search?collection=${bookInfo?.collection_cd}`, {
+        console.log(`/biblio/search?method=collection&data=${bookCollection}`);
+        api.get(`/biblio/search?method=collection&data=${bookCollection}`, {
             headers: {
                 Authorization: `Bearer ${JSON.parse(token)}`
             }
         })
             .then((respose) => {
                 setBooks(respose.data.biblios)
+                console.log(respose.data.biblios)
             })
             .catch((err) => {
                 console.log(err)
             })
 
-    }, []);
+    }, [id, token, bookCollection, bookInfo]);
 
     useEffect(() => {
         api.get(`/biblio/detail/${id}`, {
@@ -65,6 +69,7 @@ const Detail: React.FC = () => {
             .then((response) => {
                 setBookInfo(response.data.biblio);
                 setSubfieldsDescriptions(response.data.subfieldsDescriptions);
+                setBookCollection(response.data.collection.description);
             })
             .catch((err) => {
                 console.error(err);
@@ -148,7 +153,7 @@ const Detail: React.FC = () => {
                         </TextContainer>
                     </BookInfo>
                     <BookContent>
-                        <Title>Cópias disponíveis</Title>
+                        <Title>Cópias cadastradas</Title>
                         <CopyList>
                             {
                                 bookCopies && bookCopies.length > 0
@@ -168,13 +173,14 @@ const Detail: React.FC = () => {
                         </CopyList>
                     </BookContent>
                     <Content>
-                        <Title>Livros semelhantes</Title>
-                        <BooksSection biblioData={books} title="" />
+                        <Title>Livros relacionados a { bookCollection }</Title>
+                    <BooksSection title="" biblioData={books} />
+                    <Footer/>
                     </Content>
                 </BookSection>
             ) : (
                 <p>Carregando...</p>
-            )}
+                )}
         </Container>
     );
 };

@@ -19,7 +19,6 @@ interface BookCard {
 const BookCard: React.FC<BookCard> = ({img, title, author, rank, id}) => {
 
   const imagemFormatada = `http://localhost:5000/imgs/biblio/${img}`;
-  console.log(imagemFormatada);
 
   return (
     <Container to={`/catalog/biblio/detail/${id}`}>

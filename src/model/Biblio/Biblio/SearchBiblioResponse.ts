@@ -27,6 +27,9 @@ export interface Biblio {
     biblio_copy: BiblioCopy[];
     BiblioMedia?: BiblioMedia[];
     biblio_field?: BiblioField[];
+    collection?: {
+        description?: string
+    };
 }
 
 export interface BiblioCopy {

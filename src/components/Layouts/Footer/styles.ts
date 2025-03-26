@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.footer`
     width: 100%;
-    min-height: 300px;
     color: ${ props => props.theme.colors.white };
     display: flex;
     justify-content: center;
@@ -14,7 +13,8 @@ export const Content = styled.div`
     flex-wrap: wrap;
     width: 100%;
     flex-grow: 1;
-    padding: 20px;
+    padding: 70px;
+    text-align: center;
     background-color: ${ props => props.theme.colors.secondary };
     display: flex;
     justify-content: space-between;

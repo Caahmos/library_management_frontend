@@ -25,37 +25,6 @@ import {
 } from './styles';
 import BookItem from "../../Layouts/Admin/BookItem";
 
-const data = [
-    {
-        name: 'Page A',
-        uv: 4000,
-    },
-    {
-        name: 'Page B',
-        uv: 3000,
-    },
-    {
-        name: 'Page C',
-        uv: 2000,
-    },
-    {
-        name: 'Page D',
-        uv: 2780,
-    },
-    {
-        name: 'Page E',
-        uv: 1890,
-    },
-    {
-        name: 'Page F',
-        uv: 2390,
-    },
-    {
-        name: 'Page G',
-        uv: 3490,
-    },
-];
-
 const Admin: React.FC = () => {
     const [topBooks, setTopBooks] = useState<TopBooksInterface[]>([]);
     const [rentals, setRentals] = useState<RentalsInterface[]>([]);
@@ -149,7 +118,8 @@ const Admin: React.FC = () => {
                             left: 20,
                             bottom: 5,
                         }}
-                    >
+                        >
+                        <YAxis/>
                         <XAxis dataKey="month" color="#F27052" />
                         <Tooltip />
                         <Line type="monotone" dataKey="total_rentals" stroke="#F27052" activeDot={{ r: 8 }} />

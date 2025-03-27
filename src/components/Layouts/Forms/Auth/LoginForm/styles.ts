@@ -8,7 +8,7 @@ export const Container = styled.form`
   min-width: 350px;
   width: 400px;
   padding: 30px;
-  background-color: ${(props) => props.theme.colors.black};
+  background-color: ${(props) => props.theme.colors.secondary};
   border-radius: 15px;
   -webkit-box-shadow: 42px 35px 58px -36px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 42px 35px 58px -36px rgba(0, 0, 0, 0.9);
@@ -24,7 +24,7 @@ export const Title = styled.h2`
 export const Button = styled.button`
   width: 100%;
   padding: 18px;
-  background-color: ${(props) => props.theme.colors.gray};
+  background-color: ${(props) => props.theme.colors.primary};
   color: ${(props) => props.theme.colors.white};
   border-radius: 12px;
   margin-top: 20px;

@@ -127,6 +127,7 @@ export const RetangleGrid = styled.div`
   padding: 20px;
   grid-area: RG;
   background-color: ${(props) => props.theme.colors.secondary};
+  color: ${(props) => props.theme.colors.white};
   display: flex;
   flex-direction: column;
   gap: 20px;

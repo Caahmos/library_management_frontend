@@ -11,7 +11,8 @@ import {
   AccordionContent,
   TitleContainer,
   CircleIcon,
-  Brand
+  Brand,
+  LinkItem
 } from './styles'
 
 const Aside: React.FC = () => {
@@ -74,8 +75,10 @@ const Aside: React.FC = () => {
           </MenuItem>
           <AccordionContent isOpen={openIndex === 2}>
             <ul>
-              <li>Subitem 1</li>
-              <li>Subitem 2</li>
+              <li><LinkItem to={'/admin/adminlist'}>Lista de Admins</LinkItem></li>
+              <li>Tipos de Usuários</li>
+              <li>Tipos de Materiais</li>
+              <li>Tipos de Categorias</li>
             </ul>
           </AccordionContent>
         </li>

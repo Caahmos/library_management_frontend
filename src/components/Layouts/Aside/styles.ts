@@ -85,6 +85,7 @@ export const AccordionContent = styled.div<{ isOpen: boolean }>`
     max-height: ${({ isOpen }) => (isOpen ? '200px' : '0')}; 
     transition: max-height 0.4s ease-in-out;
     margin-left: 25px;
+    color: ${props => props.theme.colors.white}; 
 
     ul {
         list-style: none;
@@ -94,7 +95,18 @@ export const AccordionContent = styled.div<{ isOpen: boolean }>`
 
     li {
         margin-top: 5px;
+        margin-bottom: 15px;
         font-size: 14px;
     }
 `;
+
+export const LinkItem = styled(Link)`
+    color: ${props => props.theme.colors.white}; 
+    text-decoration: none;
+
+    &:hover {
+        transition: ease .4s all;
+        color: ${props => props.theme.colors.success}; 
+    }
+`
 

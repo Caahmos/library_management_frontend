@@ -29,7 +29,7 @@ const Admin: React.FC = () => {
     const [topBooks, setTopBooks] = useState<TopBooksInterface[]>([]);
     const [rentals, setRentals] = useState<RentalsInterface[]>([]);
     const [filteredRentals, setFilteredRentals] = useState<RentalsInterface[]>([]);
-    const [selectedYear, setSelectedYear] = useState<number>(2023);
+    const [selectedYear, setSelectedYear] = useState<number>(2024);
     const [token, setToken] = useState(
         localStorage.getItem("@library_management:token") || ""
     );
@@ -78,28 +78,28 @@ const Admin: React.FC = () => {
 
     return (
         <Container>
-            <Square1>
+            <Square1 to={'/admin/adminlist'}>
                 <SquareContent>
                     <SquareTitle>Lista de Admins</SquareTitle>
                     <SquareSpan>Acessar painel </SquareSpan>
                 </SquareContent>
                 <IconAdm />
             </Square1>
-            <Square2>
+            <Square2 to={''}>
                 <SquareContent>
                     <SquareTitle>Tipos de Usuários</SquareTitle>
                     <SquareSpan>Acessar painel </SquareSpan>
                 </SquareContent>
                 <IconUsers />
             </Square2>
-            <Square3>
+            <Square3 to={''}>
                 <SquareContent>
                     <SquareTitle>Tipos de Materiais</SquareTitle>
                     <SquareSpan>Acessar painel </SquareSpan>
                 </SquareContent>
                 <IconBooks />
             </Square3>
-            <Square4>
+            <Square4 to={''}>
                 <SquareContent>
                     <SquareTitle>Tipos de Categorias</SquareTitle>
                     <SquareSpan>Acessar painel </SquareSpan>
@@ -119,6 +119,7 @@ const Admin: React.FC = () => {
                             bottom: 5,
                         }}
                         >
+                        <CartesianGrid strokeDasharray="3 3" />
                         <YAxis/>
                         <XAxis dataKey="month" color="#F27052" />
                         <Tooltip />

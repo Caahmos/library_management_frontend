@@ -3,6 +3,7 @@ import { RiAdminFill } from "react-icons/ri";
 import { FaUsers } from "react-icons/fa";
 import { ImBooks } from "react-icons/im";
 import { BiSolidCategory } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   width: 100%;
@@ -33,9 +34,10 @@ export const Container = styled.div`
   }
 `;
 
-export const Square1 = styled.div`
+export const Square1 = styled(Link)`
   grid-area: SG1;
   background-color: ${(props) => props.theme.colors.secondary};
+  text-decoration: none;
   position: relative;
   overflow: hidden;
 `;
@@ -104,21 +106,24 @@ export const SquareContent = styled.div`
   flex-direction: column;
 `;
 
-export const Square2 = styled.div`
+export const Square2 = styled(Link)`
   grid-area: SG2;
   background-color: ${(props) => props.theme.colors.secondary};
+  text-decoration: none;
   position: relative;
   overflow: hidden;
 `;
-export const Square3 = styled.div`
+export const Square3 = styled(Link)`
   grid-area: SG3;
   background-color: ${(props) => props.theme.colors.secondary};
+  text-decoration: none;
   position: relative;
   overflow: hidden;
 `;
-export const Square4 = styled.div`
+export const Square4 = styled(Link)`
   grid-area: SG4;
   background-color: ${(props) => props.theme.colors.secondary};
+  text-decoration: none;
   position: relative;
   overflow: hidden;
 `;

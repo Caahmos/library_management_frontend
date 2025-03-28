@@ -5,8 +5,8 @@ export const Container = styled(Link)`
     text-decoration: none;
     color: ${props => props.theme.colors.white};
     width: 100%;
+    /* border-bottom: 1px solid ${props => props.theme.colors.white}; */
     padding: 15px;
-    border-bottom: 1px solid ${props => props.theme.colors.white};
     display: flex; 
     justify-content: space-between;
     align-items: center;

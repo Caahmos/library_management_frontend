@@ -6,6 +6,7 @@ import Circulation from "../components/Pages/Circulation";
 import Catalog from "../components/Pages/Catalog";
 import Admin from "../components/Pages/Admin";
 import Detail from "../components/Pages/Catalog/Detail";
+import AdminList from "../components/Pages/Admin/AdminList";
 
 const AppRoutes: React.FC = () => {
     return (
@@ -16,6 +17,7 @@ const AppRoutes: React.FC = () => {
                 <Route path="/catalog" element={<Catalog />} />
                 <Route path="/catalog/biblio/detail/:id" element={<Detail />} />
                 <Route path="/admin" element={<Admin />} />
+                <Route path="/admin/adminlist" element={<AdminList />} />
             </Routes>
         </Layout>
     );

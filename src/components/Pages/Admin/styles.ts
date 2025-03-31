@@ -34,6 +34,11 @@ export const Container = styled.div`
   }
 `;
 
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
 export const Square1 = styled(Link)`
   grid-area: SG1;
   background-color: ${(props) => props.theme.colors.secondary};

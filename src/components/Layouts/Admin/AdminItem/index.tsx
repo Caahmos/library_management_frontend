@@ -6,6 +6,8 @@ import { RiLockPasswordLine } from "react-icons/ri";
 
 import {
     Container,
+    Content,
+    HiddenHeaders,
     FirstName,
     LastName,
     Username,
@@ -14,21 +16,40 @@ import {
     Catalog,
     Admin,
     Suspended,
-    Functions
+    Functions,
+    LinkIcon
 } from './styles';
 
-const AdminItem: React.FC<SeeStaffs> = ({userid, first_name, last_name, username, admin_flg, catalog_flg, circ_flg, circ_mbr_flg, suspended_flg }) => {
+const AdminItem: React.FC<SeeStaffs> = ({ userid, first_name, last_name, username, admin_flg, catalog_flg, circ_flg, circ_mbr_flg, suspended_flg }) => {
     return (
         <Container>
-            <FirstName>{first_name}</FirstName>
-            <LastName>{last_name}</LastName>
-            <Username>{username}</Username>
-            <Circ>{circ_flg}</Circ>
-            <UpdMember>{circ_mbr_flg}</UpdMember>
-            <Catalog>{catalog_flg}</Catalog>
-            <Admin>{admin_flg}</Admin>
-            <Suspended>{suspended_flg}</Suspended>
-            <Functions><TbEdit/><MdDeleteOutline/><RiLockPasswordLine/></Functions>
+            <HiddenHeaders>
+                <FirstName>Nome:</FirstName>
+                <LastName>Sobrenome:</LastName>
+                <Username>Usuário:</Username>
+                <Circ>Circulação:</Circ>
+                <UpdMember>Atualizar Membros:</UpdMember>
+                <Catalog>Catalogo:</Catalog>
+                <Admin>Administrador:</Admin>
+                <Suspended>Suspenso:</Suspended>
+                <Functions>Ações:</Functions>
+            </HiddenHeaders>
+            <Content>
+                <FirstName>{first_name}</FirstName>
+                <LastName>{last_name}</LastName>
+                <Username>{username}</Username>
+                <Circ>{circ_flg}</Circ>
+                <UpdMember>{circ_mbr_flg}</UpdMember>
+                <Catalog>{catalog_flg}</Catalog>
+                <Admin>{admin_flg}</Admin>
+                <Suspended>{suspended_flg}</Suspended>
+                <Functions>
+                    <LinkIcon to={`/admin/editadmin/${userid}`}><TbEdit /></LinkIcon>
+                    <LinkIcon to={'/admin/delete'}><MdDeleteOutline /></LinkIcon>
+                    <LinkIcon to={'/admin/delete'}><RiLockPasswordLine /></LinkIcon>
+
+                </Functions>
+            </Content>
         </Container>
     )
 };

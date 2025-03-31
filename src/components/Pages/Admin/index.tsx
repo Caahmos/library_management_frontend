@@ -6,6 +6,7 @@ import api from "../../../utils/api";
 
 import {
     Container,
+    Header,
     Square1,
     Square2,
     Square3,
@@ -64,7 +65,7 @@ const Admin: React.FC = () => {
 
     const filteredRentalsFunction = useMemo(() => {
         const filtered = rentals.filter((rental) => {
-           
+
             const rentalYear = rental.month.slice(0, 4);
 
             console.log(rentalYear);
@@ -75,6 +76,20 @@ const Admin: React.FC = () => {
 
         setFilteredRentals(filtered)
     }, [rentals, selectedYear]);
+
+    const avaiableYears = useMemo(() => {
+        let year = new Set<string>();
+
+        rentals.map((rental) => {
+            year.add(rental.month.slice(0, 4));
+        });
+
+        return Array.from(year).reverse();
+    }, [rentals]);
+
+    const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedYear(Number(e.target.value));
+    };
 
     return (
         <Container>
@@ -107,7 +122,18 @@ const Admin: React.FC = () => {
                 <IconCategory />
             </Square4>
             <RetangleGrid>
-                <p>Estatística de aluguéis</p>
+                <Header>
+                    Estatística de aluguéis
+                    <select onChange={handleOnChange} value={selectedYear}>
+                        {
+                            avaiableYears && avaiableYears.length > 0
+                                ? avaiableYears.map((year) => (
+                                    <option key={year} value={year}>{year}</option>
+                                ))
+                                : <option>{selectedYear}</option>
+                        }
+                    </select>
+                </Header>
                 <ResponsiveContainer width="100%" height="100%">
                     <LineChart
                         height={300}
@@ -118,9 +144,9 @@ const Admin: React.FC = () => {
                             left: 20,
                             bottom: 5,
                         }}
-                        >
+                    >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <YAxis/>
+                        <YAxis />
                         <XAxis dataKey="month" color="#F27052" />
                         <Tooltip />
                         <Line type="monotone" dataKey="total_rentals" stroke="#F27052" activeDot={{ r: 8 }} />

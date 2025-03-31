@@ -15,14 +15,20 @@ export const List = styled.div`
 `;
 
 export const NewAdmin = styled(Link)`
+  width: 320px;
+  padding: 20px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background-color: ${ props => props.theme.colors.secondary};
   color: ${ props => props.theme.colors.white};
   text-decoration: none;
-  transition: 0.1s all ease-in;
   margin-bottom: 20px;
+  transition: 0.1s all ease-in;
   
   &:hover{
+    opacity: 0.7;
     color: ${ props => props.theme.colors.success};
   }
   `
@@ -41,10 +47,12 @@ export const AdminHeaders = styled.div`
     color: ${props => props.theme.colors.success};
     padding: 20px;
     border-bottom: 1px solid ${props => props.theme.colors.success};
+    word-wrap: break-word;
 
     @media screen and (max-width: 1200px) {
     flex-direction: column;
     align-items: flex-start;
+    display: none;
   }
 `
 export const FirstName = styled.div`
@@ -82,4 +90,6 @@ export const Suspended = styled.div`
 
 export const Functions = styled.div`
     width: 10%;
+
+
 `

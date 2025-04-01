@@ -8,8 +8,11 @@ export const Container = styled.header`
     align-items: center;
     color: ${props => props.theme.colors.white};
     background-color: ${props => props.theme.colors.primary};
-
-`
+    
+    /* Adicione isso para evitar que o header cresça verticalmente */
+    min-height: 80px;
+    height: auto;
+`;
 
 export const Profile = styled.div`
     display: flex;

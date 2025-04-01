@@ -6,7 +6,7 @@ import {
   Rating
 } from './styles';
 
-import { FaStar } from "react-icons/fa6";;
+import { FaStar } from "react-icons/fa6";
 
 interface BookCard {
   id: number;

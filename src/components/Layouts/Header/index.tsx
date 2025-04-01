@@ -5,6 +5,7 @@ import { useTheme } from '../../../hooks/useTheme';
 import { IoIosSearch } from "react-icons/io";
 import { useState, useEffect, useMemo } from 'react';
 import { Biblio } from '../../../model/Biblio/Biblio/SearchBiblioResponse';
+import { useHandleSearch } from '../../../hooks/useHandleSearch';
 
 import {
   Container,
@@ -17,10 +18,10 @@ import ThemeChanger from '../ThemeChanger';
 import SearchInput from '../Forms/SearchInput';
 
 const Header: React.FC = () => {
+  const {changeOpen, isOpen, searchText, changeSearchText} = useHandleSearch();
+
   const { signOut, userData } = useAuth();
   const { theme, changeTheme } = useTheme();
-  const [search, setSearch] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
   const [books, setBooks] = useState<Biblio[]>([]);
   const [selectTheme, setSelectTheme] = useState(theme.title === 'dark');
   const [token, setToken] = useState(
@@ -28,24 +29,16 @@ const Header: React.FC = () => {
   );
 
   const handleIsOpen = useMemo(() => {
-    if(search.length > 0){
-      setIsOpen(true);
-    };
-
-    if(search.length <= 0){
-      setIsOpen(false);
-    }
-
-    console.log(isOpen);
-  }, [search]);
+    changeOpen(searchText);
+  }, [searchText]);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
+    changeSearchText(e.target.value);
     console.log(e.target.value);
   };
 
   useEffect(() => {
-    api.get(`/biblio/search?method=title&data=${search}`, {
+    api.get(`/biblio/search?method=title&data=${searchText}`, {
       headers: {
         Authorization: `Bearer ${JSON.parse(token)}`
       }
@@ -57,7 +50,7 @@ const Header: React.FC = () => {
       .catch((err) => {
         console.log(err)
       })
-  }, [search]);
+  }, [searchText]);
 
   return (
     <Container>
@@ -65,7 +58,7 @@ const Header: React.FC = () => {
         icon={<IoIosSearch />}
         placeholder='Pesquise por algum livro'
         onChange={handleOnChange}
-        value={search}
+        value={searchText}
         isOpen={isOpen || false}
         searchResults={books}
       />

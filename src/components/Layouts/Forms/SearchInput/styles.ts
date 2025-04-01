@@ -1,19 +1,29 @@
 import styled from "styled-components";
+import { IoCloseSharp } from "react-icons/io5";
 
 interface isActive {
   isOpen: boolean
 };
 
+export const CloseButton = styled.button`
+  background-color: transparent;
+  color: ${props => props.theme.colors.white};
+  margin-right: 12px;
+  font-size: 18px;
+`
+
 export const Container = styled.div`
   position: relative;
-  width: 500px;
+  width: 550px;
   margin: 0 10px;   
 `;
 
 export const StyledInputContainer = styled.div`
   display: flex;
+  border-radius: 8px;
   align-items: center;
   position: relative;
+  border: 1px solid ${props => props.theme.colors.success};
   width: 100%;
 `;
 
@@ -29,7 +39,6 @@ export const StyledInput = styled.input`
   background-color: ${props => props.theme.colors.primary};
   color: ${props => props.theme.colors.white};
   border-radius: 8px;
-  border: 1px solid ${props => props.theme.colors.success};
   &:focus {
     outline: none;
     border-color: ${props => props.theme.colors.success};

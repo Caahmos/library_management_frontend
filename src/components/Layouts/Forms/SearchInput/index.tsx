@@ -1,7 +1,10 @@
 import React, { InputHTMLAttributes } from "react";
-import { Container, StyledInputContainer, StyledInput, IconWrapper, Dropdown } from "./styles";
+import { Container, StyledInputContainer, StyledInput, IconWrapper, Dropdown, CloseButton } from "./styles";
 import { Biblio } from "../../../../model/Biblio/Biblio/SearchBiblioResponse";
 import BookSearch from "../../BookSearch";
+import { IoCloseSharp } from "react-icons/io5";
+import { useHandleSearch } from "../../../../hooks/useHandleSearch";
+
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label?: string;
@@ -11,11 +14,16 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const SearchInput: React.FC<InputProps> = ({ icon, searchResults, isOpen, ...props }) => {
+    const {close} = useHandleSearch();
+
     return (
         <Container>
             <StyledInputContainer>
                 {icon && <IconWrapper>{icon}</IconWrapper>}
                 <StyledInput {...props} />
+                <CloseButton onClick={() => { close() }}>
+                    <IoCloseSharp/>
+                </CloseButton>
             </StyledInputContainer>
 
             <Dropdown isOpen={isOpen}>

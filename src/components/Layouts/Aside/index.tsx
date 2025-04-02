@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import { IoBook, IoSettingsSharp } from "react-icons/io5";
+import React, { useState, useRef, useEffect } from 'react';
+import { IoBook, IoSettingsSharp, IoLogOutOutline, IoClose } from "react-icons/io5";
 import { FaCartShopping } from "react-icons/fa6";
 import { BiSolidDashboard } from "react-icons/bi";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { useTheme } from '../../../hooks/useTheme';
-import { IoLogOutOutline } from "react-icons/io5";
 import { useAuth } from '../../../hooks/useAuth';
-import { IoClose } from "react-icons/io5";
 import { useMenu } from '../../../hooks/useOpenMenu';
 
 import {
@@ -37,16 +35,34 @@ const Aside: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [selectTheme, setSelectTheme] = useState(theme.title === 'dark');
 
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
   const handleToggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        open(); 
+      }
+    }
+
+    if (isOpenMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpenMenu, open]);
+
   return (
-    <Container isOpen={isOpenMenu}>
+    <Container isOpen={isOpenMenu} ref={menuRef}>
       <MenuBox>
         <Brand>
           <Logo>Library</Logo>
-          <CloseMenuButton onClick={() => { open() }}>
+          <CloseMenuButton onClick={open}>
             <IoClose />
           </CloseMenuButton>
         </Brand>

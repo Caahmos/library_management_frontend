@@ -12,14 +12,17 @@ export const Container = styled.aside<MenuToggle>`
   justify-content: flex-start;
   padding: 30px;
   background-color: ${(props) => props.theme.colors.primary};
+  transition: width 0.3s;
+  box-shadow: 18px 10px 44px 2px rgba(0,0,0,0.15);
+  -webkit-box-shadow: 18px 10px 44px 2px rgba(0,0,0,0.15);
+  -moz-box-shadow: 18px 10px 44px 2px rgba(0,0,0,0.15);
+  z-index: 9999;
 
   @media (max-width: 1000px) {
     position: fixed;
-    z-index: 9999;
     width: 0;
     left: 0;
     bottom: 0;
-    transition: width 0.3s;
 
     width: 260px;
 

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { IoBook, IoSettingsSharp, IoLogOutOutline, IoClose } from "react-icons/io5";
+import { ImBooks } from "react-icons/im";
 import { FaCartShopping } from "react-icons/fa6";
 import { BiSolidDashboard } from "react-icons/bi";
 import { MdAdminPanelSettings } from "react-icons/md";
@@ -61,7 +62,7 @@ const Aside: React.FC = () => {
     <Container isOpen={isOpenMenu} ref={menuRef}>
       <MenuBox>
         <Brand>
-          <Logo>Library</Logo>
+          <Logo><ImBooks/> Library</Logo>
           <CloseMenuButton onClick={open}>
             <IoClose />
           </CloseMenuButton>

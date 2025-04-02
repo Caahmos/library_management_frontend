@@ -9,6 +9,7 @@ import Detail from "../components/Pages/Catalog/Detail";
 import AdminList from "../components/Pages/Admin/AdminList";
 import { HandleSearchProvider } from "../hooks/useHandleSearch";
 import { MenuProvider } from "../hooks/useOpenMenu";
+import CreateAdmin from "../components/Pages/Admin/CreateAdmin";
 
 const AppRoutes: React.FC = () => {
 
@@ -22,6 +23,7 @@ const AppRoutes: React.FC = () => {
                         <Route path="/catalog" element={<Catalog />} />
                         <Route path="/catalog/biblio/detail/:id" element={<Detail />} />
                         <Route path="/admin" element={<Admin />} />
+                        <Route path="/admin/createadmin" element={<CreateAdmin />} />
                         <Route path="/admin/adminlist" element={<AdminList />} />
                     </Routes>
                 </Layout>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { TopBooksInterface } from "../../../model/Biblio/BiblioReports/TopBooksInterface";
 import { RentalsInterface } from "../../../model/Biblio/BiblioReports/RentalsInterface";
+import { FiArrowUpRight } from "react-icons/fi";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import api from "../../../utils/api";
 
@@ -96,28 +97,28 @@ const Admin: React.FC = () => {
             <Square1 to={'/admin/adminlist'}>
                 <SquareContent>
                     <SquareTitle>Lista de Admins</SquareTitle>
-                    <SquareSpan>Acessar painel </SquareSpan>
+                    <SquareSpan>Acessar painel <FiArrowUpRight/></SquareSpan>
                 </SquareContent>
                 <IconAdm />
             </Square1>
             <Square2 to={''}>
                 <SquareContent>
                     <SquareTitle>Tipos de Usuários</SquareTitle>
-                    <SquareSpan>Acessar painel </SquareSpan>
+                    <SquareSpan>Acessar painel <FiArrowUpRight/></SquareSpan>
                 </SquareContent>
                 <IconUsers />
             </Square2>
             <Square3 to={''}>
                 <SquareContent>
                     <SquareTitle>Tipos de Materiais</SquareTitle>
-                    <SquareSpan>Acessar painel </SquareSpan>
+                    <SquareSpan>Acessar painel <FiArrowUpRight/></SquareSpan>
                 </SquareContent>
                 <IconBooks />
             </Square3>
             <Square4 to={''}>
                 <SquareContent>
                     <SquareTitle>Tipos de Categorias</SquareTitle>
-                    <SquareSpan>Acessar painel </SquareSpan>
+                    <SquareSpan>Acessar painel <FiArrowUpRight/></SquareSpan>
                 </SquareContent>
                 <IconCategory />
             </Square4>

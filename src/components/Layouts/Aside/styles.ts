@@ -38,7 +38,9 @@ export const Brand = styled.h2`
   color: ${(props) => props.theme.colors.success};
 `;
 
-export const Logo = styled.div``;
+export const Logo = styled.div`
+  font-size: 26px;
+`;
 
 export const CloseMenuButton = styled.div`
   display: none;
@@ -60,6 +62,7 @@ export const CloseMenuButton = styled.div`
 export const MenuBox = styled.nav`
   width: 100%;
   height: 95%;
+  overflow-y: auto;
 `;
 
 export const UserBox = styled.div`

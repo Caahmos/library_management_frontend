@@ -3,14 +3,18 @@ import { IoIosSearch } from "react-icons/io";
 import { useState, useEffect, useMemo } from 'react';
 import { Biblio } from '../../../model/Biblio/Biblio/SearchBiblioResponse';
 import { useHandleSearch } from '../../../hooks/useHandleSearch';
+import { GiHamburgerMenu } from "react-icons/gi";
+import { useMenu } from '../../../hooks/useOpenMenu';
 
 import {
-  Container
+  Container,
+  MenuIcon
 } from './styles';
 import SearchInput from '../Forms/SearchInput';
 
 const Header: React.FC = () => {
-  const {changeOpen, isOpen, searchText, changeSearchText} = useHandleSearch();
+  const {isOpenMenu, open} = useMenu();
+  const { changeOpen, isOpen, searchText, changeSearchText } = useHandleSearch();
 
   const [books, setBooks] = useState<Biblio[]>([]);
   const [token, setToken] = useState(
@@ -43,6 +47,9 @@ const Header: React.FC = () => {
 
   return (
     <Container>
+      <MenuIcon onClick={() => { open() }}>
+        <GiHamburgerMenu />
+      </MenuIcon>
       <SearchInput
         icon={<IoIosSearch />}
         placeholder='Pesquise por algum livro'

@@ -8,22 +8,25 @@ import Admin from "../components/Pages/Admin";
 import Detail from "../components/Pages/Catalog/Detail";
 import AdminList from "../components/Pages/Admin/AdminList";
 import { HandleSearchProvider } from "../hooks/useHandleSearch";
+import { MenuProvider } from "../hooks/useOpenMenu";
 
 const AppRoutes: React.FC = () => {
 
     return (
-        <HandleSearchProvider>
-            <Layout>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/circulation" element={<Circulation />} />
-                    <Route path="/catalog" element={<Catalog />} />
-                    <Route path="/catalog/biblio/detail/:id" element={<Detail />} />
-                    <Route path="/admin" element={<Admin />} />
-                    <Route path="/admin/adminlist" element={<AdminList />} />
-                </Routes>
-            </Layout>
-        </HandleSearchProvider>
+        <MenuProvider>
+            <HandleSearchProvider>
+                <Layout>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/circulation" element={<Circulation />} />
+                        <Route path="/catalog" element={<Catalog />} />
+                        <Route path="/catalog/biblio/detail/:id" element={<Detail />} />
+                        <Route path="/admin" element={<Admin />} />
+                        <Route path="/admin/adminlist" element={<AdminList />} />
+                    </Routes>
+                </Layout>
+            </HandleSearchProvider>
+        </MenuProvider>
     );
 }
 

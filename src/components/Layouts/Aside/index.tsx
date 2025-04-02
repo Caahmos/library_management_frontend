@@ -6,6 +6,8 @@ import { MdAdminPanelSettings } from "react-icons/md";
 import { useTheme } from '../../../hooks/useTheme';
 import { IoLogOutOutline } from "react-icons/io5";
 import { useAuth } from '../../../hooks/useAuth';
+import { IoClose } from "react-icons/io5";
+import { useMenu } from '../../../hooks/useOpenMenu';
 
 import {
   Container,
@@ -21,12 +23,15 @@ import {
   UserBox,
   Profile,
   User,
-  Button
+  Button,
+  Logo,
+  CloseMenuButton
 } from './styles'
 
 import ThemeChanger from '../ThemeChanger';
 
 const Aside: React.FC = () => {
+  const { isOpenMenu, open } = useMenu();
   const { signOut, userData } = useAuth();
   const { theme, changeTheme } = useTheme();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -37,9 +42,14 @@ const Aside: React.FC = () => {
   };
 
   return (
-    <Container>
+    <Container isOpen={isOpenMenu}>
       <MenuBox>
-        <Brand>Library</Brand>
+        <Brand>
+          <Logo>Library</Logo>
+          <CloseMenuButton onClick={() => { open() }}>
+            <IoClose />
+          </CloseMenuButton>
+        </Brand>
         <MenuContainer>
           <TitleContainer>Menus</TitleContainer>
           <li>

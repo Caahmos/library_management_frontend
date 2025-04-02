@@ -1,29 +1,18 @@
 import api from '../../../utils/api';
-import { useAuth } from '../../../hooks/useAuth';
-import { IoLogOutOutline } from "react-icons/io5";
-import { useTheme } from '../../../hooks/useTheme';
 import { IoIosSearch } from "react-icons/io";
 import { useState, useEffect, useMemo } from 'react';
 import { Biblio } from '../../../model/Biblio/Biblio/SearchBiblioResponse';
 import { useHandleSearch } from '../../../hooks/useHandleSearch';
 
 import {
-  Container,
-  Profile,
-  User,
-  Button,
-  Theme
+  Container
 } from './styles';
-import ThemeChanger from '../ThemeChanger';
 import SearchInput from '../Forms/SearchInput';
 
 const Header: React.FC = () => {
   const {changeOpen, isOpen, searchText, changeSearchText} = useHandleSearch();
 
-  const { signOut, userData } = useAuth();
-  const { theme, changeTheme } = useTheme();
   const [books, setBooks] = useState<Biblio[]>([]);
-  const [selectTheme, setSelectTheme] = useState(theme.title === 'dark');
   const [token, setToken] = useState(
     localStorage.getItem("@library_management:token") || ""
   );
@@ -62,21 +51,6 @@ const Header: React.FC = () => {
         isOpen={isOpen || false}
         searchResults={books}
       />
-      <Profile>
-        <Theme onClick={changeTheme}>
-          <ThemeChanger theme={selectTheme} />
-        </Theme>
-        <User>
-          <p>Bem-vindo(a)</p>
-          <span>
-            {userData?.first_name || 'Carlos'}
-          </span>
-        </User>
-        <Button onClick={signOut}>
-          <IoLogOutOutline />
-          <span>Sair</span>
-        </Button>
-      </Profile>
     </Container>
   );
 };

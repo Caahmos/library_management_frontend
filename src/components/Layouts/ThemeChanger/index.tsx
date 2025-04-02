@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-
+import { useTheme } from '../../../hooks/useTheme';
 import { FaMoon, FaSun } from "react-icons/fa6";
 
 import {
@@ -14,20 +14,12 @@ interface IThemeChanger {
 }
 
 const ThemeChanger: React.FC<IThemeChanger> = ({ theme }) => {
-    const [selectedTheme, setSelectedTheme] = useState(() => theme ? 1 : 0)
-
-    function handleThemeSelected() {
-        if (selectedTheme === 0) {
-            setSelectedTheme(1)
-        } else {
-            setSelectedTheme(0)
-        }
-    }
+    const {themeIcon} = useTheme();
 
     return (
-        <Container onClick={handleThemeSelected}>
+        <Container>
             {
-                React.createElement(Themes[selectedTheme])
+                React.createElement(Themes[themeIcon])
             }
         </Container>
     );

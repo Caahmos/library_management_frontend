@@ -44,10 +44,8 @@ const AdminItem: React.FC<SeeStaffs> = ({ userid, first_name, last_name, usernam
                 <Admin>{admin_flg}</Admin>
                 <Suspended>{suspended_flg}</Suspended>
                 <Functions>
-                    <LinkIcon to={`/admin/editadmin/${userid}`}><TbEdit /></LinkIcon>
-                    <LinkIcon to={'/admin/delete'}><RiLockPasswordLine /></LinkIcon>
-                    <LinkIcon to={'/admin/delete'}><MdDeleteOutline /></LinkIcon>
-
+                    <LinkIcon to={`/admin/editadmin/${userid}`}><TbEdit title='Editar Admin' /></LinkIcon>
+                    <LinkIcon to={`/admin/cpass/${userid}`}><RiLockPasswordLine title='Alterar a Senha' /></LinkIcon>
                 </Functions>
             </Content>
         </Container>

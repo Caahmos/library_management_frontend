@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../../../../utils/api';
 import useFlashMessage from '../../../../hooks/useFlashMessages';
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +17,7 @@ import { SeeStaffs } from '../../../../model/Staff/RegisterStaffRequest';
 const EditAdmin: React.FC = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const {setFlashMessage} = useFlashMessage();
+    const { setFlashMessage } = useFlashMessage();
     const [adminInfo, setAdminInfo] = useState<SeeStaffs>({} as SeeStaffs);
     const [token, setToken] = useState(
         localStorage.getItem("@library_management:token") || ""
@@ -37,6 +37,29 @@ const EditAdmin: React.FC = () => {
                 console.log(err)
             })
     }, []);
+
+    const deleteAdmin = async () => {
+        let msgText = '';
+        let msgType = '';
+
+        try {
+            const response = await api.delete(`/staff/delete/${id}`);
+            const data = response.data;
+            msgText = data.message;
+            msgType = 'success';
+        } catch (error) {
+            const err = error as AxiosError;
+            console.error(err);
+            if (err.response && err.response.data) {
+                msgText = (err.response.data as { message: string }).message;
+            } else {
+                msgText = 'Erro desconhecido';
+            }
+            msgType = 'error';
+        }
+        setFlashMessage(msgText, msgType);
+        msgType === 'success' && navigate('/admin/adminlist');
+    }
 
     const editedAdmin = async (editedAdminData: EditStaffRequest) => {
         let msgText = '';
@@ -64,9 +87,9 @@ const EditAdmin: React.FC = () => {
 
     return (
         <Container>
-            <ReturnButton/>
+            <ReturnButton />
             <FormContainer>
-                    <EditAdminForm button_text='Salvar' handleSubmit={editedAdmin} adminInfo={adminInfo}/>
+                <EditAdminForm button_text='Salvar' handleSubmit={editedAdmin} adminInfo={adminInfo} handleDelete={deleteAdmin} />
             </FormContainer>
         </Container>
     )

@@ -11,6 +11,7 @@ import { HandleSearchProvider } from "../hooks/useHandleSearch";
 import { MenuProvider } from "../hooks/useOpenMenu";
 import CreateAdmin from "../components/Pages/Admin/CreateAdmin";
 import EditAdmin from "../components/Pages/Admin/EditAdmin";
+import ChangeAdminPassword from "../components/Pages/Admin/ChangeAdminPassword";
 
 const AppRoutes: React.FC = () => {
 
@@ -26,6 +27,7 @@ const AppRoutes: React.FC = () => {
                         <Route path="/admin" element={<Admin />} />
                         <Route path="/admin/createadmin" element={<CreateAdmin />} />
                         <Route path="/admin/editadmin/:id" element={<EditAdmin />} />
+                        <Route path="/admin/cpass/:id" element={<ChangeAdminPassword />} />
                         <Route path="/admin/adminlist" element={<AdminList />} />
                     </Routes>
                 </Layout>

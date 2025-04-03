@@ -33,20 +33,3 @@ export const Button = styled.button`
     transition: ease 0.4s all;
   }
 `;
-
-export const DeleteButton = styled.button`
-  width: 100%;
-  padding: 18px;
-  background-color: ${(props) => props.theme.colors.secondary};
-  color: ${(props) => props.theme.colors.white};
-  border: 1px solid red;
-  border-radius: 5px;
-  margin-top: 10px;
-  transition: ease 0.4s all;
-  
-  &:hover {
-    opacity: 0.9;
-    background-color: red;
-  }
-`;
-

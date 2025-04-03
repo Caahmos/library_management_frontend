@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Title, Button } from "./styles";
+import { Container, Title, Button, DeleteButton } from "./styles";
 import InputForm from "../../Input/index";
 import SwitchComponent from "../../SwitchComponent";
 import { EditStaffRequest } from "../../../../../model/Staff/EditStaffRequest";
@@ -9,9 +9,10 @@ interface IEditAdminForm {
   adminInfo: SeeStaffs;
   button_text: string;
   handleSubmit(data: Partial<EditStaffRequest>): void; 
+  handleDelete(): void; 
 }
 
-const EditAdminForm: React.FC<IEditAdminForm> = ({ button_text, handleSubmit, adminInfo }) => {
+const EditAdminForm: React.FC<IEditAdminForm> = ({ button_text, handleSubmit, adminInfo, handleDelete }) => {
   
   const [modifiedFields, setModifiedFields] = useState<Partial<EditStaffRequest>>({});
 
@@ -36,6 +37,12 @@ const EditAdminForm: React.FC<IEditAdminForm> = ({ button_text, handleSubmit, ad
     console.log("Dados modificados:", dataToSubmit);
     handleSubmit(dataToSubmit);
   };
+
+  const handleOnDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    handleDelete();
+  }
 
   const getCurrentValue = <K extends keyof EditStaffRequest>(field: K): EditStaffRequest[K] => {
     return field in modifiedFields 
@@ -108,6 +115,12 @@ const EditAdminForm: React.FC<IEditAdminForm> = ({ button_text, handleSubmit, ad
       />
 
       <Button type="submit">{button_text}</Button>
+       <DeleteButton 
+          type="button"  
+          onClick={handleOnDelete}
+        >
+          Deletar
+        </DeleteButton>
     </Container>
   );
 };

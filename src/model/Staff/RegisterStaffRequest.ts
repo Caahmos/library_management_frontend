@@ -22,4 +22,5 @@ export interface SeeStaffs{
     circ_mbr_flg: string
     catalog_flg: string
     suspended_flg: string
+    reports_flg?: string
 }

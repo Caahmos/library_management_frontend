@@ -1,11 +1,7 @@
 export interface EditStaffRequest{
-    userid: number
-    firstName?: string
-    lastName?: string
+    first_name?: string
+    last_name?: string
     username?: string
-    password?: string
-    last_change_userid?: number
-    confirmPassword?: string
     suspended_flg?: boolean
     admin_flg?: boolean
     circ_flg?: boolean

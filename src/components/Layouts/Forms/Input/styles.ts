@@ -5,6 +5,7 @@ export const StyledInputContainer = styled.div`
     align-items: center;
     position: relative;
     width: 100%;
+    margin-bottom: 10px;
 `;
 
 export const IconWrapper = styled.div`
@@ -24,12 +25,13 @@ export const StyledInput = styled.input`
     width: 100%;
     padding: 18px 18px 18px 40px; 
     margin: 3px 0 3px 0;
-    background-color: ${props => props.theme.colors.gray};
-    border-radius: 12px;
+    color: ${props => props.theme.colors.white};
+    background-color: ${props => props.theme.colors.primary};
+    border-radius: 5px;
     border: 1px solid transparent;
     transition: border 0.3s ease;
 
     &:hover, &:focus {
-        border: 1px solid ${props => props.theme.colors.primary};
+        border: 1px solid ${props => props.theme.colors.success};
     }
 `;

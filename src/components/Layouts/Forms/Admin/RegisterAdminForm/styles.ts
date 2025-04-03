@@ -10,7 +10,7 @@ export const Container = styled.form`
   padding: 30px;
   color: ${(props) => props.theme.colors.white};
   background-color: ${(props) => props.theme.colors.secondary};
-  border-radius: 15px;
+  border-radius: 5px;
   text-align: left;
 `;
 
@@ -23,9 +23,9 @@ export const Title = styled.h2`
 export const Button = styled.button`
   width: 100%;
   padding: 18px;
-  background-color: ${(props) => props.theme.colors.primary};
+  background-color: ${(props) => props.theme.colors.success};
   color: ${(props) => props.theme.colors.white};
-  border-radius: 12px;
+  border-radius: 5px;
   margin-top: 20px;
 
   &:hover {

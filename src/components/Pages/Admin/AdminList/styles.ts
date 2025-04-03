@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { LiaUserEditSolid } from "react-icons/lia";
+import { RiUserAddLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 export const Container = styled.div`
@@ -20,7 +20,7 @@ export const NewAdmin = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 15px;
+  border-radius: 5px;
   background-color: ${ props => props.theme.colors.secondary};
   color: ${ props => props.theme.colors.white};
   text-decoration: none;
@@ -31,9 +31,13 @@ export const NewAdmin = styled(Link)`
     opacity: 0.7;
     color: ${ props => props.theme.colors.success};
   }
+
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+  }
   `
   
-  export const NewAdminIcon = styled(LiaUserEditSolid)`
+  export const NewAdminIcon = styled(RiUserAddLine)`
   font-size: 25px;
   margin-right: 10px;
   color: ${ props => props.theme.colors.success};

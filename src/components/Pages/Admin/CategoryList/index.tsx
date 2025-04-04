@@ -13,19 +13,20 @@ import {
     NewAdminIcon,
 } from './styles';
 import GenericHeader from '../../../Layouts/Admin/GenericHeader';
+import { ViewCollection } from '../../../../model/Collection/ViewCollection';
 
-const MemberList: React.FC = () => {
-    const [memberClassifies, setMemberClassifies] = useState<ViewAllClassifiesRequest[]>([]);
+const CategoryList: React.FC = () => {
+    const [collections, setCollections] = useState<ViewCollection[]>([]);
     const token = localStorage.getItem("@library_management:token") || "";
 
     useEffect(() => {
-        api.get('/mbrclassifydm/viewall', {
+        api.get('/collection/viewcollections', {
             headers: {
                 Authorization: `Bearer ${JSON.parse(token)}`
             }
         })
             .then((response) => {
-                setMemberClassifies(response.data.classifies);
+                setCollections(response.data.collections);
             })
             .catch((err) => {
                 console.error(err);
@@ -35,20 +36,20 @@ const MemberList: React.FC = () => {
     const fields = [
         { key: 'code', label: 'Código' },
         { key: 'description', label: 'Descrição' },
-        { key: 'default_flg', label: 'Padrão' },
-        { key: 'max_fines', label: 'Multa Máxima' }
+        { key: 'days_due_back', label: 'Dias para Devolução' },
+        { key: 'daily_late_fee', label: 'Multa Diária' }
     ];
 
     const actions = [
         {
             icon: <TbEdit />,
             title: "Editar",
-            to: (item: ViewAllClassifiesRequest) => `/mbrclassify/edit/${item.code}`,
+            to: (item: ViewAllClassifiesRequest) => `/collection/edit/${item.code}`,
         },
         {
             icon: <MdDeleteOutline />,
             title: "Excluir",
-            to: (item: ViewAllClassifiesRequest) => `/mbrclassify/delete/${item.code}`,
+            to: (item: ViewAllClassifiesRequest) => `/collection/delete/${item.code}`,
         }
     ];
 
@@ -56,14 +57,14 @@ const MemberList: React.FC = () => {
         <Container>
             <ReturnButton />
             <List>
-                <NewAdmin to={'/mbrclassify/create'}>
-                    <NewAdminIcon />Adicionar Tipo de Usuário
+                <NewAdmin to={'/collection/create'}>
+                    <NewAdminIcon />Adicionar Categoria
                 </NewAdmin>
 
                 <GenericHeader fields={fields} hasActions />
 
-                {memberClassifies && memberClassifies.length > 0
-                    ? memberClassifies.map((item, index) => (
+                {collections && collections.length > 0
+                    ? collections.map((item, index) => (
                         <GenericItem
                             key={index}
                             item={item}
@@ -78,4 +79,4 @@ const MemberList: React.FC = () => {
     );
 };
 
-export default MemberList;
+export default CategoryList;

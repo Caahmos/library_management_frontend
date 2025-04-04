@@ -7,32 +7,33 @@ import ReturnButton from "../../../Layouts/ReturnButton";
 import { AxiosError } from "axios";
 import GenericForm from "../../../Layouts/Forms/Admin/GenericForm";
 import { ViewAllClassifiesRequest } from "../../../../model/Member/MemberClassifyDM/ViewAllClassifiesRequest";
+import { ViewCollection } from "../../../../model/Collection/ViewCollection";
 
-const EditMemberType: React.FC = () => {
+const EditCollection: React.FC = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { setFlashMessage } = useFlashMessage();
-    const [mbrClassifyInfo, setMbrClassifyInfo] = useState<ViewAllClassifiesRequest | null>(null);
+    const [collectionData, setCollectionData] = useState<ViewCollection | null>(null);
     const token = localStorage.getItem("@library_management:token") || "";
 
     useEffect(() => {
-        api.get(`/mbrclassifydm/detail/${id}`, {
+        api.get(`/collection/detail/${id}`, {
             headers: { Authorization: `Bearer ${JSON.parse(token)}` }
         })
             .then((response) => {
-                setMbrClassifyInfo(response.data.classify);
+                setCollectionData(response.data.collection);
             })
             .catch((err) => {
                 console.error(err);
             });
     }, [id, token]);
 
-    const handleEdit = async (updatedData: ViewAllClassifiesRequest) => {
+    const handleEdit = async (updatedData: ViewCollection) => {
         let msgText = "";
         let msgType = "";
 
         try {
-            const response = await api.patch(`/mbrclassifydm/edit/${id}`, updatedData);
+            const response = await api.patch(`/collection/edit/${id}`, updatedData);
             const data = response.data;
             msgText = data.message;
             msgType = 'success';
@@ -48,24 +49,23 @@ const EditMemberType: React.FC = () => {
         }
 
         setFlashMessage(msgText, msgType);
-        msgType === 'success' && navigate('/mbrclassify');
+        msgType === 'success' && navigate('/collection');
     };
 
-    if (!mbrClassifyInfo) return <p>Carregando...</p>;
+    if (!collectionData) return <p>Carregando...</p>;
 
     return (
         <Container>
             <ReturnButton />
             <FormContainer>
                 <GenericForm
-                    title="Editar Tipo de Membro"
+                    title="Editar Categoria"
                     fields={[
                         { name: "description", label: "Descrição", type: "text", placeholder: "Ex: Aluno" },
-                        // { name: "code", label: "Código", type: "text", placeholder: "Ex: 1" },
-                        { name: "max_fines", label: "Multa Máxima", type: "text", placeholder: "Ex: 0" },
-                        // { name: "default_flg", label: "Tipo padrão", type: "switch" },
+                        { name: "days_due_back", label: "Dias para Devolução", type: "number", placeholder: "Ex: 1" },
+                        { name: "daily_late_fee", label: "Multa Diária", type: "number", placeholder: "Ex: 0" },
                     ]}
-                    data={mbrClassifyInfo}
+                    data={collectionData}
                     button_text="Salvar Alterações"
                     onSubmit={handleEdit}
                 />
@@ -74,4 +74,4 @@ const EditMemberType: React.FC = () => {
     );
 };
 
-export default EditMemberType;
+export default EditCollection;

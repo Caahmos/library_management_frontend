@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FaUsersCog } from "react-icons/fa";
+import { TbCategoryFilled } from "react-icons/tb";
 import { Link } from "react-router-dom";
 
 export const Container = styled.div`
@@ -37,7 +37,7 @@ export const NewAdmin = styled(Link)`
   }
   `
   
-  export const NewAdminIcon = styled(FaUsersCog)`
+  export const NewAdminIcon = styled(TbCategoryFilled)`
   font-size: 25px;
   margin-right: 10px;
   color: ${ props => props.theme.colors.success};

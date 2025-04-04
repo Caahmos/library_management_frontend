@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { IoBook, IoSettingsSharp, IoLogOutOutline, IoClose } from "react-icons/io5";
 import { ImBooks } from "react-icons/im";
-import { FaCartShopping } from "react-icons/fa6";
+import { FaBookOpenReader } from "react-icons/fa6";
 import { BiSolidDashboard } from "react-icons/bi";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { useTheme } from '../../../hooks/useTheme';
@@ -81,7 +81,7 @@ const Aside: React.FC = () => {
           <li>
             <MenuItem to='/circulation' onClick={() => handleToggle(0)}>
               <CircleIcon>
-                <FaCartShopping />
+                <FaBookOpenReader />
               </CircleIcon>
               <p>Circulação</p>
             </MenuItem>
@@ -120,7 +120,7 @@ const Aside: React.FC = () => {
                 <li><LinkItem to={'/admin/adminlist'}>Lista de Admins</LinkItem></li>
                 <li><LinkItem to={'/mbrclassify'}>Tipos de Usuários</LinkItem></li>
                 <li>Tipos de Materiais</li>
-                <li>Tipos de Categorias</li>
+                <li><LinkItem to={'/collection'}>Tipos de Categorias</LinkItem></li>
               </ul>
             </AccordionContent>
           </li>

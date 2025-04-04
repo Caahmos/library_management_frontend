@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../../../../utils/api";
 import useFlashMessage from "../../../../hooks/useFlashMessages";
 import { Container, FormContainer } from "./styles";
@@ -8,31 +8,17 @@ import { AxiosError } from "axios";
 import GenericForm from "../../../Layouts/Forms/Admin/GenericForm";
 import { ViewAllClassifiesRequest } from "../../../../model/Member/MemberClassifyDM/ViewAllClassifiesRequest";
 
-const EditMemberType: React.FC = () => {
-    const { id } = useParams();
+const CreateMemberType: React.FC = () => {
     const navigate = useNavigate();
     const { setFlashMessage } = useFlashMessage();
-    const [mbrClassifyInfo, setMbrClassifyInfo] = useState<ViewAllClassifiesRequest | null>(null);
     const token = localStorage.getItem("@library_management:token") || "";
 
-    useEffect(() => {
-        api.get(`/mbrclassifydm/detail/${id}`, {
-            headers: { Authorization: `Bearer ${JSON.parse(token)}` }
-        })
-            .then((response) => {
-                setMbrClassifyInfo(response.data.classify);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, [id, token]);
-
-    const handleEdit = async (updatedData: ViewAllClassifiesRequest) => {
+    const handleEdit = async (newClassifyData: ViewAllClassifiesRequest) => {
         let msgText = "";
         let msgType = "";
 
         try {
-            const response = await api.patch(`/mbrclassifydm/edit/${id}`, updatedData);
+            const response = await api.post(`/mbrclassifydm/register`, newClassifyData);
             const data = response.data;
             msgText = data.message;
             msgType = 'success';
@@ -51,27 +37,24 @@ const EditMemberType: React.FC = () => {
         msgType === 'success' && navigate('/mbrclassify');
     };
 
-    if (!mbrClassifyInfo) return <p>Carregando...</p>;
-
     return (
         <Container>
             <ReturnButton />
             <FormContainer>
                 <GenericForm
-                    title="Editar Tipo de Membro"
+                    title="Criar Tipo de Membro"
                     fields={[
                         { name: "description", label: "Descrição", type: "text", placeholder: "Ex: Aluno" },
-                        // { name: "code", label: "Código", type: "text", placeholder: "Ex: 1" },
                         { name: "max_fines", label: "Multa Máxima", type: "text", placeholder: "Ex: 0" },
-                        // { name: "default_flg", label: "Tipo padrão", type: "switch" },
                     ]}
-                    data={mbrClassifyInfo}
-                    button_text="Salvar Alterações"
+                    data={{} as ViewAllClassifiesRequest}
+                    button_text="Salvar"
                     onSubmit={handleEdit}
+                    isCreate
                 />
             </FormContainer>
         </Container>
     );
 };
 
-export default EditMemberType;
+export default CreateMemberType;

@@ -57,7 +57,7 @@ const AdminList: React.FC = () => {
         <Container>
             <ReturnButton />
             <List>
-                <NewAdmin to={'/admin/createadmin'}><NewAdminIcon />Adicionar novo Administrador</NewAdmin>
+                <NewAdmin to={'/admin/createadmin'}><NewAdminIcon />Adicionar Administrador</NewAdmin>
                 <AdminHeaders>
                     <FirstName>Nome</FirstName>
                     <LastName>Sobrenome</LastName>

@@ -115,7 +115,7 @@ const Admin: React.FC = () => {
                 </SquareContent>
                 <IconBooks />
             </Square3>
-            <Square4 to={''}>
+            <Square4 to={'/collection'}>
                 <SquareContent>
                     <SquareTitle>Tipos de Categorias</SquareTitle>
                     <SquareSpan>Acessar painel <FiArrowUpRight/></SquareSpan>

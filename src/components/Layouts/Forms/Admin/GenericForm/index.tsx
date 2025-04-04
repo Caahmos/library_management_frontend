@@ -1,9 +1,9 @@
-import React, { useState, FormEvent, ChangeEvent } from "react";
+import React, { useState, useCallback, FormEvent, ChangeEvent } from "react";
 import { Container, Title, Button } from "./styles";
 import InputForm from "../../Input";
 import SwitchComponent from "../../SwitchComponent";
 
-type FieldType = 'text' | 'switch';
+type FieldType = "text" | "switch" | "number";
 
 type Field<T> = {
   name: keyof T;
@@ -19,52 +19,59 @@ interface GenericEditFormProps<T> {
   button_text: string;
   onSubmit(data: Partial<T>): void;
   onDelete?(): void;
+  isCreate?: boolean;
 }
 
-function GenericEditForm<T extends Record<string, any>>({
+function GenericForm<T extends Record<string, any>>({
   title,
   fields,
   data,
   button_text,
   onSubmit,
   onDelete,
+  isCreate = false,
 }: GenericEditFormProps<T>) {
   const [formData, setFormData] = useState<Partial<T>>({});
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    const key = name as keyof T;
-    const originalValue = data[key];
+  const handleInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const { name, value, type } = e.target;
+      const key = name as keyof T;
+      const originalValue = data[key];
 
-    setFormData((prev) => {
-      if (value === String(originalValue)) {
-        const updated = { ...prev };
-        delete updated[key];
-        return updated;
-      }
-      return { ...prev, [key]: value };
-    });
+      const newValue = type === "number" ? Number(value) || 0 : value;
 
-    console.log(formData);
-  };
+      setFormData((prev) => {
+        if (!isCreate && newValue === originalValue) {
+          const updated = { ...prev };
+          delete updated[key];
+          return updated;
+        }
+        return { ...prev, [key]: newValue };
+      });
+    },
+    [data, isCreate]
+  );
 
-  const handleSwitchChange = (name: keyof T) => {
-    const originalValue = !!data[name];
-    const newValue = !(formData[name] ?? originalValue);
+  const handleSwitchChange = useCallback(
+    (name: keyof T) => {
+      const originalValue = !!data[name];
+      const newValue = !(formData[name] ?? originalValue);
 
-    setFormData((prev) => {
-      if (newValue === originalValue) {
-        const updated = { ...prev };
-        delete updated[name];
-        return updated;
-      }
-      return { ...prev, [name]: newValue };
-    });
-  };
+      setFormData((prev) => {
+        if (!isCreate && newValue === originalValue) {
+          const updated = { ...prev };
+          delete updated[name];
+          return updated;
+        }
+        return { ...prev, [name]: newValue };
+      });
+    },
+    [data, formData, isCreate]
+  );
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
     onSubmit(formData);
   };
 
@@ -73,12 +80,13 @@ function GenericEditForm<T extends Record<string, any>>({
       <Title>{title}</Title>
 
       {fields.map((field) =>
-        field.type === "text" ? (
+        field.type === "text" || field.type === "number" ? (
           <InputForm
             key={String(field.name)}
             name={String(field.name)}
             label={field.label}
             placeholder={field.placeholder}
+            type={field.type}
             value={
               formData[field.name] !== undefined
                 ? String(formData[field.name])
@@ -103,7 +111,11 @@ function GenericEditForm<T extends Record<string, any>>({
       <Button type="submit">{button_text}</Button>
 
       {onDelete && (
-        <Button type="button" style={{ backgroundColor: "#D9534F" }} onClick={onDelete}>
+        <Button
+          type="button"
+          style={{ backgroundColor: "#D9534F" }}
+          onClick={onDelete}
+        >
           Excluir
         </Button>
       )}
@@ -111,4 +123,4 @@ function GenericEditForm<T extends Record<string, any>>({
   );
 }
 
-export default GenericEditForm;
+export default GenericForm;

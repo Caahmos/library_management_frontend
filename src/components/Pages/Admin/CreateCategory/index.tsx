@@ -1,38 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../../../../utils/api";
 import useFlashMessage from "../../../../hooks/useFlashMessages";
 import { Container, FormContainer } from "./styles";
 import ReturnButton from "../../../Layouts/ReturnButton";
 import { AxiosError } from "axios";
 import GenericForm from "../../../Layouts/Forms/Admin/GenericForm";
-import { ViewAllClassifiesRequest } from "../../../../model/Member/MemberClassifyDM/ViewAllClassifiesRequest";
+import { ViewCollection } from "../../../../model/Collection/ViewCollection";
 
-const EditMemberType: React.FC = () => {
-    const { id } = useParams();
+const CreateCategory: React.FC = () => {
     const navigate = useNavigate();
     const { setFlashMessage } = useFlashMessage();
-    const [mbrClassifyInfo, setMbrClassifyInfo] = useState<ViewAllClassifiesRequest | null>(null);
     const token = localStorage.getItem("@library_management:token") || "";
 
-    useEffect(() => {
-        api.get(`/mbrclassifydm/detail/${id}`, {
-            headers: { Authorization: `Bearer ${JSON.parse(token)}` }
-        })
-            .then((response) => {
-                setMbrClassifyInfo(response.data.classify);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, [id, token]);
-
-    const handleEdit = async (updatedData: ViewAllClassifiesRequest) => {
+    const handleEdit = async (newCategory: ViewCollection) => {
         let msgText = "";
         let msgType = "";
 
         try {
-            const response = await api.patch(`/mbrclassifydm/edit/${id}`, updatedData);
+            const response = await api.post(`/collection/register`, newCategory);
             const data = response.data;
             msgText = data.message;
             msgType = 'success';
@@ -51,27 +37,25 @@ const EditMemberType: React.FC = () => {
         msgType === 'success' && navigate('/mbrclassify');
     };
 
-    if (!mbrClassifyInfo) return <p>Carregando...</p>;
-
     return (
         <Container>
             <ReturnButton />
             <FormContainer>
                 <GenericForm
-                    title="Editar Tipo de Membro"
+                    title="Criar Categoria"
                     fields={[
                         { name: "description", label: "Descrição", type: "text", placeholder: "Ex: Aluno" },
-                        // { name: "code", label: "Código", type: "text", placeholder: "Ex: 1" },
-                        { name: "max_fines", label: "Multa Máxima", type: "text", placeholder: "Ex: 0" },
-                        // { name: "default_flg", label: "Tipo padrão", type: "switch" },
+                        { name: "days_due_back", label: "Dias para Devolução", type: "number", placeholder: "Ex: 1" },
+                        { name: "daily_late_fee", label: "Multa dia de Atraso", type: "number", placeholder: "Ex: 0" },
                     ]}
-                    data={mbrClassifyInfo}
-                    button_text="Salvar Alterações"
+                    data={{} as ViewCollection}
+                    button_text="Salvar"
                     onSubmit={handleEdit}
+                    isCreate
                 />
             </FormContainer>
         </Container>
     );
 };
 
-export default EditMemberType;
+export default CreateCategory;

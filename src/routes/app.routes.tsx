@@ -12,6 +12,8 @@ import { MenuProvider } from "../hooks/useOpenMenu";
 import CreateAdmin from "../components/Pages/Admin/CreateAdmin";
 import EditAdmin from "../components/Pages/Admin/EditAdmin";
 import ChangeAdminPassword from "../components/Pages/Admin/ChangeAdminPassword";
+import MemberList from "../components/Pages/Admin/MemberList";
+import EditMemberType from "../components/Pages/Admin/EditMemberType";
 
 const AppRoutes: React.FC = () => {
 
@@ -29,6 +31,8 @@ const AppRoutes: React.FC = () => {
                         <Route path="/admin/editadmin/:id" element={<EditAdmin />} />
                         <Route path="/admin/cpass/:id" element={<ChangeAdminPassword />} />
                         <Route path="/admin/adminlist" element={<AdminList />} />
+                        <Route path="/mbrclassify" element={<MemberList />} />
+                        <Route path="/mbrclassify/edit/:id" element={<EditMemberType />} />
                     </Routes>
                 </Layout>
             </HandleSearchProvider>

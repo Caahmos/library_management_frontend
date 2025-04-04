@@ -6,6 +6,7 @@ export const Container = styled.footer`
     display: flex;
     justify-content: center;
     flex-direction: column;
+    z-index: 1;
     `;
 
 export const Content = styled.div`

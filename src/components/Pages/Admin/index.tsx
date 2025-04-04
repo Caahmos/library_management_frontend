@@ -101,7 +101,7 @@ const Admin: React.FC = () => {
                 </SquareContent>
                 <IconAdm />
             </Square1>
-            <Square2 to={''}>
+            <Square2 to={'/mbrclassify'}>
                 <SquareContent>
                     <SquareTitle>Tipos de Usuários</SquareTitle>
                     <SquareSpan>Acessar painel <FiArrowUpRight/></SquareSpan>

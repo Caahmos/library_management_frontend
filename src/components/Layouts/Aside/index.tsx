@@ -118,7 +118,7 @@ const Aside: React.FC = () => {
             <AccordionContent isOpen={openIndex === 2}>
               <ul>
                 <li><LinkItem to={'/admin/adminlist'}>Lista de Admins</LinkItem></li>
-                <li>Tipos de Usuários</li>
+                <li><LinkItem to={'/mbrclassify'}>Tipos de Usuários</LinkItem></li>
                 <li>Tipos de Materiais</li>
                 <li>Tipos de Categorias</li>
               </ul>

@@ -23,7 +23,8 @@ import {
     IconUsers,
     IconBooks,
     IconCategory,
-    Title
+    Title,
+    TooltipEdited
 } from './styles';
 import BookItem from "../../Layouts/Admin/BookItem";
 
@@ -147,9 +148,10 @@ const Admin: React.FC = () => {
                         }}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
+                        <Tooltip/>
                         <YAxis />
                         <XAxis dataKey="month" color="#F27052" />
-                        <Tooltip />
+                        
                         <Line type="monotone" dataKey="total_rentals" stroke="#F27052" activeDot={{ r: 8 }} />
                     </LineChart>
                 </ResponsiveContainer>

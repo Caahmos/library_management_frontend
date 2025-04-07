@@ -21,6 +21,9 @@ import CreateCategory from "../components/Pages/Admin/CreateCategory";
 import MaterialsList from "../components/Pages/Admin/MaterialsList";
 import CreateMaterial from "../components/Pages/Admin/CreateMaterial";
 import EditMaterial from "../components/Pages/Admin/EditMaterial";
+import MemberFieldsList from "../components/Pages/Admin/MemberFieldsList";
+import CreateMemberField from "../components/Pages/Admin/CreateMemberField";
+import EditMemberField from "../components/Pages/Admin/EditMemberField";
 
 const AppRoutes: React.FC = () => {
 
@@ -52,6 +55,11 @@ const AppRoutes: React.FC = () => {
                         <Route path="/material" element={<MaterialsList />} />
                         <Route path="/material/create" element={<CreateMaterial />} />
                         <Route path="/material/edit/:id" element={<EditMaterial />} />
+                        
+                        <Route path="/mbrfield" element={<MemberFieldsList />} />
+                        <Route path="/mbrfield/create" element={<CreateMemberField />} />
+                        <Route path="/mbrfield/edit/:id" element={<EditMemberField />} />
+
                     </Routes>
                 </Layout>
             </HandleSearchProvider>

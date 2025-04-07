@@ -121,6 +121,7 @@ const Aside: React.FC = () => {
                 <li><LinkItem to={'/mbrclassify'}>Tipos de Usuários</LinkItem></li>
                 <li><LinkItem to={'/material'}>Tipos de Materiais</LinkItem></li>
                 <li><LinkItem to={'/collection'}>Tipos de Categorias</LinkItem></li>
+                <li><LinkItem to={'/mbrfield'}>Campos de Usuários</LinkItem></li>
               </ul>
             </AccordionContent>
           </li>

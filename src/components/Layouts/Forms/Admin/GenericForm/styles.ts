@@ -50,3 +50,9 @@ export const DeleteButton = styled.button`
   }
 `;
 
+export const ImagePreview = styled.img`
+  max-width: 200px;
+  height: auto;
+  margin-top: 8px;
+  border-radius: 8px;
+`;

@@ -1,9 +1,9 @@
 import React, { useState, useCallback, FormEvent, ChangeEvent } from "react";
-import { Container, Title, Button } from "./styles";
+import { Container, Title, Button, DeleteButton } from "./styles";
 import InputForm from "../../Input";
 import SwitchComponent from "../../SwitchComponent";
 
-type FieldType = "text" | "switch" | "number";
+type FieldType = "text" | "switch" | "number" | "file";
 
 type Field<T> = {
   name: keyof T;
@@ -17,7 +17,8 @@ interface GenericEditFormProps<T> {
   fields: Field<T>[];
   data: T;
   button_text: string;
-  onSubmit(data: Partial<T>): void;
+  img?: string;
+  onSubmit(data: Partial<T> | FormData): void;
   onDelete?(): void;
   isCreate?: boolean;
 }
@@ -27,18 +28,35 @@ function GenericForm<T extends Record<string, any>>({
   fields,
   data,
   button_text,
+  img,
   onSubmit,
   onDelete,
   isCreate = false,
 }: GenericEditFormProps<T>) {
   const [formData, setFormData] = useState<Partial<T>>({});
+  const [fileData, setFileData] = useState<Record<string, File>>({});
+  const [previewImages, setPreviewImages] = useState<Record<string, string>>({});
+
+  const hasFileField = fields.some((field) => field.type === "file");
 
   const handleInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      const { name, value, type } = e.target;
+      const { name, value, type, files } = e.target as HTMLInputElement;
       const key = name as keyof T;
-      const originalValue = data[key];
 
+      if (type === "file" && files && files.length > 0) {
+        const file = files[0];
+        setFileData((prev) => ({ ...prev, [key]: file }));
+
+        if (file.type.startsWith("image/")) {
+          const previewUrl = URL.createObjectURL(file);
+          setPreviewImages((prev) => ({ ...prev, [key]: previewUrl }));
+        }
+
+        return;
+      }
+
+      const originalValue = data[key];
       const newValue = type === "number" ? Number(value) || 0 : value;
 
       setFormData((prev) => {
@@ -72,7 +90,22 @@ function GenericForm<T extends Record<string, any>>({
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit(formData);
+
+    if (hasFileField) {
+      const formDataToSend = new FormData();
+
+      Object.entries(formData).forEach(([key, value]) => {
+        formDataToSend.append(key, String(value));
+      });
+
+      Object.entries(fileData).forEach(([key, file]) => {
+        formDataToSend.append(key, file);
+      });
+
+      onSubmit(formDataToSend);
+    } else {
+      onSubmit(formData);
+    }
   };
 
   return (
@@ -94,6 +127,23 @@ function GenericForm<T extends Record<string, any>>({
             }
             onChange={handleInputChange}
           />
+        ) : field.type === "file" ? (
+          <div key={String(field.name)}>
+            <InputForm
+              name={String(field.name)}
+              label={field.label}
+              placeholder={field.placeholder}
+              type="file"
+              onChange={handleInputChange}
+            />
+            {previewImages[field.name as string] || img && (
+              <img
+                src={previewImages[field.name as string] || `http://localhost:5000/imgs/material/${img}`}
+                alt="Pré-visualização"
+                style={{ maxWidth: "200px", marginTop: "10px", borderRadius: "8px" }}
+              />
+            )}
+          </div>
         ) : (
           <SwitchComponent
             key={String(field.name)}
@@ -111,13 +161,9 @@ function GenericForm<T extends Record<string, any>>({
       <Button type="submit">{button_text}</Button>
 
       {onDelete && (
-        <Button
-          type="button"
-          style={{ backgroundColor: "#D9534F" }}
-          onClick={onDelete}
-        >
+        <DeleteButton type="button" onClick={onDelete}>
           Excluir
-        </Button>
+        </DeleteButton>
       )}
     </Container>
   );

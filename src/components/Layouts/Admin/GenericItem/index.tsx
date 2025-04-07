@@ -2,11 +2,11 @@ import React from 'react';
 import {
   Container,
   Content,
-  Row,
-  Label,
   Cell,
   Functions,
+  Label,
   LinkIcon,
+  Row
 } from './styles';
 
 type Field = {
@@ -28,30 +28,33 @@ interface GenericItemProps {
 }
 
 const GenericItem: React.FC<GenericItemProps> = ({ item, fields, actions = [] }) => {
+  const totalColumns = actions.length > 0 ? fields.length + 1 : fields.length;
+
   return (
     <Container>
       <Content>
         {fields.map((field) => (
-          <Row key={field.key}>
+          <Row key={field.key} columns={totalColumns}>
             <Label>{field.label}</Label>
             <Cell>
-              {typeof item[field.key] === "boolean"
-                ? item[field.key] ? "Sim" : "Não"
+              {typeof item[field.key] === 'boolean'
+                ? item[field.key] ? 'Sim' : 'Não'
                 : item[field.key]}
             </Cell>
           </Row>
         ))}
+
         {actions.length > 0 && (
-          <Row>
+          <Row columns={totalColumns}>
             <Label>Ações</Label>
             <Functions>
-              {actions.map((action, i) =>
+              {actions.map((action, index) =>
                 action.to ? (
-                  <LinkIcon key={i} to={action.to(item)} title={action.title}>
+                  <LinkIcon key={index} to={action.to(item)} title={action.title}>
                     {action.icon}
                   </LinkIcon>
                 ) : (
-                  <span key={i} onClick={() => action.onClick?.(item)} title={action.title}>
+                  <span key={index} onClick={() => action.onClick?.(item)} title={action.title}>
                     {action.icon}
                   </span>
                 )

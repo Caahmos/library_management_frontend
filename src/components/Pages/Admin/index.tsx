@@ -108,7 +108,7 @@ const Admin: React.FC = () => {
                 </SquareContent>
                 <IconUsers />
             </Square2>
-            <Square3 to={''}>
+            <Square3 to={'/material'}>
                 <SquareContent>
                     <SquareTitle>Tipos de Materiais</SquareTitle>
                     <SquareSpan>Acessar painel <FiArrowUpRight/></SquareSpan>

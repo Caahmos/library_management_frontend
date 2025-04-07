@@ -16,8 +16,11 @@ import MemberList from "../components/Pages/Admin/MemberList";
 import EditMemberType from "../components/Pages/Admin/EditMemberType";
 import CreateMemberType from "../components/Pages/Admin/CreateMemberType";
 import CategoryList from "../components/Pages/Admin/CategoryList";
-import EditCollection from "../components/Pages/Admin/EditCollection";
+import EditCategory from "../components/Pages/Admin/EditCategory";
 import CreateCategory from "../components/Pages/Admin/CreateCategory";
+import MaterialsList from "../components/Pages/Admin/MaterialsList";
+import CreateMaterial from "../components/Pages/Admin/CreateMaterial";
+import EditMaterial from "../components/Pages/Admin/EditMaterial";
 
 const AppRoutes: React.FC = () => {
 
@@ -44,7 +47,11 @@ const AppRoutes: React.FC = () => {
                         
                         <Route path="/collection" element={<CategoryList />} />
                         <Route path="/collection/create" element={<CreateCategory />} />
-                        <Route path="/collection/edit/:id" element={<EditCollection />} />
+                        <Route path="/collection/edit/:id" element={<EditCategory />} />
+                        
+                        <Route path="/material" element={<MaterialsList />} />
+                        <Route path="/material/create" element={<CreateMaterial />} />
+                        <Route path="/material/edit/:id" element={<EditMaterial />} />
                     </Routes>
                 </Layout>
             </HandleSearchProvider>

@@ -13,20 +13,20 @@ import {
     NewAdminIcon,
 } from './styles';
 import GenericHeader from '../../../Layouts/Admin/GenericHeader';
-import { ViewCollection } from '../../../../model/Collection/ViewCollection';
 
-const CategoryList: React.FC = () => {
-    const [collections, setCollections] = useState<ViewCollection[]>([]);
+const MaterialsList: React.FC = () => {
+    const [materials, setMaterials] = useState<ViewAllClassifiesRequest[]>([]);
     const token = localStorage.getItem("@library_management:token") || "";
 
     useEffect(() => {
-        api.get('/collection/viewcollections', {
+        api.get('/material/viewmaterials', {
             headers: {
                 Authorization: `Bearer ${JSON.parse(token)}`
             }
         })
             .then((response) => {
-                setCollections(response.data.collections);
+                setMaterials(response.data.materials);
+                console.log(response.data.materials);
             })
             .catch((err) => {
                 console.error(err);
@@ -35,15 +35,14 @@ const CategoryList: React.FC = () => {
 
     const fields = [
         { key: 'description', label: 'Descrição' },
-        { key: 'days_due_back', label: 'Dias para Devolução' },
-        { key: 'daily_late_fee', label: 'Multa Diária' }
+        { key: 'image_file', label: 'Imagem' }
     ];
 
     const actions = [
         {
             icon: <TbEdit />,
             title: "Editar",
-            to: (item: ViewAllClassifiesRequest) => `/collection/edit/${item.code}`,
+            to: (item: ViewAllClassifiesRequest) => `/material/edit/${item.code}`,
         }
     ];
 
@@ -51,14 +50,14 @@ const CategoryList: React.FC = () => {
         <Container>
             <ReturnButton />
             <List>
-                <NewAdmin to={'/collection/create'}>
-                    <NewAdminIcon />Adicionar Categoria
+                <NewAdmin to={'/material/create'}>
+                    <NewAdminIcon />Adicionar Tipo de Material
                 </NewAdmin>
 
                 <GenericHeader fields={fields} hasActions />
 
-                {collections && collections.length > 0
-                    ? collections.map((item, index) => (
+                {materials && materials.length > 0
+                    ? materials.map((item, index) => (
                         <GenericItem
                             key={index}
                             item={item}
@@ -66,11 +65,11 @@ const CategoryList: React.FC = () => {
                             actions={actions}
                         />
                     ))
-                    : <span>Nenhuma categoria encontrada!</span>
+                    : <span>Nenhum material encontrado!</span>
                 }
             </List>
         </Container>
     );
 };
 
-export default CategoryList;
+export default MaterialsList;

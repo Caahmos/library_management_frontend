@@ -6,36 +6,41 @@ import { Container, FormContainer } from "./styles";
 import ReturnButton from "../../../Layouts/ReturnButton";
 import { AxiosError } from "axios";
 import GenericForm from "../../../Layouts/Forms/Admin/GenericForm";
-import { ViewCollection } from "../../../../model/Collection/ViewCollection";
+import { RegisterMaterialRequest } from "../../../../model/Material/RegisterMaterialRequest";
 
-const CreateCategory: React.FC = () => {
+const CreateMaterial: React.FC = () => {
     const navigate = useNavigate();
     const { setFlashMessage } = useFlashMessage();
     const token = localStorage.getItem("@library_management:token") || "";
 
-    const handleEdit = async (newCategory: ViewCollection) => {
+    const handleEdit = async (formData: FormData) => {
         let msgText = "";
         let msgType = "";
-
+    
         try {
-            const response = await api.post(`/collection/register`, newCategory);
+            const response = await api.post(`/material/register`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                },
+            });
             const data = response.data;
             msgText = data.message;
-            msgType = 'success';
-            console.log(response);
+            msgType = "success";
         } catch (error) {
             const err = error as AxiosError;
             console.error(err);
             if (err.response && err.response.data) {
                 msgText = (err.response.data as { message: string }).message;
             } else {
-                msgText = 'Erro desconhecido';
+                msgText = "Erro desconhecido";
             }
-            msgType = 'error';
+            msgType = "error";
         }
-
+    
         setFlashMessage(msgText, msgType);
-        msgType === 'success' && navigate('/collection');
+        if (msgType === "success") {
+            navigate("/material");
+        }
     };
 
     return (
@@ -43,13 +48,12 @@ const CreateCategory: React.FC = () => {
             <ReturnButton />
             <FormContainer>
                 <GenericForm
-                    title="Criar Categoria"
+                    title="Criar Material"
                     fields={[
-                        { name: "description", label: "Descrição", type: "text", placeholder: "Ex: Aluno" },
-                        { name: "days_due_back", label: "Dias para Devolução", type: "number", placeholder: "Ex: 1" },
-                        { name: "daily_late_fee", label: "Multa dia de Atraso", type: "number", placeholder: "Ex: 0" },
+                        { name: "description", label: "Descrição", type: "text", placeholder: "Livro" },
+                        { name: "image_file", label: "Imagem", type: "file", placeholder: "Ex: 1" }
                     ]}
-                    data={{} as ViewCollection}
+                    data={{} as RegisterMaterialRequest}
                     button_text="Salvar"
                     onSubmit={handleEdit}
                     isCreate
@@ -59,4 +63,4 @@ const CreateCategory: React.FC = () => {
     );
 };
 
-export default CreateCategory;
+export default CreateMaterial;

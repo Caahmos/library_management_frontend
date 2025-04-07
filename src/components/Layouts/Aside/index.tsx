@@ -119,7 +119,7 @@ const Aside: React.FC = () => {
               <ul>
                 <li><LinkItem to={'/admin/adminlist'}>Lista de Admins</LinkItem></li>
                 <li><LinkItem to={'/mbrclassify'}>Tipos de Usuários</LinkItem></li>
-                <li>Tipos de Materiais</li>
+                <li><LinkItem to={'/material'}>Tipos de Materiais</LinkItem></li>
                 <li><LinkItem to={'/collection'}>Tipos de Categorias</LinkItem></li>
               </ul>
             </AccordionContent>

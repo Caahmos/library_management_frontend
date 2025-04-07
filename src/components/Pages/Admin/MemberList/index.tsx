@@ -33,9 +33,7 @@ const MemberList: React.FC = () => {
     }, []);
 
     const fields = [
-        { key: 'code', label: 'Código' },
         { key: 'description', label: 'Descrição' },
-        { key: 'default_flg', label: 'Padrão' },
         { key: 'max_fines', label: 'Multa Máxima' }
     ];
 
@@ -44,11 +42,6 @@ const MemberList: React.FC = () => {
             icon: <TbEdit />,
             title: "Editar",
             to: (item: ViewAllClassifiesRequest) => `/mbrclassify/edit/${item.code}`,
-        },
-        {
-            icon: <MdDeleteOutline />,
-            title: "Excluir",
-            to: (item: ViewAllClassifiesRequest) => `/mbrclassify/delete/${item.code}`,
         }
     ];
 

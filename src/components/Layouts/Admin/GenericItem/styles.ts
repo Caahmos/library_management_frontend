@@ -1,5 +1,9 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
+interface RowProps {
+  columns: number;
+}
 
 export const Container = styled.div`
   width: 100%;
@@ -10,25 +14,21 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
 
   @media screen and (max-width: 1200px) {
     flex-direction: column;
-    align-items: flex-start;
   }
 `;
 
-export const Row = styled.div`
+export const Row = styled.div<RowProps>`
+  width: ${({ columns }) => `calc(100% / ${columns})`};
   display: flex;
-  width: 20%;
   align-items: center;
 
   @media screen and (max-width: 1200px) {
     width: 100%;
-    display: flex;
     flex-direction: row;
     margin-bottom: 10px;
   }
@@ -54,8 +54,6 @@ export const Cell = styled.div`
 
 export const Functions = styled.div`
   display: flex;
-  width: 20%;
-  justify-content: flex-start;
   gap: 8px;
 
   @media screen and (max-width: 1200px) {

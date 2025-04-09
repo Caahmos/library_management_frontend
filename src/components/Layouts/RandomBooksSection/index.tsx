@@ -1,10 +1,16 @@
 import BookCard from '../BookCard';
+import { useNavigate } from 'react-router-dom';
+import { useHandleSearch } from '../../../hooks/useHandleSearch';
+
 import {
   Container,
   Title,
   SwiperContainer,
-  StyledSlide
+  StyledSlide,
+  Header,
+  More
 } from './styles'
+
 import { RandomBiblio } from '../../../model/Biblio/Biblio/RandomSearchBiblioResponse';
 import { Swiper } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
@@ -13,13 +19,28 @@ interface RandomBiblios {
   randomBiblios: RandomBiblio[]
 }
 
+interface IFilter {
+  collection?: string;
+}
+
 const RandomBooksSection: React.FC<RandomBiblios> = ({ randomBiblios }) => {
+  const navigate = useNavigate();
+  const { changeFilter } = useHandleSearch();
+
+  const handleOnClick = (collection: string) => {
+    changeFilter({collection: collection, date: 'desc', order: '', take: '100'});
+    navigate('/catalog');
+  };
+
   return (
-      <>
+    <>
       {
         randomBiblios && randomBiblios.map((value) => (
           <Container>
-            <Title>{value.collection.description}</Title>
+            <Header>
+              <Title>{value.collection.description}</Title>
+              <More onClick={() => {handleOnClick(value.collection.description)}}>Ver mais</More>
+            </Header>
             <SwiperContainer>
               <Swiper
                 spaceBetween={20}
@@ -42,11 +63,11 @@ const RandomBooksSection: React.FC<RandomBiblios> = ({ randomBiblios }) => {
                 }
               </Swiper>
             </SwiperContainer>
-            </Container>
-            ))
+          </Container>
+        ))
       }
-          </>
-        );
+    </>
+  );
 }
 
-      export default RandomBooksSection;
+export default RandomBooksSection;

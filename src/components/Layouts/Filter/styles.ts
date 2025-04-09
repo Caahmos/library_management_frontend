@@ -26,7 +26,7 @@ export const Select = styled.select<ActiveSelect>`
     props.active ? props.theme.colors.success : props.theme.colors.primary};
   cursor: pointer;
   transition: background-color 0.3s, border 0.3s;
-  border-radius: 6px;
+  border-radius: 4px;
 `;
 
 export const Option = styled.option`

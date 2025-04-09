@@ -27,3 +27,18 @@ export const Title = styled.h3`
     margin-bottom: 10px;
     color: ${props => props.theme.colors.white}
 `
+
+export const Header = styled.div`
+  color: ${(props) => props.theme.colors.white};
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const More = styled.span`
+  cursor: pointer;
+  transition: 0.4s all ease;
+
+  &:hover{
+    color: ${(props) => props.theme.colors.success};
+  }
+`;

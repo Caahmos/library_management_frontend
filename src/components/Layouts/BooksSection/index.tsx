@@ -1,10 +1,16 @@
 import BookCard from '../BookCard';
+import { useNavigate } from 'react-router-dom';
+import { useHandleSearch } from '../../../hooks/useHandleSearch';
+
 import {
   Container,
   Title,
   SwiperContainer,
-  StyledSlide
-} from './styles'
+  StyledSlide,
+  Header,
+  More
+} from './styles';
+
 import { Biblio } from '../../../model/Biblio/Biblio/SearchBiblioResponse';
 import { Swiper } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
@@ -15,9 +21,20 @@ interface BooksSectionProps {
 }
 
 const BooksSection: React.FC<BooksSectionProps> = ({ biblioData, title }) => {
+  const navigate = useNavigate();
+  const { changeFilter } = useHandleSearch();
+
+  const handleOnClick = (collection: string) => {
+    changeFilter({collection: collection, date: 'desc', order: '', take: '100'});
+    navigate('/catalog');
+  };
+
   return (
     <Container>
-      <Title>{title}</Title>
+      <Header>
+              <Title>{title}</Title>
+              <More onClick={() => {handleOnClick(title)}}>Ver mais</More>
+            </Header>
       <SwiperContainer>
         <Swiper
         spaceBetween={20}

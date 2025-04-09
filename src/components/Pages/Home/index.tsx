@@ -49,7 +49,7 @@ const Home: React.FC = () => {
         <Container onClick={() => {
             console.log(randomBooks)
         }}>
-           <BooksSection biblioData={books} title="Novidades na biblioteca"/>
+           <BooksSection collection="" biblioData={books} title="Novidades na biblioteca"/>
            <RandomBooksSection randomBiblios={randomBooks}/>
            <Footer/>
         </Container>

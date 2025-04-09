@@ -174,7 +174,7 @@ const Detail: React.FC = () => {
                     </BookContent>
                     <Content>
                         <Title>Livros relacionados a { bookCollection }</Title>
-                    <BooksSection title={bookCollection} biblioData={books} />
+                    <BooksSection collection={bookCollection} title="" biblioData={books} />
                     <Footer/>
                     </Content>
                 </BookSection>

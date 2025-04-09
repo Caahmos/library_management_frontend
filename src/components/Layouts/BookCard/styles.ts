@@ -39,6 +39,9 @@ export const Author = styled.span`
   margin-bottom: 7px;
   font-size: 0.6rem;
   font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   > span {
     color: ${(props) => props.theme.colors.success};

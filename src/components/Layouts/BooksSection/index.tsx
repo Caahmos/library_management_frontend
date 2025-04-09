@@ -16,11 +16,12 @@ import { Swiper } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 
 interface BooksSectionProps {
+  collection: string;
   title: string
   biblioData: Biblio[]
 }
 
-const BooksSection: React.FC<BooksSectionProps> = ({ biblioData, title }) => {
+const BooksSection: React.FC<BooksSectionProps> = ({ biblioData, title, collection }) => {
   const navigate = useNavigate();
   const { changeFilter } = useHandleSearch();
 
@@ -33,7 +34,7 @@ const BooksSection: React.FC<BooksSectionProps> = ({ biblioData, title }) => {
     <Container>
       <Header>
               <Title>{title}</Title>
-              <More onClick={() => {handleOnClick(title)}}>Ver mais</More>
+              <More onClick={() => {handleOnClick(collection)}}>Ver mais</More>
             </Header>
       <SwiperContainer>
         <Swiper

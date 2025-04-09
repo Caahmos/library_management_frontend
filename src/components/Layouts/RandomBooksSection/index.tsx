@@ -28,7 +28,7 @@ const RandomBooksSection: React.FC<RandomBiblios> = ({ randomBiblios }) => {
   const { changeFilter } = useHandleSearch();
 
   const handleOnClick = (collection: string) => {
-    changeFilter({collection: collection, date: 'desc', order: '', take: '100'});
+    changeFilter({collection: collection, date: 'desc', order: '', take: '100', viewStyle: 'block'});
     navigate('/catalog');
   };
 

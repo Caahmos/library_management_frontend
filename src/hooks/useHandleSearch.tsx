@@ -5,6 +5,7 @@ interface IFilter {
     date: string;
     order: string;
     take: string;
+    viewStyle: "block" | "list";
 }
 
 interface IHandleSearch {
@@ -31,7 +32,8 @@ const HandleSearchProvider: React.FC<IHandleProviderProps> = ({ children }) => {
         collection: "",
         date: "",
         order: "",
-        take: "100"
+        take: "100",
+        viewStyle: "block"
     });
 
     const changeOpen = (searchText: string) => { 

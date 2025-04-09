@@ -10,6 +10,8 @@ import { Biblio } from "../../../model/Biblio/Biblio/SearchBiblioResponse";
 import Filter from "../../Layouts/Filter";
 import Footer from "../../Layouts/Footer";
 import { useHandleSearch } from "../../../hooks/useHandleSearch";
+import BookItem from "../../Layouts/Admin/BookItem";
+import BookListItem from "../../Layouts/Catalog/BookListItem";
 const Catalog: React.FC = () => {
     const [booksInfo, setBooksInfo] = useState<Biblio[]>();
     const token = localStorage.getItem("@library_management:token") || "";
@@ -53,22 +55,33 @@ const Catalog: React.FC = () => {
             <Filter />
             <Content>
                 {
-                    booksInfo && booksInfo.length > 0
-                        ? booksInfo.map((bookInfo) => (
-                            <Book
-                                key={bookInfo.bibid}
-                                order="block"
-                                id={bookInfo.bibid}
-                                title={bookInfo.title}
-                                author={bookInfo.author}
-                                img={bookInfo.BiblioMedia?.[0]?.imageUrl || 'semcapa.png'}
-                                rank={bookInfo.BiblioMedia?.[0]?.rank || 0}
-                            />
-                        ))
-                        : <span> Nenhum livro encontrado! </span>
+                    filterData.viewStyle === 'block'
+                        ? booksInfo && booksInfo.length > 0
+                            ? booksInfo.map((bookInfo) => (
+                                <Book
+                                    key={bookInfo.bibid}
+                                    order="block"
+                                    id={bookInfo.bibid}
+                                    title={bookInfo.title}
+                                    author={bookInfo.author}
+                                    img={bookInfo.BiblioMedia?.[0]?.imageUrl || 'semcapa.png'}
+                                    rank={bookInfo.BiblioMedia?.[0]?.rank || 0}
+                                />
+                            ))
+                            : <span> Nenhum livro encontrado! </span>
+                        :
+                        booksInfo && booksInfo.length > 0
+                            ? booksInfo.map((bookInfo) => (
+                                <BookListItem
+                                    bibid={bookInfo.bibid}
+                                    title={bookInfo.title}
+                                    author={bookInfo.author}
+                                />
+                            ))
+                            : <span> Nenhum livro encontrado! </span>
                 }
             </Content>
-            <Footer/>
+            <Footer />
         </Container>
     );
 }

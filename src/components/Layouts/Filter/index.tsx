@@ -1,8 +1,5 @@
 import api from '../../../utils/api';
-import React, {useEffect, useState} from 'react';
-import { IoIosArrowRoundUp } from "react-icons/io";
-import { IoIosArrowRoundDown } from "react-icons/io";
-
+import React, { useEffect, useState } from 'react';
 import {
     Container,
     Text,
@@ -10,10 +7,12 @@ import {
     Option
 } from './styles';
 import { ViewCollection } from '../../../model/Collection/ViewCollection';
+import { useHandleSearch } from '../../../hooks/useHandleSearch'; 
 
 const Filter: React.FC = () => {
     const [collections, setCollections] = useState<ViewCollection[]>([]);
     const token = localStorage.getItem("@library_management:token") || "";
+    const { filterData, changeFilter } = useHandleSearch();
 
     useEffect(() => {
         api.get('/collection/viewcollections', {
@@ -29,33 +28,49 @@ const Filter: React.FC = () => {
             });
     }, []);
 
+    const handleFilterChange = (key: keyof typeof filterData, value: string) => {
+        changeFilter({
+            ...filterData,
+            [key]: value
+        });
+    };
+
     return (
         <Container>
             <Text>Classificar por:</Text>
-            <Select >
-                <Option>Categoria</Option>
+
+            <Select value={filterData.collection} onChange={(e) => handleFilterChange("collection", e.target.value)}>
+                <Option value="">Categoria</Option>
                 {
-                    collections && collections.length > 0 &&
-                    collections.map((collection) => (
-                       <option>{collection.description}</option> 
+                    collections?.map((collection) => (
+                        <Option key={collection.description} value={collection.description}>
+                            {collection.description}
+                        </Option>
                     ))
                 }
             </Select>
-            <Select>
-                <Option>Mais Recente </Option>
-                <Option>Mais Antigo </Option>
+
+            <Select value={filterData.date} onChange={(e) => handleFilterChange("date", e.target.value)}>
+                <Option value="">Ordenar por Data</Option>
+                <Option value="desc">Mais Recente</Option>
+                <Option value="asc">Mais Antigo</Option>
             </Select>
-            <Select>
-                <Option>A-Z</Option>
-                <Option>Z-A</Option>
+
+            <Select value={filterData.order} onChange={(e) => handleFilterChange("order", e.target.value)}>
+                <Option value="">Ordenar por Nome</Option>
+                <Option value="A-Z">A-Z</Option>
+                <Option value="Z-A">Z-A</Option>
             </Select>
-            <Select>
-                <Option>Bloco</Option>
-                <Option>Lista</Option>
+
+            <Text>Carregar:</Text>    
+            <Select value={filterData.take} onChange={(e) => handleFilterChange("take", e.target.value)}>
+                <Option value="10">10</Option>
+                <Option value="50">50</Option>
+                <Option value="100">100</Option>
+                <Option value="500">500</Option>
             </Select>
-            
         </Container>
-    )
+    );
 };
 
 export default Filter;

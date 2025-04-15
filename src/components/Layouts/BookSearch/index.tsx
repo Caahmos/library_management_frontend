@@ -27,7 +27,7 @@ const BookSearch: React.FC<BookCard> = ({title, author, id, img, rank}) => {
     const imagemFormatada = `http://localhost:5000/imgs/biblio/${img}`;
 
     return (
-        <Container key={id} to={`/catalog/biblio/detail/${id}`} onClick={() => { close() }}>
+        <Container key={id} to={`/catalog/detail/${id}`} onClick={() => { close() }}>
             <Img src={imagemFormatada}/>
             <Info>
                 <Title> {title}</Title>  

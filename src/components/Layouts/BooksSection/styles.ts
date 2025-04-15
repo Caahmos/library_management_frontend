@@ -24,7 +24,6 @@ export const Container = styled.main`
 `
 
 export const Title = styled.h3`
-    margin-bottom: 10px;
     color: ${props => props.theme.colors.white}
 `
 
@@ -32,13 +31,19 @@ export const Header = styled.div`
   color: ${(props) => props.theme.colors.white};
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
 `;
 
 export const More = styled.span`
+  padding: 6px 10px 6px 10px;
+  border-radius: 5px;
+  border: 1px solid ${(props) => props.theme.colors.white};
   cursor: pointer;
   transition: 0.4s all ease;
-
+  
   &:hover{
+    border: 1px solid ${(props) => props.theme.colors.success};
     color: ${(props) => props.theme.colors.success};
   }
 `;

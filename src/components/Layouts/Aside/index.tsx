@@ -45,7 +45,7 @@ const Aside: React.FC = () => {
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        open(); 
+        open();
       }
     }
 
@@ -62,7 +62,7 @@ const Aside: React.FC = () => {
     <Container isOpen={isOpenMenu} ref={menuRef}>
       <MenuBox>
         <Brand>
-          <Logo><ImBooks/> Library</Logo>
+          <Logo><ImBooks /> Library</Logo>
           <CloseMenuButton onClick={open}>
             <IoClose />
           </CloseMenuButton>
@@ -102,8 +102,7 @@ const Aside: React.FC = () => {
             </MenuItem>
             <AccordionContent isOpen={openIndex === 1}>
               <ul>
-                <li>Subitem 1</li>
-                <li>Subitem 2</li>
+                <li><LinkItem to={'/catalog/createbook'}>Registrar Livro</LinkItem></li>
               </ul>
             </AccordionContent>
           </li>

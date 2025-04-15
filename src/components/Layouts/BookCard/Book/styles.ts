@@ -1,27 +1,26 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-interface ImageProp {
-  img: string;
-}
-
 export const Container = styled(Link)`
-  width: 200px;
-  min-height: 300px;
+  width: 180px;
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  text-align: center;
+  justify-content: space-between;
+  cursor: grab;
+  padding: 12px;
+  border: 1px solid ${(props) => props.theme.colors.primary};
+  border-radius: 5px;
   color: ${(props) => props.theme.colors.white};
   text-decoration: none;
-  cursor: grab;
+  
+  &:hover{
+    border: 1px solid ${(props) => props.theme.colors.success};
+  }
 `;
-export const ImageBook = styled.div<ImageProp>`
-  width: 200px;
-  height: 200px;
+export const ImageBook = styled.img`
+  width: 100%;
   align-self: center;
-  background-image: url(${(props) => props.img});
-  background-size: cover;
-  border-radius: 20px;
   margin-bottom: 20px;
   background-color: #fff;
 `;
@@ -49,6 +48,11 @@ export const Author = styled.span`
     font-weight: lighter;
   }
 `;
+
+export const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+`
 
 export const Rating = styled.span`
   font-size: 0.7rem;

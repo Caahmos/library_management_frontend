@@ -1,4 +1,4 @@
-import BookCard from '../BookCard';
+import Book from '../BookCard/Book';
 import { useNavigate } from 'react-router-dom';
 import { useHandleSearch } from '../../../hooks/useHandleSearch';
 
@@ -38,7 +38,7 @@ const BooksSection: React.FC<BooksSectionProps> = ({ biblioData, title, collecti
             </Header>
       <SwiperContainer>
         <Swiper
-        spaceBetween={20}
+        spaceBetween={10}
           slidesPerView="auto"
           onSlideChange={() => console.log('slide change')}
           onSwiper={() => console.log()}
@@ -46,7 +46,7 @@ const BooksSection: React.FC<BooksSectionProps> = ({ biblioData, title, collecti
           {
             biblioData && biblioData.map((biblio) => (
               <StyledSlide key={biblio.bibid}>
-                <BookCard
+                <Book
                   id={biblio.bibid}
                   title={biblio.title}
                   author={biblio.author}

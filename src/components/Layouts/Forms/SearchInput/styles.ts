@@ -63,4 +63,23 @@ export const Dropdown = styled.div<isActive>`
   border-radius: 0 0 8px 8px;
   box-shadow: 0 4px 26px rgba(0, 0, 0, 0.4);
   z-index: 100;      
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.colors.primary};
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.colors.tertiary};
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: ${({ theme }) => theme.colors.success || "#00a293"};
+  }
 `;

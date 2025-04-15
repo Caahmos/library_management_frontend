@@ -22,13 +22,13 @@ const Book: React.FC<BookCard> = ({ img, title, author, rank, id }) => {
   const imagemFormatada = `http://localhost:5000/imgs/biblio/${img}`;
 
   return (
-    <Container to={`/catalog/biblio/detail/${id}`}>
+    <Container to={`/catalog/detail/${id}`}>
+      <ImageBook src={imagemFormatada} />
       <Info>
-        <ImageBook src={imagemFormatada} />
         <Title>{title}</Title>
         <Author>por: <span>{author}</span></Author>
+        <Rating>rank {rank}<FaStar /></Rating>
       </Info>
-      <Rating>rank {rank}<FaStar /></Rating>
     </Container>
   );
 }

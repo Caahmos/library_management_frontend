@@ -3,19 +3,20 @@ import { Link } from "react-router-dom";
 
 export const Container = styled(Link)`
   width: 180px;
+  min-height: 330px;
   display: flex;
   flex-direction: column;
   text-align: center;
   justify-content: space-between;
   cursor: grab;
   padding: 12px;
-  border: 1px solid ${(props) => props.theme.colors.primary};
+  border: 2px solid ${(props) => props.theme.colors.primary};
   border-radius: 5px;
   color: ${(props) => props.theme.colors.white};
   text-decoration: none;
   
   &:hover{
-    border: 1px solid ${(props) => props.theme.colors.success};
+    border: 2px solid ${(props) => props.theme.colors.success};
   }
 `;
 export const ImageBook = styled.img`

@@ -34,7 +34,7 @@ const BooksSection: React.FC<BooksSectionProps> = ({ biblioData, title, collecti
     <Container>
       <Header>
               <Title>{title}</Title>
-              <More onClick={() => {handleOnClick(collection)}}>Ver mais</More>
+              <More onClick={() => {handleOnClick(collection)}}>VER MAIS</More>
             </Header>
       <SwiperContainer>
         <Swiper

@@ -39,7 +39,7 @@ const RandomBooksSection: React.FC<RandomBiblios> = ({ randomBiblios }) => {
           <Container>
             <Header>
               <Title>{value.collection.description}</Title>
-              <More onClick={() => {handleOnClick(value.collection.description)}}>Ver mais</More>
+              <More onClick={() => {handleOnClick(value.collection.description)}}>VER MAIS</More>
             </Header>
             <SwiperContainer>
               <Swiper

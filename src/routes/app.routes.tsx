@@ -36,7 +36,7 @@ const AppRoutes: React.FC = () => {
                         <Route path="/circulation" element={<Circulation />} />
                         
                         <Route path="/catalog" element={<Catalog />} />
-                        <Route path="/catalog/biblio/detail/:id" element={<Detail />} />
+                        <Route path="/catalog/detail/:id" element={<Detail />} />
                         
                         <Route path="/admin" element={<Admin />} />
                         <Route path="/admin/createadmin" element={<CreateAdmin />} />

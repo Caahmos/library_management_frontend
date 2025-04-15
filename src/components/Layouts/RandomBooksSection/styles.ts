@@ -22,8 +22,10 @@ export const Container = styled.main`
 `;
 
 export const Title = styled.h3`
-    color: ${props => props.theme.colors.white}
-`
+  font-weight: normal;
+  font-size: 1.5rem;
+  color: ${(props) => props.theme.colors.white};
+`;
 
 export const Header = styled.div`
   color: ${(props) => props.theme.colors.white};
@@ -36,12 +38,10 @@ export const Header = styled.div`
 export const More = styled.span`
   padding: 6px 10px 6px 10px;
   border-radius: 5px;
-  border: 1px solid ${(props) => props.theme.colors.white};
+  color: ${(props) => props.theme.colors.success};
+  border: 1px solid ${(props) => props.theme.colors.success};
   cursor: pointer;
   transition: 0.4s all ease;
-  
-  &:hover{
-    border: 1px solid ${(props) => props.theme.colors.success};
-    color: ${(props) => props.theme.colors.success};
-  }
+  font-size: 0.8rem;
+  font-weight: bold;
 `;

@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes } from "react";
-import { StyledInputContainer, StyledInput, IconWrapper } from "./styles";
+import { StyledInputContainer, StyledInput, IconWrapper, Container } from "./styles";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label?: string;
@@ -8,13 +8,13 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const InputForm: React.FC<InputProps> = ({ label, icon, ...props }) => {
     return (
-        <>
+        <Container>
             {label && <label>{label}</label>}
             <StyledInputContainer>
                 {icon && <IconWrapper>{icon}</IconWrapper>}
                 <StyledInput {...props} />
             </StyledInputContainer>
-        </>
+        </Container>
     );
 }
 

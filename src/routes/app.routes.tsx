@@ -24,6 +24,7 @@ import EditMaterial from "../components/Pages/Admin/EditMaterial";
 import MemberFieldsList from "../components/Pages/Admin/MemberFieldsList";
 import CreateMemberField from "../components/Pages/Admin/CreateMemberField";
 import EditMemberField from "../components/Pages/Admin/EditMemberField";
+import CreateBook from "../components/Pages/Catalog/CreateBook";
 
 const AppRoutes: React.FC = () => {
 
@@ -37,6 +38,7 @@ const AppRoutes: React.FC = () => {
                         
                         <Route path="/catalog" element={<Catalog />} />
                         <Route path="/catalog/detail/:id" element={<Detail />} />
+                        <Route path="/catalog/createbook" element={<CreateBook />} />
                         
                         <Route path="/admin" element={<Admin />} />
                         <Route path="/admin/createadmin" element={<CreateAdmin />} />

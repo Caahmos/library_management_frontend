@@ -48,6 +48,25 @@ export const Select = styled.select<ActiveSelect>`
   transition: background-color 0.3s, border 0.3s;
   border-radius: 4px;
 
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${(props) => props.theme.colors.primary};
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${(props) => props.theme.colors.tertiary};
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: ${(props) => props.theme.colors.tertiary};
+  }
+
   @media screen and (max-width: 1000px){
     width: 100%;
   }

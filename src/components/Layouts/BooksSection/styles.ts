@@ -5,6 +5,7 @@ import { SwiperSlide } from "swiper/react";
 export const SwiperContainer = styled.div`
   width: 100%;
   margin-bottom: 20px;
+  cursor: grab;
   .swiper-container {
     width: 100%;
   }

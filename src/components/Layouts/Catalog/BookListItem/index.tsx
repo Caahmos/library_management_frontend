@@ -13,7 +13,7 @@ import {
 
 const BookListItem: React.FC<ListBooksInterface> = ({ author, bibid, title }) => {
     return (
-        <Container to={`/catalog/biblio/detail/${bibid}`} key={bibid}>
+        <Container to={`/catalog/detail/${bibid}`} key={bibid}>
             <Content>
                 <Info>
                     <Title>{title}</Title>

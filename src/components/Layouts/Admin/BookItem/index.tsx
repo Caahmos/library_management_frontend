@@ -14,7 +14,7 @@ import {
 
 const BookItem: React.FC<TopBooksInterface> = ({ author, bibid, count, title }) => {
     return (
-        <Container to={`/catalog/biblio/detail/${bibid}`}>
+        <Container to={`/catalog/detail/${bibid}`}>
             <Content>
                 <Count>
                     <Rank>{count}</Rank>

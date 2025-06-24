@@ -1,5 +1,5 @@
 import React from 'react';
-import { SeeStaffs } from '../../../../model/Staff/RegisterStaffRequest';
+import type { SeeStaffs } from '../../../../model/Staff/RegisterStaffRequest';
 import { TbEdit } from "react-icons/tb";
 import { MdDeleteOutline } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";

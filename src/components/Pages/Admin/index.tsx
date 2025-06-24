@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { TopBooksInterface } from "../../../model/Biblio/BiblioReports/TopBooksInterface";
-import { RentalsInterface } from "../../../model/Biblio/BiblioReports/RentalsInterface";
+import type { TopBooksInterface } from "../../../model/Biblio/BiblioReports/TopBooksInterface";
+import type { RentalsInterface } from "../../../model/Biblio/BiblioReports/RentalsInterface";
 import { FiArrowUpRight } from "react-icons/fi";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import api from "../../../utils/api";

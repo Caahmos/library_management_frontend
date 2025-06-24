@@ -1,6 +1,7 @@
-import React, { InputHTMLAttributes } from "react";
+import React from "react";
+import type { InputHTMLAttributes } from 'react';
 import { Container, StyledInputContainer, StyledInput, IconWrapper, Dropdown, CloseButton } from "./styles";
-import { Biblio } from "../../../../model/Biblio/Biblio/SearchBiblioResponse";
+import type { Biblio } from "../../../../model/Biblio/Biblio/SearchBiblioResponse";
 import BookSearch from "../../BookSearch";
 import { IoCloseSharp } from "react-icons/io5";
 import { useHandleSearch } from "../../../../hooks/useHandleSearch";

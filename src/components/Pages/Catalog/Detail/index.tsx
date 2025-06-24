@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { Biblio } from "../../../../model/Biblio/Biblio/SearchBiblioResponse";
-import { Copies } from "../../../../model/Biblio/BiblioCopy/Copies";
+import type { Biblio } from "../../../../model/Biblio/Biblio/SearchBiblioResponse";
+import type { Copies } from "../../../../model/Biblio/BiblioCopy/Copies";
 import api from "../../../../utils/api";
 import { Rating as StarsRating } from 'react-simple-star-rating';
 import { FaCalendar } from "react-icons/fa";
@@ -29,7 +29,7 @@ import {
     CopyButtons
 } from './styles';
 import ReturnButton from "../../../Layouts/ReturnButton";
-import { ViewStatusRequest } from "../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest";
+import type { ViewStatusRequest } from "../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest";
 import BooksSection from "../../../Layouts/BooksSection";
 import Footer from "../../../Layouts/Footer";
 

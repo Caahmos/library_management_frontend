@@ -9,7 +9,7 @@ import {
   Select,
   Option
 } from './styles';
-import { ViewCollection } from '../../../model/Collection/ViewCollection';
+import type { ViewCollection } from '../../../model/Collection/ViewCollection';
 import { useHandleSearch } from '../../../hooks/useHandleSearch';
 
 const Filter: React.FC = () => {

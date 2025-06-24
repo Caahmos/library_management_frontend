@@ -7,7 +7,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
   const { theme } = useTheme();
-
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
@@ -19,7 +18,7 @@ function App() {
         </Router>
       </ThemeProvider>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

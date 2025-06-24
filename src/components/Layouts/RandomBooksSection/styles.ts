@@ -10,7 +10,7 @@ export const SwiperContainer = styled.div`
   }
 `;
 
-export const StyledSlide = styled(SwiperSlide)`
+export const StyledSlide = styled(SwiperSlide as any)`
   width: auto;
   max-width: 300px;
   border-radius: 7px;

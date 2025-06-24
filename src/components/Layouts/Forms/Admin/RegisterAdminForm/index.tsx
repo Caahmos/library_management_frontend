@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import { Container, Title, Button } from "./styles";
 import InputForm from "../../Input/index";
 import SwitchComponent from "../../SwitchComponent";
-import { RegisterStaffRequest } from "../../../../../model/Staff/RegisterStaffRequest";
+import type { RegisterStaffRequest } from "../../../../../model/Staff/RegisterStaffRequest";
 
 interface IRegisterAdminForm {
   button_text: string;

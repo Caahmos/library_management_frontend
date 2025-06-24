@@ -6,7 +6,7 @@ import { Container, FormContainer } from "./styles";
 import ReturnButton from "../../../Layouts/ReturnButton";
 import { AxiosError } from "axios";
 import GenericForm from "../../../Layouts/Forms/Admin/GenericForm";
-import { ViewAllClassifiesRequest } from "../../../../model/Member/MemberClassifyDM/ViewAllClassifiesRequest";
+import type { ViewAllClassifiesRequest } from "../../../../model/Member/MemberClassifyDM/ViewAllClassifiesRequest";
 
 const CreateMemberType: React.FC = () => {
     const navigate = useNavigate();

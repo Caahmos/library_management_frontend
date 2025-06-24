@@ -4,9 +4,9 @@ import {
     Container
 } from './styles';
 import BooksSection from "../../Layouts/BooksSection";
-import { Biblio } from "../../../model/Biblio/Biblio/SearchBiblioResponse";
+import type { Biblio } from "../../../model/Biblio/Biblio/SearchBiblioResponse";
 import RandomBooksSection from "../../Layouts/RandomBooksSection";
-import { RandomBiblio } from "../../../model/Biblio/Biblio/RandomSearchBiblioResponse";
+import type { RandomBiblio } from "../../../model/Biblio/Biblio/RandomSearchBiblioResponse";
 import Footer from "../../Layouts/Footer";
 
 const Home: React.FC = () => {

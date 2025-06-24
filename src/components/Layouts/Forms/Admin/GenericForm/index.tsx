@@ -1,4 +1,5 @@
-import React, { useState, useCallback, FormEvent, ChangeEvent } from "react";
+import React, { useState, useCallback } from "react";
+import type {FormEvent, ChangeEvent} from 'react';
 import { Container, Title, Button, DeleteButton } from "./styles";
 import InputForm from "../../Input";
 import SwitchComponent from "../../SwitchComponent";

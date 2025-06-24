@@ -6,8 +6,8 @@ import { Container, FormContainer } from "./styles";
 import ReturnButton from "../../../Layouts/ReturnButton";
 import { AxiosError } from "axios";
 import GenericForm from "../../../Layouts/Forms/Admin/GenericForm";
-import { ViewAllClassifiesRequest } from "../../../../model/Member/MemberClassifyDM/ViewAllClassifiesRequest";
-import { ViewCollection } from "../../../../model/Collection/ViewCollection";
+import type { ViewAllClassifiesRequest } from "../../../../model/Member/MemberClassifyDM/ViewAllClassifiesRequest";
+import type { ViewCollection } from "../../../../model/Collection/ViewCollection";
 
 const EditCategory: React.FC = () => {
     const { id } = useParams();

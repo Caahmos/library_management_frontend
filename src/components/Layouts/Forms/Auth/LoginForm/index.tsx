@@ -7,7 +7,7 @@ import {
 import InputForm from "../../Input";
 import { FaUser } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { LoginStaffRequest } from "../../../../../model/Staff/LoginStaffRequest";
+import type { LoginStaffRequest } from "../../../../../model/Staff/LoginStaffRequest";
 
 interface ILoginForm {
     button_text: string;

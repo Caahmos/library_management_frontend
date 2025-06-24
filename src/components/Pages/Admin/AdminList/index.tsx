@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import ReturnButton from '../../../Layouts/ReturnButton';
 import AdminItem from '../../../Layouts/Admin/AdminItem';
 import api from '../../../../utils/api';
-import { SeeStaffs } from '../../../../model/Staff/RegisterStaffRequest';
+import type { SeeStaffs } from '../../../../model/Staff/RegisterStaffRequest';
 
 import {
     Container,

@@ -1,9 +1,9 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { LoginStaffRequest } from "../model/Staff/LoginStaffRequest";
+import type { LoginStaffRequest } from "../model/Staff/LoginStaffRequest";
 import axios, { AxiosError } from "axios";
 import api from "../utils/api";
 import useFlashMessage from "./useFlashMessages";
-import { LoginStaffResponse } from "../model/Staff/LoginStaffResponse";
+import type { LoginStaffResponse } from "../model/Staff/LoginStaffResponse";
 import { useNavigate } from "react-router-dom";
 
 interface IAuthContext {

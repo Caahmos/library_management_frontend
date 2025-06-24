@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Container, Title, Button } from "./styles";
 import InputForm from "../../Input/index";
-import { ChangeStaffPasswordRequest } from "../../../../../model/Staff/ChangeStaffPasswordRequest";
+import type { ChangeStaffPasswordRequest } from "../../../../../model/Staff/ChangeStaffPasswordRequest";
 
 interface IChangeAdminPassword {
   button_text: string;

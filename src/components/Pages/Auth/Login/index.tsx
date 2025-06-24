@@ -1,7 +1,7 @@
 import React from "react";
 import LoginForm from "../../../Layouts/Forms/Auth/LoginForm";
 import { Container } from './styles';
-import { LoginStaffRequest } from "../../../../model/Staff/LoginStaffRequest";
+import type { LoginStaffRequest } from "../../../../model/Staff/LoginStaffRequest";
 import { useAuth } from "../../../../hooks/useAuth";
 
 const Login: React.FC = () => {

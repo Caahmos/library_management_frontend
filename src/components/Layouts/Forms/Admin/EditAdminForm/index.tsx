@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Container, Title, Button, DeleteButton } from "./styles";
 import InputForm from "../../Input/index";
 import SwitchComponent from "../../SwitchComponent";
-import { EditStaffRequest } from "../../../../../model/Staff/EditStaffRequest";
-import { SeeStaffs } from "../../../../../model/Staff/RegisterStaffRequest";
+import type { EditStaffRequest } from "../../../../../model/Staff/EditStaffRequest";
+import type { SeeStaffs } from "../../../../../model/Staff/RegisterStaffRequest";
 
 interface IEditAdminForm {
   adminInfo: SeeStaffs;

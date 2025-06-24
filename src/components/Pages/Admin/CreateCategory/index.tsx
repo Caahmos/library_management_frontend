@@ -6,7 +6,7 @@ import { Container, FormContainer } from "./styles";
 import ReturnButton from "../../../Layouts/ReturnButton";
 import { AxiosError } from "axios";
 import GenericForm from "../../../Layouts/Forms/Admin/GenericForm";
-import { ViewCollection } from "../../../../model/Collection/ViewCollection";
+import type { ViewCollection } from "../../../../model/Collection/ViewCollection";
 
 const CreateCategory: React.FC = () => {
     const navigate = useNavigate();

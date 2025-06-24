@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import type { LinkProps } from "react-router-dom";
 
 interface ImageProp {
   img: string;
 }
 
-export const Container = styled(Link)`
+export const Container = styled(Link)<LinkProps>`
   width: 200px;
   min-height: 300px;
   display: flex;

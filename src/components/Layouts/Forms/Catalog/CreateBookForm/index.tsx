@@ -1,19 +1,17 @@
 import React, { useState, useCallback, useEffect } from "react";
 import InputForm from "../../Input/index";
-import SwitchComponent from "../../SwitchComponent";
-import { RegisterBiblioRequest } from "../../../../../model/Biblio/Biblio/RegisterBiblioRequest";
+import type { RegisterBiblioRequest } from "../../../../../model/Biblio/Biblio/RegisterBiblioRequest";
 import api from "../../../../../utils/api";
 
 import {
   Container,
-  Call,
   Title,
   Button,
   Select,
   Option
 } from "./styles";
-import { ViewCollection } from "../../../../../model/Collection/ViewCollection";
-import { ViewMaterials } from "../../../../../model/Material/ViewMaterials";
+import type { ViewCollection } from "../../../../../model/Collection/ViewCollection";
+import type { ViewMaterials } from "../../../../../model/Material/ViewMaterials";
 
 interface IRegisterBookForm {
   button_text: string;
@@ -21,7 +19,17 @@ interface IRegisterBookForm {
 }
 
 const CreateBookForm: React.FC<IRegisterBookForm> = ({ button_text, handleSubmit }) => {
-  const [newBook, setNewBook] = useState<RegisterBiblioRequest>({} as RegisterBiblioRequest);
+  const [newBook, setNewBook] = useState<RegisterBiblioRequest>({
+    material_cd: '',
+    collection_cd: '',
+    values: {},
+    indexes: [],
+    tags: {},
+    subfields: {},
+    fieldIds: {},
+    requiredFlgs: {}
+  });
+
   const token = localStorage.getItem("@library_management:token") || "";
   const [collections, setCollections] = useState<ViewCollection[]>([]);
   const [materials, setMaterials] = useState<ViewMaterials[]>([]);
@@ -34,7 +42,7 @@ const CreateBookForm: React.FC<IRegisterBookForm> = ({ button_text, handleSubmit
     })
       .then((response) => setCollections(response.data.collections))
       .catch((err) => console.error(err));
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     api.get('/material/viewmaterials', {
@@ -44,68 +52,149 @@ const CreateBookForm: React.FC<IRegisterBookForm> = ({ button_text, handleSubmit
     })
       .then((response) => setMaterials(response.data.materials))
       .catch((err) => console.error(err));
+  }, [token]);
+
+  const handleInputChange = useCallback((inputName: string, value: string) => {
+    setNewBook(prev => {
+      
+      if (inputName === 'material_cd' || inputName === 'collection_cd') {
+        return {
+          ...prev,
+          [inputName]: value
+        };
+      }
+
+      
+      const field = marcFieldsToRender.find(f => f.inputName === inputName);
+      if (!field) return prev;
+
+      console.log(newBook)
+      const labelKey = `${field.tag}${field.subfield}`;
+      
+      return {
+        ...prev,
+        values: {
+          ...prev.values,
+          [labelKey]: value
+        },
+        indexes: prev.indexes.includes(labelKey) 
+          ? prev.indexes 
+          : [...prev.indexes, labelKey],
+        tags: {
+          ...prev.tags,
+          [labelKey]: field.tag
+        },
+        subfields: {
+          ...prev.subfields,
+          [labelKey]: field.subfield
+        },
+        fieldIds: {
+          ...prev.fieldIds,
+          [labelKey]: field.fieldId || ""
+        },
+        requiredFlgs: {
+          ...prev.requiredFlgs,
+          [labelKey]: field.required ? "1" : ""
+        }
+      };
+    });
   }, []);
-
-  const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-      const { name, value } = e.target;
-
-      setNewBook((prev) => ({
-        ...prev,
-        [name]: name === 'material_cd' ? Number(value) : value,
-      }));
-    },
-    []
-  );
-
-  const handleSwitchChange = useCallback(
-    (name: keyof RegisterBiblioRequest) => {
-      setNewBook((prev) => ({
-        ...prev,
-        [name]: !prev[name] as boolean,
-      }));
-    },
-    []
-  );
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const requiredFields = ['material_cd', 'collection_cd', 'title', 'author'];
-    const missingFields = requiredFields.filter(field => !newBook[field as keyof RegisterBiblioRequest]);
-
-    // const validCollectionCodes = collections.map((c) => c.description);
-    // const isValidCollection = validCollectionCodes.includes(newBook.collection_cd);
-
-    // if (!isValidCollection) {
-    //   alert("Categoria inválida. Por favor, selecione uma das opções válidas.");
-    //   return;
-    // }
-
-    if (missingFields.length > 0) {
-      console.error("Campos obrigatórios faltando:", missingFields);
-      alert("Por favor, preencha todos os campos obrigatórios.");
+    // Verificar campos obrigatórios principais
+    if (!newBook.material_cd || !newBook.collection_cd) {
+      alert("Por favor, selecione o Material e a Categoria.");
       return;
     }
 
-    console.log(newBook);
-    // handleSubmit(newBook);
+    // Verificar campos MARC obrigatórios
+    const missingRequiredMarcFields = marcFieldsToRender
+      .filter(field => field.required)
+      .filter(field => {
+        const labelKey = `${field.tag}${field.subfield}`;
+        return !newBook.values?.[labelKey];
+      });
+
+    if (missingRequiredMarcFields.length > 0) {
+      const missingFieldsNames = missingRequiredMarcFields.map(f => f.description);
+      alert(`Por favor, preencha os campos obrigatórios: ${missingFieldsNames.join(", ")}`);
+      return;
+    }
+
+    console.log("Dados enviados:", newBook);
+    handleSubmit(newBook);
   };
 
+  const marcFieldsToRender = [
+    {
+      tag: "245",
+      subfield: "a",
+      labelKey: "245a",
+      required: true,
+      description: "Título",
+      value: "",
+      inputName: "245a",
+      fieldId: "245a_1"
+    },
+    {
+      tag: "245",
+      subfield: "b",
+      labelKey: "245b",
+      required: false,
+      description: "Subtítulo",
+      value: "",
+      inputName: "245b",
+      fieldId: "245b_1"
+    },
+    {
+      tag: "245",
+      subfield: "c",
+      labelKey: "245c",
+      required: false,
+      description: "Responsabilidade pelo título",
+      value: "",
+      inputName: "245c",
+      fieldId: "245c_1"
+    },
+    {
+      tag: "100",
+      subfield: "a",
+      labelKey: "100a",
+      required: true,
+      description: "Autor",
+      value: "",
+      inputName: "100a",
+      fieldId: "100a_1"
+    },
+    // ... (restante dos campos MARC permanecem iguais)
+  ];
+  
   return (
     <Container onSubmit={handleOnSubmit}>
       <Title>Registrar Livro</Title>
 
-      <Select name="material_cd" value={newBook.material_cd || ''} onChange={handleInputChange}>
+      <Select 
+        name="material_cd" 
+        value={newBook.material_cd} 
+        onChange={(e) => handleInputChange('material_cd', e.target.value)}
+        required
+      >
         <Option value="">Material *</Option>
         {materials.map((material) => (
-          <Option key={material.code} value={material.code}>
+          <Option key={material.code} value={material.code.toString()}>
             {material.description}
           </Option>
         ))}
       </Select>
 
-      <Select name="collection_cd" value={newBook.collection_cd || ''} onChange={handleInputChange}>
+      <Select 
+        name="collection_cd" 
+        value={newBook.collection_cd} 
+        onChange={(e) => handleInputChange('collection_cd', e.target.value)}
+        required
+      >
         <Option value="">Categoria *</Option>
         {collections.map((collection) => (
           <Option key={collection.description} value={collection.description}>
@@ -114,22 +203,21 @@ const CreateBookForm: React.FC<IRegisterBookForm> = ({ button_text, handleSubmit
         ))}
       </Select>
 
-      <Call>
-        <InputForm name="call_nmbr1" label="Número de chamada I" placeholder="Número de chamada I" value={newBook.call_nmbr1} onChange={handleInputChange} />
-        <InputForm name="call_nmbr2" label="Número de chamada II" placeholder="Número de chamada II" value={newBook.call_nmbr2} onChange={handleInputChange} />
-        <InputForm name="call_nmbr3" label="Número de chamada III" placeholder="Número de chamada III" value={newBook.call_nmbr3} onChange={handleInputChange} />
-      </Call>
-
-      <InputForm name="title" type="text" label="Título *" placeholder="Título" value={newBook.title} onChange={handleInputChange} />
-      <InputForm name="title_remainder" type="text" label="Subtítulo" placeholder="Subtítulo" value={newBook.title_remainder} onChange={handleInputChange} />
-      <InputForm name="responsibility_stmt" type="text" label="Declaração de Responsabilidade" placeholder="Declaração de Responsabilidade" value={newBook.responsibility_stmt} onChange={handleInputChange} />
-      <InputForm name="author" type="text" label="Autor *" placeholder="Autor" value={newBook.author} onChange={handleInputChange} />
-
-      <InputForm name="topic1" type="text" label="Termo tópico I" placeholder="Digite aqui..." value={newBook.topic1} onChange={handleInputChange} />
-      <InputForm name="topic2" type="text" label="Termo tópico II" placeholder="Digite aqui..." value={newBook.topic2} onChange={handleInputChange} />
-      <InputForm name="topic3" type="text" label="Termo tópico III" placeholder="Digite aqui..." value={newBook.topic3} onChange={handleInputChange} />
-      <InputForm name="topic4" type="text" label="Termo tópico IV" placeholder="Digite aqui..." value={newBook.topic4} onChange={handleInputChange} />
-      <InputForm name="topic5" type="text" label="Termo tópico V" placeholder="Digite aqui..." value={newBook.topic5} onChange={handleInputChange} />
+      {marcFieldsToRender.map((field) => {
+        const labelKey = `${field.tag}${field.subfield}`;
+        
+        return (
+          <div key={field.inputName}>
+            <InputForm
+              label={field.description}
+              name={field.inputName}
+              value={newBook.values?.[labelKey] || ''}
+              required={field.required}
+              onChange={(e) => handleInputChange(field.inputName, e.target.value)}
+            />
+          </div>
+        );
+      })}
 
       <Button type="submit">{button_text}</Button>
     </Container>

@@ -6,7 +6,7 @@ import { Container, FormContainer } from "./styles";
 import ReturnButton from "../../../Layouts/ReturnButton";
 import { AxiosError } from "axios";
 import GenericForm from "../../../Layouts/Forms/Admin/GenericForm";
-import { EditMaterialRequest } from "../../../../model/Material/EditMaterialRequest";
+import type { EditMaterialRequest } from "../../../../model/Material/EditMaterialRequest";
 
 const EditMaterial: React.FC = () => {
     const { id } = useParams();

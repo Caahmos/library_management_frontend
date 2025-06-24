@@ -8,6 +8,7 @@ import {
   LinkIcon,
   Row
 } from './styles';
+import type { JSX } from 'react/jsx-dev-runtime';
 
 type Field = {
   key: string;

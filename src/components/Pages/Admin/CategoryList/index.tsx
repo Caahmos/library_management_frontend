@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../../../../utils/api';
 import ReturnButton from '../../../Layouts/ReturnButton';
 import GenericItem from '../../../Layouts/Admin/GenericItem';
-import { ViewAllClassifiesRequest } from '../../../../model/Member/MemberClassifyDM/ViewAllClassifiesRequest';
+import type { ViewAllClassifiesRequest } from '../../../../model/Member/MemberClassifyDM/ViewAllClassifiesRequest';
 import { TbEdit } from "react-icons/tb";
 import { MdDeleteOutline } from "react-icons/md";
 
@@ -13,7 +13,7 @@ import {
     NewAdminIcon,
 } from './styles';
 import GenericHeader from '../../../Layouts/Admin/GenericHeader';
-import { ViewCollection } from '../../../../model/Collection/ViewCollection';
+import type { ViewCollection } from '../../../../model/Collection/ViewCollection';
 
 const CategoryList: React.FC = () => {
     const [collections, setCollections] = useState<ViewCollection[]>([]);

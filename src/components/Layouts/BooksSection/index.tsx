@@ -11,7 +11,7 @@ import {
   More
 } from './styles';
 
-import { Biblio } from '../../../model/Biblio/Biblio/SearchBiblioResponse';
+import type { Biblio } from '../../../model/Biblio/Biblio/SearchBiblioResponse';
 import { Swiper } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 

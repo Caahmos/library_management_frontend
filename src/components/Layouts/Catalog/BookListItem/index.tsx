@@ -1,5 +1,5 @@
 import React from "react";
-import { ListBooksInterface, TopBooksInterface } from "../../../../model/Biblio/BiblioReports/TopBooksInterface";
+import type { ListBooksInterface, TopBooksInterface } from "../../../../model/Biblio/BiblioReports/TopBooksInterface";
 import { IoIosArrowForward } from "react-icons/io";
 
 import {

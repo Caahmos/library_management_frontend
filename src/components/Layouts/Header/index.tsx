@@ -1,7 +1,7 @@
 import api from '../../../utils/api';
 import { IoIosSearch } from "react-icons/io";
 import { useState, useEffect, useMemo } from 'react';
-import { Biblio } from '../../../model/Biblio/Biblio/SearchBiblioResponse';
+import type { Biblio } from '../../../model/Biblio/Biblio/SearchBiblioResponse';
 import { useHandleSearch } from '../../../hooks/useHandleSearch';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useMenu } from '../../../hooks/useOpenMenu';

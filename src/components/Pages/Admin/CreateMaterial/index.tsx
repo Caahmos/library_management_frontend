@@ -6,7 +6,7 @@ import { Container, FormContainer } from "./styles";
 import ReturnButton from "../../../Layouts/ReturnButton";
 import { AxiosError } from "axios";
 import GenericForm from "../../../Layouts/Forms/Admin/GenericForm";
-import { RegisterMaterialRequest } from "../../../../model/Material/RegisterMaterialRequest";
+import type { RegisterMaterialRequest } from "../../../../model/Material/RegisterMaterialRequest";
 
 const CreateMaterial: React.FC = () => {
     const navigate = useNavigate();

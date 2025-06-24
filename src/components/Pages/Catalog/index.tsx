@@ -6,7 +6,7 @@ import {
 } from './styles';
 
 import Book from "../../Layouts/Catalog/Book";
-import { Biblio } from "../../../model/Biblio/Biblio/SearchBiblioResponse";
+import type { Biblio } from "../../../model/Biblio/Biblio/SearchBiblioResponse";
 import Filter from "../../Layouts/Filter";
 import Footer from "../../Layouts/Footer";
 import { useHandleSearch } from "../../../hooks/useHandleSearch";

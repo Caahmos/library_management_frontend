@@ -10,7 +10,7 @@ import {
 } from './styles';
 import ReturnButton from '../../../Layouts/ReturnButton';
 import { AxiosError } from 'axios';
-import { ChangeStaffPasswordRequest } from '../../../../model/Staff/ChangeStaffPasswordRequest';
+import type { ChangeStaffPasswordRequest } from '../../../../model/Staff/ChangeStaffPasswordRequest';
 import ChangeAdminPasswordForm from '../../../Layouts/Forms/Admin/ChangeAdminPasswordForm';
 
 const ChangeAdminPassword: React.FC = () => {

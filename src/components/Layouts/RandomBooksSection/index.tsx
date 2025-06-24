@@ -11,7 +11,7 @@ import {
   More
 } from './styles'
 
-import { RandomBiblio } from '../../../model/Biblio/Biblio/RandomSearchBiblioResponse';
+import type { RandomBiblio } from '../../../model/Biblio/Biblio/RandomSearchBiblioResponse';
 import { Swiper } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 

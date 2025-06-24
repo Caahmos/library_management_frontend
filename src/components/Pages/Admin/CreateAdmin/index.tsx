@@ -10,7 +10,7 @@ import {
 import ReturnButton from '../../../Layouts/ReturnButton';
 import RegisterAdminForm from '../../../Layouts/Forms/Admin/RegisterAdminForm';
 import { AxiosError } from 'axios';
-import { RegisterStaffRequest } from '../../../../model/Staff/RegisterStaffRequest';
+import type { RegisterStaffRequest } from '../../../../model/Staff/RegisterStaffRequest';
 
 const CreateAdmin: React.FC = () => {
     const navigate = useNavigate();

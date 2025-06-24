@@ -1,4 +1,5 @@
-import React, { InputHTMLAttributes } from "react";
+import React from "react";
+import type { InputHTMLAttributes } from 'react';
 import { StyledInputContainer, StyledInput, IconWrapper, Container } from "./styles";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {

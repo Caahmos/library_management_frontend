@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import type { LinkProps } from "react-router-dom";
 
-export const Container = styled(Link)`
+export const Container = styled(Link)<LinkProps>`
     width: 100%;
     display: flex;
     margin-bottom: 25px;

@@ -11,8 +11,8 @@ import {
 import ReturnButton from '../../../Layouts/ReturnButton';
 import { AxiosError } from 'axios';
 import EditAdminForm from '../../../Layouts/Forms/Admin/EditAdminForm';
-import { EditStaffRequest } from '../../../../model/Staff/EditStaffRequest';
-import { SeeStaffs } from '../../../../model/Staff/RegisterStaffRequest';
+import type { EditStaffRequest } from '../../../../model/Staff/EditStaffRequest';
+import type { SeeStaffs } from '../../../../model/Staff/RegisterStaffRequest';
 
 const EditAdmin: React.FC = () => {
     const { id } = useParams();

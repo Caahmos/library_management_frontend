@@ -1,6 +1,6 @@
 import api from '../../../../utils/api';
 import { AxiosError } from 'axios';
-import React, { useState } from 'react';
+import React from 'react';
 import ReturnButton from '../../../Layouts/ReturnButton';
 import type { RegisterBiblioRequest } from '../../../../model/Biblio/Biblio/RegisterBiblioRequest';
 import useFlashMessage from '../../../../hooks/useFlashMessages';
@@ -15,9 +15,6 @@ import CreateBookForm from '../../../Layouts/Forms/Catalog/CreateBookForm';
 const CreateBook: React.FC = () => {
     const navigate = useNavigate();
     const { setFlashMessage } = useFlashMessage();
-    const [token, setToken] = useState(
-        localStorage.getItem("@library_management:token") || ""
-    );
 
     const handleOnSubmit = async (newBiblio: RegisterBiblioRequest) => {
         let msgText = '';
@@ -40,7 +37,7 @@ const CreateBook: React.FC = () => {
         }
 
         setFlashMessage(msgText, msgType);
-        msgType === 'success' && navigate('/catalog/createbook');
+        msgType === 'success' && navigate('/');
     }
 
     return (

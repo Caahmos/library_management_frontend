@@ -151,6 +151,12 @@ const CreateBookForm: React.FC<IRegisterBookForm> = ({ button_text, handleSubmit
     handleSubmit(newBook);
   };
 
+  // Ordenar para que obrigatórios venham primeiro
+  const sortedMarcFields = [...marcFieldsToRender].sort((a, b) => {
+    if (a.required === b.required) return 0;
+    return a.required ? -1 : 1;
+  });
+
   return (
     <Container onSubmit={handleOnSubmit}>
       <Title>Registrar Livro</Title>
@@ -205,12 +211,12 @@ const CreateBookForm: React.FC<IRegisterBookForm> = ({ button_text, handleSubmit
         onChange={(e) => handleInputChange('call_nmbr3', e.target.value)}
       />
 
-      {marcFieldsToRender.map((field) => {
+      {sortedMarcFields.map((field) => {
         const labelKey = `${field.tag}${field.subfield_cd}`;
         return (
           <div key={labelKey}>
             <InputForm
-              label={field.description}
+              label={field.required ? `${field.description} *` : field.description}
               name={labelKey}
               value={newBook.values?.[labelKey] || ''}
               required={field.required}

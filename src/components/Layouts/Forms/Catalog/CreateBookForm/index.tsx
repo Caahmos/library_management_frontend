@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect } from "react";
 import InputForm from "../../Input/index";
 import type { RegisterBiblioRequest } from "../../../../../model/Biblio/Biblio/RegisterBiblioRequest";
 import api from "../../../../../utils/api";
-
 import {
   Container,
   Title,
@@ -18,10 +17,22 @@ interface IRegisterBookForm {
   handleSubmit(data: RegisterBiblioRequest): void;
 }
 
+interface MarcField {
+  id: number;
+  tag: number;
+  subfield_cd: string;
+  description: string;
+  repeatable_flg: boolean;
+  required: boolean;
+}
+
 const CreateBookForm: React.FC<IRegisterBookForm> = ({ button_text, handleSubmit }) => {
   const [newBook, setNewBook] = useState<RegisterBiblioRequest>({
     material_cd: '',
     collection_cd: '',
+    call_nmbr1: '',
+    call_nmbr2: '',
+    call_nmbr3: '',
     values: {},
     indexes: [],
     tags: {},
@@ -30,6 +41,7 @@ const CreateBookForm: React.FC<IRegisterBookForm> = ({ button_text, handleSubmit
     requiredFlgs: {}
   });
 
+  const [marcFieldsToRender, setMarcFieldsToRender] = useState<MarcField[]>([]);
   const token = localStorage.getItem("@library_management:token") || "";
   const [collections, setCollections] = useState<ViewCollection[]>([]);
   const [materials, setMaterials] = useState<ViewMaterials[]>([]);
@@ -39,58 +51,72 @@ const CreateBookForm: React.FC<IRegisterBookForm> = ({ button_text, handleSubmit
       headers: {
         Authorization: `Bearer ${JSON.parse(token)}`
       }
-    })
-      .then((response) => setCollections(response.data.collections))
-      .catch((err) => console.error(err));
-  }, [token]);
+    }).then((res) => setCollections(res.data.collections));
 
-  useEffect(() => {
     api.get('/material/viewmaterials', {
       headers: {
         Authorization: `Bearer ${JSON.parse(token)}`
       }
-    })
-      .then((response) => setMaterials(response.data.materials))
-      .catch((err) => console.error(err));
+    }).then((res) => setMaterials(res.data.materials));
+  }, [token]);
+
+  useEffect(() => {
+    api.get('/marc/viewsubfieldsrequired?required=true', {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(token)}`
+      }
+    }).then((res) => {
+      const fields = res.data.subfields.map((sub: any) => ({
+        id: sub.id,
+        tag: sub.tag,
+        subfield_cd: sub.subfield_cd,
+        description: sub.description,
+        repeatable_flg: sub.repeatable_flg,
+        required: sub.required
+      }));
+      setMarcFieldsToRender(fields);
+    }).catch((err) => console.error("Erro ao buscar subcampos:", err));
   }, [token]);
 
   const handleInputChange = useCallback((inputName: string, value: string) => {
     setNewBook(prev => {
-      
-      if (inputName === 'material_cd' || inputName === 'collection_cd') {
-        return {
-          ...prev,
-          [inputName]: value
-        };
+      if (
+        inputName === 'material_cd' ||
+        inputName === 'collection_cd' ||
+        inputName === 'call_nmbr1' ||
+        inputName === 'call_nmbr2' ||
+        inputName === 'call_nmbr3'
+      ) {
+        return { ...prev, [inputName]: value };
       }
 
-      
-      const field = marcFieldsToRender.find(f => f.inputName === inputName);
+      const field = marcFieldsToRender.find(f =>
+        `${f.tag}${f.subfield_cd}` === inputName
+      );
       if (!field) return prev;
 
-      console.log(newBook)
-      const labelKey = `${field.tag}${field.subfield}`;
-      
+      const labelKey = `${field.tag}${field.subfield_cd}`;
+
       return {
         ...prev,
         values: {
           ...prev.values,
           [labelKey]: value
         },
-        indexes: prev.indexes.includes(labelKey) 
-          ? prev.indexes 
+        indexes: prev.indexes.includes(labelKey)
+          ? prev.indexes
           : [...prev.indexes, labelKey],
         tags: {
           ...prev.tags,
-          [labelKey]: field.tag
+          [labelKey]: String(field.tag)
         },
         subfields: {
           ...prev.subfields,
-          [labelKey]: field.subfield
+          [labelKey]: field.subfield_cd
         },
         fieldIds: {
           ...prev.fieldIds,
-          [labelKey]: field.fieldId || ""
+          [labelKey]: `${field.tag}${field.subfield_cd}_${field.id}`
         },
         requiredFlgs: {
           ...prev.requiredFlgs,
@@ -98,22 +124,20 @@ const CreateBookForm: React.FC<IRegisterBookForm> = ({ button_text, handleSubmit
         }
       };
     });
-  }, []);
+  }, [marcFieldsToRender]);
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Verificar campos obrigatórios principais
-    if (!newBook.material_cd || !newBook.collection_cd) {
-      alert("Por favor, selecione o Material e a Categoria.");
+    if (!newBook.material_cd || !newBook.collection_cd || !newBook.call_nmbr1) {
+      alert("Por favor, preencha os campos obrigatórios.");
       return;
     }
 
-    // Verificar campos MARC obrigatórios
     const missingRequiredMarcFields = marcFieldsToRender
       .filter(field => field.required)
       .filter(field => {
-        const labelKey = `${field.tag}${field.subfield}`;
+        const labelKey = `${field.tag}${field.subfield_cd}`;
         return !newBook.values?.[labelKey];
       });
 
@@ -123,61 +147,17 @@ const CreateBookForm: React.FC<IRegisterBookForm> = ({ button_text, handleSubmit
       return;
     }
 
-    console.log("Dados enviados:", newBook);
+    console.log(newBook);
     handleSubmit(newBook);
   };
 
-  const marcFieldsToRender = [
-    {
-      tag: "245",
-      subfield: "a",
-      labelKey: "245a",
-      required: true,
-      description: "Título",
-      value: "",
-      inputName: "245a",
-      fieldId: "245a_1"
-    },
-    {
-      tag: "245",
-      subfield: "b",
-      labelKey: "245b",
-      required: false,
-      description: "Subtítulo",
-      value: "",
-      inputName: "245b",
-      fieldId: "245b_1"
-    },
-    {
-      tag: "245",
-      subfield: "c",
-      labelKey: "245c",
-      required: false,
-      description: "Responsabilidade pelo título",
-      value: "",
-      inputName: "245c",
-      fieldId: "245c_1"
-    },
-    {
-      tag: "100",
-      subfield: "a",
-      labelKey: "100a",
-      required: true,
-      description: "Autor",
-      value: "",
-      inputName: "100a",
-      fieldId: "100a_1"
-    },
-    // ... (restante dos campos MARC permanecem iguais)
-  ];
-  
   return (
     <Container onSubmit={handleOnSubmit}>
       <Title>Registrar Livro</Title>
 
-      <Select 
-        name="material_cd" 
-        value={newBook.material_cd} 
+      <Select
+        name="material_cd"
+        value={newBook.material_cd}
         onChange={(e) => handleInputChange('material_cd', e.target.value)}
         required
       >
@@ -189,31 +169,52 @@ const CreateBookForm: React.FC<IRegisterBookForm> = ({ button_text, handleSubmit
         ))}
       </Select>
 
-      <Select 
-        name="collection_cd" 
-        value={newBook.collection_cd} 
+      <Select
+        name="collection_cd"
+        value={newBook.collection_cd}
         onChange={(e) => handleInputChange('collection_cd', e.target.value)}
         required
       >
         <Option value="">Categoria *</Option>
         {collections.map((collection) => (
-          <Option key={collection.description} value={collection.description}>
+          <Option key={collection.description} value={collection.code?.toString()}>
             {collection.description}
           </Option>
         ))}
       </Select>
 
+      <InputForm
+        label="Call Number 1 *"
+        name="call_nmbr1"
+        value={newBook.call_nmbr1 || ''}
+        required
+        onChange={(e) => handleInputChange('call_nmbr1', e.target.value)}
+      />
+
+      <InputForm
+        label="Call Number 2"
+        name="call_nmbr2"
+        value={newBook.call_nmbr2 || ''}
+        onChange={(e) => handleInputChange('call_nmbr2', e.target.value)}
+      />
+
+      <InputForm
+        label="Call Number 3"
+        name="call_nmbr3"
+        value={newBook.call_nmbr3 || ''}
+        onChange={(e) => handleInputChange('call_nmbr3', e.target.value)}
+      />
+
       {marcFieldsToRender.map((field) => {
-        const labelKey = `${field.tag}${field.subfield}`;
-        
+        const labelKey = `${field.tag}${field.subfield_cd}`;
         return (
-          <div key={field.inputName}>
+          <div key={labelKey}>
             <InputForm
               label={field.description}
-              name={field.inputName}
+              name={labelKey}
               value={newBook.values?.[labelKey] || ''}
               required={field.required}
-              onChange={(e) => handleInputChange(field.inputName, e.target.value)}
+              onChange={(e) => handleInputChange(labelKey, e.target.value)}
             />
           </div>
         );

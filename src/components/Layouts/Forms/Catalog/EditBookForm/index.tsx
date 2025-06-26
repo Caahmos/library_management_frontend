@@ -266,6 +266,40 @@ const EditBookForm: React.FC<IRegisterBookForm> = ({ button_text, handleSubmit, 
           </div>
         );
       })}
+      <InputForm
+        label="Tópico 1"
+        name="topic1"
+        value={localBiblioData.topic1 || ''}
+        onChange={(e) => handleBiblioFieldChange('topic1', e.target.value)}
+      />
+
+      <InputForm
+        label="Tópico 2"
+        name="topic2"
+        value={localBiblioData.topic2 || ''}
+        onChange={(e) => handleBiblioFieldChange('topic2', e.target.value)}
+      />
+
+      <InputForm
+        label="Tópico 3"
+        name="topic3"
+        value={localBiblioData.topic3 || ''}
+        onChange={(e) => handleBiblioFieldChange('topic3', e.target.value)}
+      />
+
+      <InputForm
+        label="Tópico 4"
+        name="topic4"
+        value={localBiblioData.topic4 || ''}
+        onChange={(e) => handleBiblioFieldChange('topic4', e.target.value)}
+      />
+
+      <InputForm
+        label="Tópico 5"
+        name="topic5"
+        value={localBiblioData.topic5 || ''}
+        onChange={(e) => handleBiblioFieldChange('topic5', e.target.value)}
+      />
 
       <Button type="submit">{button_text}</Button>
     </Container>

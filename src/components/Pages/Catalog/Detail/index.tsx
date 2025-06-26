@@ -44,7 +44,6 @@ const Detail: React.FC = () => {
     const token = localStorage.getItem("@library_management:token") || "";
 
     useEffect(() => {
-        console.log(`/biblio/search?method=collection&data=${bookCollection}`);
         api.get(`/biblio/search?method=collection&data=${bookCollection}`, {
             headers: {
                 Authorization: `Bearer ${JSON.parse(token)}`
@@ -52,7 +51,6 @@ const Detail: React.FC = () => {
         })
             .then((respose) => {
                 setBooks(respose.data.biblios)
-                console.log(respose.data.biblios)
             })
             .catch((err) => {
                 console.log(err)

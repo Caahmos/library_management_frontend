@@ -28,7 +28,7 @@ const RandomBooksSection: React.FC<RandomBiblios> = ({ randomBiblios }) => {
   const { changeFilter } = useHandleSearch();
 
   const handleOnClick = (collection: string) => {
-    changeFilter({collection: collection, date: 'desc', order: '', take: '100', viewStyle: 'block'});
+    changeFilter({ collection: collection, date: 'desc', order: '', take: '100', viewStyle: 'block' });
     navigate('/catalog');
   };
 
@@ -39,7 +39,7 @@ const RandomBooksSection: React.FC<RandomBiblios> = ({ randomBiblios }) => {
           <Container>
             <Header>
               <Title>{value.collection.description}</Title>
-              <More onClick={() => {handleOnClick(value.collection.description)}}>VER MAIS</More>
+              <More onClick={() => { handleOnClick(value.collection.description) }}>VER MAIS</More>
             </Header>
             <SwiperContainer>
               <Swiper
@@ -52,12 +52,13 @@ const RandomBooksSection: React.FC<RandomBiblios> = ({ randomBiblios }) => {
                   value.biblios && value.biblios.map((biblio) => (
                     <StyledSlide key={biblio.bibid}>
                       <Book
+                        key={biblio.bibid}
                         id={biblio.bibid}
                         title={biblio.title}
                         author={biblio.author}
                         img={biblio.BiblioMedia && biblio.BiblioMedia[0]?.imageUrl || 'semcapa.png'}
                         rank={biblio.BiblioMedia && biblio.BiblioMedia[0]?.rank || 0}
-                        
+
                       />
                     </StyledSlide>
                   ))

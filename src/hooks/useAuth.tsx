@@ -79,7 +79,6 @@ const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
     const authUser = (data: LoginStaffResponse) => {
         if (data.token) {
-            console.log(data);
             localStorage.setItem('@library_management:token', JSON.stringify(data.token));
             localStorage.setItem('@library_management:user', JSON.stringify(data));
             api.defaults.headers.Authorization = `Bearer ${data.token}`;

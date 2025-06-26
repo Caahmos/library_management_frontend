@@ -18,7 +18,6 @@ const Catalog: React.FC = () => {
     const { filterData } = useHandleSearch();
 
     useEffect(() => {
-        console.log(filterData);
         const params: any = {
             take: filterData.take,
         };
@@ -43,7 +42,6 @@ const Catalog: React.FC = () => {
         })
             .then((response) => {
                 setBooksInfo(response.data.biblios);
-                console.log(response);
             })
             .catch((err) => {
                 console.error(err);

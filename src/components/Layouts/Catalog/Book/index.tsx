@@ -1,5 +1,6 @@
 import {
   Container,
+  Content,
   Circle,
   Info,
   ImageBook,
@@ -25,16 +26,18 @@ const Book: React.FC<BookCard> = ({ img, title, author, rank, id, order }) => {
   const imagemFormatada = `http://localhost:5000/imgs/biblio/${img}`;
 
   return (
-    <Container to={`/catalog/detail/${id}`}>
+    <Container>
       <Circle to={`/catalog/editbook/${id}`}>
-        <MdEdit title='Editar livro'/>
+        <MdEdit title='Editar livro' />
       </Circle>
-      <Info>
-        <ImageBook src={imagemFormatada} />
-        <Title>{title}</Title>
-        <Author>por: <span>{author}</span></Author>
-      </Info>
-      <Rating>rank {rank}<FaStar /></Rating>
+      <Content to={`/catalog/detail/${id}`}>
+        <Info>
+          <ImageBook src={imagemFormatada} />
+          <Title>{title}</Title>
+          <Author>por: <span>{author}</span></Author>
+        </Info>
+        <Rating>rank {rank}<FaStar /></Rating>
+      </Content>
     </Container>
   );
 }

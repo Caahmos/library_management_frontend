@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { IoCloseSharp } from "react-icons/io5";
 
-interface isActive {
-  isOpen: boolean
+interface DropdownProps {
+  $isopen: boolean
 };
 
 export const CloseButton = styled.button`
@@ -49,8 +48,8 @@ export const StyledInput = styled.input`
   }
 `;
 
-export const Dropdown = styled.div<isActive>`
-  display: ${ props => props.isOpen ? 'block' : 'none'};
+export const Dropdown = styled.div<DropdownProps>`
+  display: ${ props => props.$isopen ? 'block' : 'none'};
   position: absolute;
   top: 100%;         
   left: 0;

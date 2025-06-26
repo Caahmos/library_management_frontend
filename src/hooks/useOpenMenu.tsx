@@ -16,7 +16,6 @@ const MenuProvider: React.FC<IMenuProps> = ({ children }) => {
 
     const open = () => {
         setisOpenMenu(!isOpenMenu);
-        console.log(isOpenMenu);
         return isOpenMenu;
     };
 

@@ -22,7 +22,6 @@ const EditBook: React.FC = () => {
     const { setFlashMessage } = useFlashMessage();
 
     useEffect(() => {
-        console.log(`/biblio/detail/${id}`);
         api.get(`/biblio/detail/${id}`, {
             headers: {
                 Authorization: `Bearer ${JSON.parse(token)}`
@@ -30,7 +29,6 @@ const EditBook: React.FC = () => {
         })
             .then((respose) => {
                 setBook(respose.data.biblio)
-                console.log(respose.data.biblio)
             })
             .catch((err) => {
                 console.log(err)

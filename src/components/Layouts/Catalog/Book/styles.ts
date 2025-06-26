@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import type { LinkProps } from "react-router-dom";
 
-export const Container = styled(Link)<LinkProps>`
+export const Container = styled.div`
   width: 150px;
   height: 270px;
   position: relative;
@@ -19,6 +19,18 @@ export const Container = styled(Link)<LinkProps>`
   &:hover{
     background-color: ${(props) => props.theme.colors.secondary};
   }
+`;
+
+export const Content = styled(Link)<LinkProps>`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  color: ${(props) => props.theme.colors.white};
+  text-align: center;
+  justify-content: space-between;
+  text-decoration: none;
+  padding: 10px;
 `;
 
 export const Circle = styled(Link)`

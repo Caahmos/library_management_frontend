@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 interface MenuToggle {
-  isOpen: boolean;
+  $isopen: boolean;
 }
 
 export const Container = styled.aside<MenuToggle>`
@@ -26,8 +26,8 @@ export const Container = styled.aside<MenuToggle>`
 
     width: 260px;
 
-    display: ${(props) => (props.isOpen ? "inline-block" : "none")};
-    height: ${(props) => (props.isOpen ? "100vh" : "none")};
+    display: ${(props) => (props.$isopen ? "inline-block" : "none")};
+    height: ${(props) => (props.$isopen ? "100vh" : "none")};
     overflow: hidden;
   }
 `;
@@ -166,9 +166,9 @@ export const ListItem = styled.div`
   }
 `;
 
-export const AccordionContent = styled.div<{ isOpen: boolean }>`
+export const AccordionContent = styled.div<{ $isopen: boolean }>`
   overflow: hidden;
-  max-height: ${({ isOpen }) => (isOpen ? "200px" : "0")};
+  max-height: ${({ $isopen }) => ($isopen ? "200px" : "0")};
   transition: max-height 0.4s ease-in-out;
   margin-left: 25px;
   color: ${(props) => props.theme.colors.white};

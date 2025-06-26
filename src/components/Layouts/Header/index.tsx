@@ -27,7 +27,6 @@ const Header: React.FC = () => {
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     changeSearchText(e.target.value);
-    console.log(e.target.value);
   };
 
   useEffect(() => {
@@ -38,7 +37,6 @@ const Header: React.FC = () => {
     })
       .then((response) => {
         setBooks(response.data.biblios);
-        console.log(response.data.biblios);
       })
       .catch((err) => {
         console.log(err)

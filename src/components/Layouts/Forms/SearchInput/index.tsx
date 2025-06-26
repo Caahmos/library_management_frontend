@@ -10,12 +10,12 @@ import { useHandleSearch } from "../../../../hooks/useHandleSearch";
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label?: string;
     icon?: React.ReactNode;
-    searchResults?: Biblio[]; 
-    isOpen: boolean | false;
+    searchResults?: Biblio[];
+    isOpen: boolean;
 }
 
 const SearchInput: React.FC<InputProps> = ({ icon, searchResults, isOpen, ...props }) => {
-    const {close} = useHandleSearch();
+    const { close } = useHandleSearch();
 
     return (
         <Container>
@@ -23,22 +23,23 @@ const SearchInput: React.FC<InputProps> = ({ icon, searchResults, isOpen, ...pro
                 {icon && <IconWrapper>{icon}</IconWrapper>}
                 <StyledInput {...props} />
                 <CloseButton onClick={() => { close() }}>
-                    <IoCloseSharp/>
+                    <IoCloseSharp />
                 </CloseButton>
             </StyledInputContainer>
 
-            <Dropdown isOpen={isOpen}>
-            {
-            searchResults && searchResults.map((biblio) => (
-                <BookSearch
-                  id={biblio.bibid}
-                  title={biblio.title}
-                  author={biblio.author}
-                  img={biblio.BiblioMedia && biblio.BiblioMedia[0]?.imageUrl || 'semcapa.png'}
-                  rank={biblio.BiblioMedia && biblio.BiblioMedia[0]?.rank || 0}
-                />
-            ))
-          }
+            <Dropdown $isopen={isOpen}>
+                {
+                    searchResults && searchResults.map((biblio) => (
+                        <BookSearch
+                            key={biblio.bibid}
+                            id={biblio.bibid}
+                            title={biblio.title}
+                            author={biblio.author}
+                            img={biblio.BiblioMedia && biblio.BiblioMedia[0]?.imageUrl || 'semcapa.png'}
+                            rank={biblio.BiblioMedia && biblio.BiblioMedia[0]?.rank || 0}
+                        />
+                    ))
+                }
             </Dropdown>
         </Container>
     );

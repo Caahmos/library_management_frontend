@@ -3,7 +3,7 @@ import { MdFilterListOff } from "react-icons/md";
 
 interface ActiveSelect {
   isOpen?: boolean;
-  active?: boolean;
+  $active?: boolean;
 }
 
 export const Container = styled.div`
@@ -43,7 +43,7 @@ export const Select = styled.select<ActiveSelect>`
   padding: 10px;
   color: ${(props) => props.theme.colors.white};
   background-color: ${(props) =>
-    props.active ? props.theme.colors.success : props.theme.colors.primary};
+    props.$active ? props.theme.colors.success : props.theme.colors.primary};
   cursor: pointer;
   transition: background-color 0.3s, border 0.3s;
   border-radius: 4px;

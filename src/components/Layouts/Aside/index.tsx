@@ -59,7 +59,7 @@ const Aside: React.FC = () => {
   }, [isOpenMenu, open]);
 
   return (
-    <Container isOpen={isOpenMenu} ref={menuRef}>
+    <Container $isopen={isOpenMenu} ref={menuRef}>
       <MenuBox>
         <Brand>
           <Logo><ImBooks /> Library</Logo>
@@ -85,7 +85,7 @@ const Aside: React.FC = () => {
               </CircleIcon>
               <p>Circulação</p>
             </MenuItem>
-            <AccordionContent isOpen={openIndex === 0}>
+            <AccordionContent $isopen={openIndex === 0}>
               <ul>
                 <li>Subitem 1</li>
                 <li>Subitem 2</li>
@@ -100,7 +100,7 @@ const Aside: React.FC = () => {
               </CircleIcon>
               <p>Catálogo</p>
             </MenuItem>
-            <AccordionContent isOpen={openIndex === 1}>
+            <AccordionContent $isopen={openIndex === 1}>
               <ul>
                 <li><LinkItem to={'/catalog/createbook'}>Registrar Livro</LinkItem></li>
               </ul>
@@ -114,7 +114,7 @@ const Aside: React.FC = () => {
               </CircleIcon>
               <p>Admin</p>
             </MenuItem>
-            <AccordionContent isOpen={openIndex === 2}>
+            <AccordionContent $isopen={openIndex === 2}>
               <ul>
                 <li><LinkItem to={'/admin/adminlist'}>Lista de Admins</LinkItem></li>
                 <li><LinkItem to={'/mbrclassify'}>Tipos de Usuários</LinkItem></li>

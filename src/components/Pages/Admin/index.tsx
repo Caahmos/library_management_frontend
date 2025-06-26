@@ -70,11 +70,8 @@ const Admin: React.FC = () => {
 
             const rentalYear = rental.month.slice(0, 4);
 
-            console.log(rentalYear);
             return rentalYear === selectedYear.toString();
         });
-
-        console.log('Anos filtrados:', filtered);
 
         setFilteredRentals(filtered)
     }, [rentals, selectedYear]);

@@ -47,6 +47,7 @@ const BooksSection: React.FC<BooksSectionProps> = ({ biblioData, title, collecti
             biblioData && biblioData.map((biblio) => (
               <StyledSlide key={biblio.bibid}>
                 <Book
+                  key={biblio.bibid}
                   id={biblio.bibid}
                   title={biblio.title}
                   author={biblio.author}

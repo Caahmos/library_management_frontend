@@ -77,7 +77,7 @@ const Filter: React.FC = () => {
         <Select
           value={filterData.date}
           onChange={(e) => handleFilterChange("date", e.target.value)}
-          active={!!filterData.date && !filterData.order}
+          $active={!!filterData.date && !filterData.order}
         >
           <Option value="">Ordenar por Data</Option>
           <Option value="desc">Mais Recente</Option>
@@ -87,7 +87,7 @@ const Filter: React.FC = () => {
         <Select
           value={filterData.order}
           onChange={(e) => handleFilterChange("order", e.target.value)}
-          active={!!filterData.order && !filterData.date}
+          $active={!!filterData.order && !filterData.date}
         >
           <Option value="">Ordenar por Nome</Option>
           <Option value="A-Z">A-Z</Option>

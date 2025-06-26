@@ -35,7 +35,6 @@ const AdminList: React.FC = () => {
         })
             .then((response) => {
                 setAdmins(response.data.staffs);
-                console.log(response.data.staffs);
             })
             .catch((err) => {
                 console.log(err)

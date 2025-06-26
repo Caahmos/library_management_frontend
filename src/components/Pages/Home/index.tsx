@@ -22,12 +22,12 @@ const Home: React.FC = () => {
                 Authorization: `Bearer ${JSON.parse(token)}`
             }
         })
-        .then(( respose ) => {
-            setBooks(respose.data.biblios)
-        })
-        .catch(( err ) => {
-            console.log(err)
-        })
+            .then((respose) => {
+                setBooks(respose.data.biblios)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
 
     }, []);
 
@@ -37,23 +37,28 @@ const Home: React.FC = () => {
                 Authorization: `Bearer ${JSON.parse(token)}`
             }
         })
-        .then(( respose ) => {
-            setRandomBooks(respose.data.biblios)
-        })
-        .catch(( err ) => {
-            console.log(err)
-        })
+            .then((respose) => {
+                setRandomBooks(respose.data.biblios)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }, [])
 
     return (
-        <Container onClick={() => {
-            console.log(randomBooks)
-        }}>
-           <BooksSection collection="" biblioData={books} title="Novidades na biblioteca"/>
-           <RandomBooksSection randomBiblios={randomBooks}/>
-           <Footer/>
+        <Container>
+            {books.length > 0 && randomBooks.length > 0 ? (
+                <>
+                    <BooksSection collection="" biblioData={books} title="Novidades na biblioteca" />
+                    <RandomBooksSection randomBiblios={randomBooks} />
+                    <Footer />
+                </>
+            ) : (
+                <p>Carregando...</p>
+            )}
         </Container>
     );
+
 }
 
 export default Home;

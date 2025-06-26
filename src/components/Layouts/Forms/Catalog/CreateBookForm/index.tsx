@@ -85,7 +85,12 @@ const CreateBookForm: React.FC<IRegisterBookForm> = ({ button_text, handleSubmit
         inputName === 'collection_cd' ||
         inputName === 'call_nmbr1' ||
         inputName === 'call_nmbr2' ||
-        inputName === 'call_nmbr3'
+        inputName === 'call_nmbr3' ||
+        inputName === 'topic1' ||
+        inputName === 'topic2' ||
+        inputName === 'topic3' ||
+        inputName === 'topic4' ||
+        inputName === 'topic5'
       ) {
         return { ...prev, [inputName]: value };
       }
@@ -224,6 +229,41 @@ const CreateBookForm: React.FC<IRegisterBookForm> = ({ button_text, handleSubmit
           </div>
         );
       })}
+
+      <InputForm
+        label="Tópico 1"
+        name="topic1"
+        value={newBook.topic1 || ''}
+        onChange={(e) => handleInputChange('topic1', e.target.value)}
+      />
+
+      <InputForm
+        label="Tópico 2"
+        name="topic2"
+        value={newBook.topic2 || ''}
+        onChange={(e) => handleInputChange('topic2', e.target.value)}
+      />
+
+      <InputForm
+        label="Tópico 3"
+        name="topic3"
+        value={newBook.topic3 || ''}
+        onChange={(e) => handleInputChange('topic3', e.target.value)}
+      />
+
+      <InputForm
+        label="Tópico 4"
+        name="topic4"
+        value={newBook.topic4 || ''}
+        onChange={(e) => handleInputChange('topic4', e.target.value)}
+      />
+
+      <InputForm
+        label="Tópico 5"
+        name="topic5"
+        value={newBook.topic5 || ''}
+        onChange={(e) => handleInputChange('topic5', e.target.value)}
+      />
 
       <Button type="submit">{button_text}</Button>
     </Container>

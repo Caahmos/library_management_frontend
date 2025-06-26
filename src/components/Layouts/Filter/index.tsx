@@ -7,7 +7,8 @@ import {
   ClearFiltersIcon,
   Text,
   Select,
-  Option
+  Option,
+  Clean
 } from './styles';
 import type { ViewCollection } from '../../../model/Collection/ViewCollection';
 import { useHandleSearch } from '../../../hooks/useHandleSearch';
@@ -53,13 +54,13 @@ const Filter: React.FC = () => {
   };
 
   const removeFilters = () => {
-      changeFilter({collection: '', date: '', order: '', take: '100', viewStyle: 'block'});
+    changeFilter({ collection: '', date: '', order: '', take: '100', viewStyle: 'block' });
   };
 
   return (
     <Container>
       <Filters>
-      <Text>Classificar por:</Text>
+        <Text>Classificar por:</Text>
         <Select
           value={filterData.collection}
           onChange={(e) => handleFilterChange("collection", e.target.value)}
@@ -113,7 +114,9 @@ const Filter: React.FC = () => {
           <Option value="list">Lista</Option>
         </Select>
       </Filters>
-      <ClearFiltersIcon title='Remover filtros' onClick={removeFilters} />
+      <Clean>
+        <ClearFiltersIcon title='Remover filtros' onClick={removeFilters} />
+      </Clean>
     </Container>
   );
 };

@@ -11,18 +11,29 @@ export const Container = styled.div`
   padding: 15px;
   background-color: ${(props) => props.theme.colors.secondary};
   display: flex;
+  border-radius: 12px;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+  gap: 15px;
+
+  @media screen and (max-width: 1000px) {
+    flex-direction: column;
+  }
   `;
 
 export const Filters = styled.div`
+  width: 100%;
   gap: 15px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   flex-direction: row;
   justify-content: flex-start;
+  
+  @media screen and (max-width: 1000px) {
+    flex-direction: column;
+  }
 `
 
 export const ClearFiltersIcon = styled(MdFilterListOff)`
@@ -76,3 +87,18 @@ export const Option = styled.option`
   color: ${(props) => props.theme.colors.white};
   background-color: ${(props) => props.theme.colors.primary};
 `;
+
+export const Clean = styled.button`
+  cursor: pointer;
+  transition: 0.4s all ease-in;
+  background-color: transparent;
+  color: ${(props) => props.theme.colors.white};
+
+  &:hover{
+    color: ${(props) => props.theme.colors.success};
+  }
+
+  > svg {
+    font-size: 1.5rem;
+  }
+`

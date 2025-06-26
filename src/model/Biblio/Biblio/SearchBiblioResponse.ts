@@ -46,7 +46,7 @@ export interface BiblioCopy {
     renewal_count: number;
 }
 
-interface BiblioField {
+export interface BiblioField {
     id: number;
     fieldid: number;
     bibid: number;

@@ -5,6 +5,7 @@ import type { LinkProps } from "react-router-dom";
 export const Container = styled(Link)<LinkProps>`
   width: 150px;
   height: 270px;
+  position: relative;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -19,6 +20,21 @@ export const Container = styled(Link)<LinkProps>`
     background-color: ${(props) => props.theme.colors.secondary};
   }
 `;
+
+export const Circle = styled(Link)`
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  border-radius: 30px;
+  right: 10px;
+  background-color: ${props => props.theme.colors.success};
+  color: ${props => props.theme.colors.white};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+`
+
 export const ImageBook = styled.img`
   width: 100px;
   align-self: center;

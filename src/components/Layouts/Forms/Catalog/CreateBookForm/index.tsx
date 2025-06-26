@@ -151,7 +151,6 @@ const CreateBookForm: React.FC<IRegisterBookForm> = ({ button_text, handleSubmit
     handleSubmit(newBook);
   };
 
-  // Ordenar para que obrigatórios venham primeiro
   const sortedMarcFields = [...marcFieldsToRender].sort((a, b) => {
     if (a.required === b.required) return 0;
     return a.required ? -1 : 1;

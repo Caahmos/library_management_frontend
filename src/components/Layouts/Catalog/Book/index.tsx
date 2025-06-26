@@ -1,5 +1,6 @@
 import {
   Container,
+  Circle,
   Info,
   ImageBook,
   Title,
@@ -8,6 +9,7 @@ import {
 } from './styles';
 
 import { FaStar } from "react-icons/fa6";
+import { MdEdit } from "react-icons/md";
 
 interface BookCard {
   id: number;
@@ -24,6 +26,9 @@ const Book: React.FC<BookCard> = ({ img, title, author, rank, id, order }) => {
 
   return (
     <Container to={`/catalog/detail/${id}`}>
+      <Circle to={`/catalog/editbook/${id}`}>
+        <MdEdit title='Editar livro'/>
+      </Circle>
       <Info>
         <ImageBook src={imagemFormatada} />
         <Title>{title}</Title>

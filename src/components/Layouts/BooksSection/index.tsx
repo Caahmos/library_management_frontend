@@ -17,7 +17,7 @@ import 'swiper/swiper-bundle.css';
 
 interface BooksSectionProps {
   collection: string;
-  title: string
+  title: string;
   biblioData: Biblio[]
 }
 

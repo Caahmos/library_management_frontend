@@ -18,6 +18,11 @@ const Catalog: React.FC = () => {
     const { filterData } = useHandleSearch();
 
     useEffect(() => {
+        const el = document.getElementById("top");
+        el?.scrollIntoView({ behavior: "smooth" });
+    }, []);
+
+    useEffect(() => {
         const params: any = {
             take: filterData.take,
         };
@@ -49,7 +54,7 @@ const Catalog: React.FC = () => {
     }, [filterData, token]);
 
     return (
-        <Container>
+        <Container id="top">
             <Filter />
             <Content>
                 {

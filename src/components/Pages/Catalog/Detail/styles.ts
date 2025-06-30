@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { MdEdit } from "react-icons/md";
 
 export const Container = styled.div`
   width: 100%;
@@ -51,6 +53,10 @@ export const TextContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 10px;
+
+  @media (max-width: 800px) {
+    padding: 0px;
+  }
 `;
 
 export const BookTitle = styled.div`
@@ -126,4 +132,26 @@ export const CopyStatus = styled.span`
 
 export const CopyButtons = styled.div`
 
+`
+
+export const AdminButton = styled(Link)`
+  width: fit-content;
+  margin-top: 30px;
+  padding: 15px;
+  border: 1px solid ${props => props.theme.colors.success};
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: white;
+  text-decoration: none;
+  border-radius: 7px;
+
+  &:hover{
+    transition: 0.4s ease;
+    background-color: ${props => props.theme.colors.success + '55'};
+  }
+`
+
+export const EditIcon = styled(MdEdit)`
+  color: ${props => props.theme.colors.success}
 `

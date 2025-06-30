@@ -26,7 +26,9 @@ import {
     CopyNumber,
     CopyDescription,
     CopyStatus,
-    CopyButtons
+    CopyButtons,
+    AdminButton,
+    EditIcon
 } from './styles';
 import ReturnButton from "../../../Layouts/ReturnButton";
 import type { ViewStatusRequest } from "../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest";
@@ -42,6 +44,11 @@ const Detail: React.FC = () => {
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
     const [subfieldsDescriptions, setSubfieldsDescriptions] = useState<string[]>();
     const token = localStorage.getItem("@library_management:token") || "";
+
+    useEffect(() => {
+        const el = document.getElementById("top");
+        el?.scrollIntoView({ behavior: "smooth" });
+    }, [id]);
 
     useEffect(() => {
         api.get(`/biblio/search?method=collection&data=${bookCollection}`, {
@@ -131,10 +138,10 @@ const Detail: React.FC = () => {
     };
 
     return (
-        <Container>
+        <Container id="top">
             <ReturnButton />
             {bookInfo && bookInfo.BiblioMedia ? (
-                <BookSection onClick={() => { console.log(bookInfo + ' ' + subfieldsDescriptions) }}>
+                <BookSection>
                     <BookImage>
                         <img src={`http://localhost:5000/imgs/biblio/${bookInfo.BiblioMedia[0]?.imageUrl || 'semcapa.png'}`} alt="Capa do Livro" />
                     </BookImage>
@@ -148,6 +155,10 @@ const Detail: React.FC = () => {
                             </Rating>
                             <Description>{getDescription()}</Description>
                             <DateBook><FaCalendar /> {getDate()}</DateBook>
+                            <AdminButton to={`/catalog/editbook/${id}`}>
+                                <EditIcon />
+                                <span>Editar</span>
+                            </AdminButton>
                         </TextContainer>
                     </BookInfo>
                     <BookContent>
@@ -171,14 +182,14 @@ const Detail: React.FC = () => {
                         </CopyList>
                     </BookContent>
                     <Content>
-                        <Title>Livros relacionados a { bookCollection }</Title>
-                    <BooksSection collection={bookCollection} title="" biblioData={books} />
-                    <Footer/>
+                        <Title>Livros relacionados a {bookCollection}</Title>
+                        <BooksSection collection={bookCollection} title="" biblioData={books} />
+                        <Footer />
                     </Content>
                 </BookSection>
             ) : (
                 <p>Carregando...</p>
-                )}
+            )}
         </Container>
     );
 };

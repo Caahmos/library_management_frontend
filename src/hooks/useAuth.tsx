@@ -1,114 +1,124 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import type { LoginStaffRequest } from "../model/Staff/LoginStaffRequest";
+import type { LoginStaffResponse } from "../model/Staff/LoginStaffResponse";
 import axios, { AxiosError } from "axios";
 import api from "../utils/api";
 import useFlashMessage from "./useFlashMessages";
-import type { LoginStaffResponse } from "../model/Staff/LoginStaffResponse";
 import { useNavigate } from "react-router-dom";
 
 interface IAuthContext {
-    logged: boolean;
-    userData: LoginStaffResponse | null;
-    signIn(user: LoginStaffRequest): void;
-    signOut(): void;
+  logged: boolean;
+  userData: LoginStaffResponse | null;
+  signIn(user: LoginStaffRequest): void;
+  signOut(): void;
 }
 
 const AuthContext = createContext({} as IAuthContext);
 
 interface IAuthProviderProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
+}
+
+function isTokenExpired(token: string): boolean {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const now = Math.floor(Date.now() / 1000);
+    return payload.exp < now;
+  } catch (e) {
+    return true;
+  }
 }
 
 const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
-    const { setFlashMessage } = useFlashMessage();
-    const [logged, setLogged] = useState<boolean>(() => {
-        const isLogged = localStorage.getItem('@library_management:token');
+  const { setFlashMessage } = useFlashMessage();
+  const navigate = useNavigate();
 
-        if(isLogged){
-            return true;
-        }else{
-            return false;
-        };
+  const [logged, setLogged] = useState<boolean>(() => {
+    const token = localStorage.getItem('@library_management:token');
+    if (token) {
+      const parsed = JSON.parse(token);
+      return !isTokenExpired(parsed);
+    }
+    return false;
+  });
 
-    });
-    const [userData, setuserData] = useState<LoginStaffResponse | null>(() => {
-        const userExists = localStorage.getItem('@library_management:user');
+  const [userData, setUserData] = useState<LoginStaffResponse | null>(() => {
+    const user = localStorage.getItem('@library_management:user');
+    const token = localStorage.getItem('@library_management:token');
+    if (user && token && !isTokenExpired(JSON.parse(token))) {
+      return JSON.parse(user);
+    }
+    return null;
+  });
 
-        if(userExists){
-            return JSON.parse(userExists)
-        }else{
-            return null
-        }
-    });
-    const navigate = useNavigate();
+  const signIn = async (staffData: LoginStaffRequest) => {
+    let msgText = '';
+    let msgType = '';
 
-    const signIn = async (staffData: LoginStaffRequest) => {
-        let msgText = '';
-        let msgType = '';
+    try {
+      const response = await api.post('/staff/login', staffData);
+      const data = response.data;
+      authUser(data.staffLogged);
+      msgText = data.message;
+      msgType = 'success';
+    } catch (error) {
+      const err = error as AxiosError;
+      console.error(err);
+      msgText = err.response?.data
+        ? (err.response.data as { message: string }).message
+        : 'Erro desconhecido';
+      msgType = 'error';
+    }
 
-        try {
-            const response = await api.post('/staff/login', staffData);
-            const data = response.data;
-            authUser(data.staffLogged);
-            msgText = data.message;
-            msgType = 'success';
-        } catch (error) {
-            const err = error as AxiosError;
-            console.error(err);
-            if (err.response && err.response.data) {
-                msgText = (err.response.data as { message: string }).message;
-            } else {
-                msgText = 'Erro desconhecido';
-            }
-            msgType = 'error';
-        }
+    setFlashMessage(msgText, msgType);
+  };
 
-        setFlashMessage(msgText, msgType);
-    };
+  const signOut = () => {
+    localStorage.removeItem('@library_management:token');
+    localStorage.removeItem('@library_management:user');
+    setLogged(false);
+    setUserData(null);
+    setFlashMessage('Saiu com sucesso!', 'success');
+    navigate('/');
+  };
 
-    const signOut = () => {
-        localStorage.removeItem('@library_management:token');
-        localStorage.removeItem('@library_management:user');
-        setLogged(false);
-        setuserData(null);
-        let msgText = 'Saiu com sucesso!';
-        let msgType = 'success';
-        setFlashMessage(msgText, msgType);
-        navigate('/')
-    };
+  const authUser = (data: LoginStaffResponse) => {
+    if (data.token) {
+      localStorage.setItem('@library_management:token', JSON.stringify(data.token));
+      localStorage.setItem('@library_management:user', JSON.stringify(data));
+      api.defaults.headers.Authorization = `Bearer ${data.token}`;
+      setLogged(true);
+      setUserData(data);
+    }
+  };
 
-    const authUser = (data: LoginStaffResponse) => {
-        if (data.token) {
-            localStorage.setItem('@library_management:token', JSON.stringify(data.token));
-            localStorage.setItem('@library_management:user', JSON.stringify(data));
-            api.defaults.headers.Authorization = `Bearer ${data.token}`;
-            setLogged(true);
-            setuserData(data);
-        }
-    };
+  useEffect(() => {
+    const tokenRaw = localStorage.getItem('@library_management:token');
+    const userRaw = localStorage.getItem('@library_management:user');
 
-    useEffect(() => {
-        const token = localStorage.getItem('@library_management:token');
-        const data = localStorage.getItem('@library_management:user');
-        if (token) {
-            api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`;
-            setLogged(true);
-        }
-        if (data) {
-            setuserData(JSON.parse(data));
-        }
-    }, []);
+    if (tokenRaw && userRaw) {
+      const token = JSON.parse(tokenRaw);
 
-    return (
-        <AuthContext.Provider value={{ logged, userData, signIn, signOut }}>
-            {children}
-        </AuthContext.Provider>
-    );
+      if (isTokenExpired(token)) {
+        signOut();
+      } else {
+        api.defaults.headers.Authorization = `Bearer ${token}`;
+        setLogged(true);
+        setUserData(JSON.parse(userRaw));
+      }
+    }
+  }, []);
+
+  return (
+    <AuthContext.Provider value={{ logged, userData, signIn, signOut }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 const useAuth = () => {
-    const context = useContext(AuthContext);
-    return context;
+  const context = useContext(AuthContext);
+  return context;
 };
 
 export { AuthProvider, useAuth };

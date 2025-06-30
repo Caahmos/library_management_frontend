@@ -82,3 +82,18 @@ export const Dropdown = styled.div<DropdownProps>`
     background: ${({ theme }) => theme.colors.success || "#00a293"};
   }
 `;
+
+export const SelectMethod = styled.select`
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.white};
+  border: none;
+  outline: none;
+  margin-right: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  
+  option {
+    background: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.white};
+  }
+`;

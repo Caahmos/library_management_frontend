@@ -1,6 +1,6 @@
 import React from "react";
 import type { InputHTMLAttributes } from 'react';
-import { Container, StyledInputContainer, StyledInput, IconWrapper, Dropdown, CloseButton } from "./styles";
+import { Container, StyledInputContainer, StyledInput, IconWrapper, Dropdown, CloseButton, SelectMethod } from "./styles";
 import type { Biblio } from "../../../../model/Biblio/Biblio/SearchBiblioResponse";
 import BookSearch from "../../BookSearch";
 import { IoCloseSharp } from "react-icons/io5";
@@ -12,6 +12,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     icon?: React.ReactNode;
     searchResults?: Biblio[];
     isOpen: boolean;
+    method: string;
+    onChangeMethod: (value: string) => void;
 }
 
 const SearchInput: React.FC<InputProps> = ({ icon, searchResults, isOpen, ...props }) => {
@@ -22,7 +24,13 @@ const SearchInput: React.FC<InputProps> = ({ icon, searchResults, isOpen, ...pro
             <StyledInputContainer>
                 {icon && <IconWrapper>{icon}</IconWrapper>}
                 <StyledInput {...props} />
-                <CloseButton onClick={() => { close() }}>
+
+                <SelectMethod value={props.method} onChange={(e) => props.onChangeMethod(e.target.value)}>
+                    <option value="title">Título</option>
+                    <option value="author">Autor</option>
+                </SelectMethod>
+
+                <CloseButton onClick={() => close()}>
                     <IoCloseSharp />
                 </CloseButton>
             </StyledInputContainer>

@@ -144,9 +144,9 @@ const Detail: React.FC = () => {
             const foundDate = bookInfo.biblio_field.find(
                 (field) => field.tag === 260 && field.subfield_cd === 'c'
             );
-            return foundDate ? foundDate.field_data : '0000';
+            return foundDate ? foundDate.field_data : 'Data';
         }
-        return '0000';
+        return 'Data';
     };
 
     const getPages = (): string => {

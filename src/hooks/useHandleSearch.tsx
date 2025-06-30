@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 interface IFilter {
     collection: string;
@@ -10,6 +10,8 @@ interface IFilter {
 
 interface IHandleSearch {
     searchText: string;
+    method: string;
+    setMethod: (method: string) => void;
     filterData: IFilter;
     changeFilter: (data: IFilter) => void;
     changeSearchText: (search: string) => void;
@@ -26,8 +28,9 @@ const Context = createContext<IHandleSearch | undefined>(undefined);
 
 const HandleSearchProvider: React.FC<IHandleProviderProps> = ({ children }) => {
     const [searchText, setSearchText] = useState('');
+    const [method, setMethod] = useState<string>('title');
     const [isOpen, setIsOpen] = useState(false);
-    
+
     const [filterData, setFilterData] = useState<IFilter>({
         collection: "",
         date: "",
@@ -36,11 +39,11 @@ const HandleSearchProvider: React.FC<IHandleProviderProps> = ({ children }) => {
         viewStyle: "block"
     });
 
-    const changeOpen = (searchText: string) => { 
+    const changeOpen = (searchText: string) => {
         setIsOpen(searchText.length > 0);
     };
-    
-    const changeSearchText = (searchText: string) => { 
+
+    const changeSearchText = (searchText: string) => {
         setSearchText(searchText);
     };
 
@@ -49,7 +52,7 @@ const HandleSearchProvider: React.FC<IHandleProviderProps> = ({ children }) => {
     };
 
     const close = () => {
-        if(isOpen){
+        if (isOpen) {
             setIsOpen(prev => !prev);
         } else {
             setIsOpen(false);
@@ -58,7 +61,17 @@ const HandleSearchProvider: React.FC<IHandleProviderProps> = ({ children }) => {
     };
 
     return (
-        <Context.Provider value={{ searchText, isOpen, changeSearchText, changeOpen, close, filterData, changeFilter }}>
+        <Context.Provider value={{
+            searchText,
+            isOpen,
+            changeSearchText,
+            changeOpen,
+            close,
+            filterData,
+            changeFilter,
+            method,         
+            setMethod       
+        }}>
             {children}
         </Context.Provider>
     );

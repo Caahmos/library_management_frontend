@@ -13,8 +13,8 @@ import {
 import SearchInput from '../Forms/SearchInput';
 
 const Header: React.FC = () => {
-  const {isOpenMenu, open} = useMenu();
-  const { changeOpen, isOpen, searchText, changeSearchText } = useHandleSearch();
+  const { isOpenMenu, open } = useMenu();
+  const { changeOpen, isOpen, searchText, changeSearchText, method, setMethod } = useHandleSearch();
 
   const [books, setBooks] = useState<Biblio[]>([]);
   const [token, setToken] = useState(
@@ -30,7 +30,7 @@ const Header: React.FC = () => {
   };
 
   useEffect(() => {
-    api.get(`/biblio/search?method=title&data=${searchText}`, {
+    api.get(`/biblio/search?method=${method}&data=${searchText}`, {
       headers: {
         Authorization: `Bearer ${JSON.parse(token)}`
       }
@@ -41,7 +41,7 @@ const Header: React.FC = () => {
       .catch((err) => {
         console.log(err)
       })
-  }, [searchText]);
+  }, [searchText, method]);
 
   return (
     <Container>
@@ -55,6 +55,8 @@ const Header: React.FC = () => {
         value={searchText}
         isOpen={isOpen || false}
         searchResults={books}
+        method={method}
+        onChangeMethod={setMethod}
       />
     </Container>
   );

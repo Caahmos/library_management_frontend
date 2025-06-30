@@ -47,6 +47,8 @@ const Detail: React.FC = () => {
     const [bookCopies, setBookCopies] = useState<Copies[]>([]);
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
     const [subfieldsDescriptions, setSubfieldsDescriptions] = useState<string[]>();
+    const defaultImage = 'http://localhost:5000/imgs/biblio/semcapa.png';
+    const [imageSrc, setImageSrc] = useState(defaultImage);
     const token = localStorage.getItem("@library_management:token") || "";
     const { userData } = useAuth();
 
@@ -78,6 +80,11 @@ const Detail: React.FC = () => {
         })
             .then((response) => {
                 setBookInfo(response.data.biblio);
+                const imageUrl = response.data.biblio.BiblioMedia?.[0]?.imageUrl;
+                setImageSrc(imageUrl
+                    ? `http://localhost:5000/imgs/biblio/${imageUrl}`
+                    : defaultImage
+                );
                 setSubfieldsDescriptions(response.data.subfieldsDescriptions);
                 setBookCollection(response.data.collection.description);
             })
@@ -168,7 +175,11 @@ const Detail: React.FC = () => {
             {bookInfo && bookInfo.BiblioMedia ? (
                 <BookSection>
                     <BookImage>
-                        <img src={`http://localhost:5000/imgs/biblio/${bookInfo.BiblioMedia[0]?.imageUrl || 'semcapa.png'}`} alt="Capa do Livro" />
+                        <img
+                            src={imageSrc}
+                            onError={() => setImageSrc(defaultImage)}
+                            alt="Capa do Livro"
+                        />
                     </BookImage>
                     <BookInfo>
                         <TextContainer>

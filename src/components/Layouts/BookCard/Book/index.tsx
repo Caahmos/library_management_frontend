@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   Info,
@@ -18,19 +19,35 @@ interface BookCard {
 }
 
 const Book: React.FC<BookCard> = ({ img, title, author, rank, id }) => {
+  const defaultImage = 'http://localhost:5000/imgs/biblio/semcapa.png';
+  const formattedImage = img
+    ? `http://localhost:5000/imgs/biblio/${img}`
+    : defaultImage;
 
-  const imagemFormatada = `http://localhost:5000/imgs/biblio/${img}`;
+  const [imageSrc, setImageSrc] = useState(defaultImage);
+
+  useEffect(() => {
+    if (img) {
+      const imgLoader = new Image();
+      imgLoader.src = formattedImage;
+      imgLoader.onload = () => setImageSrc(formattedImage);
+      imgLoader.onerror = () => setImageSrc(defaultImage);
+    }
+  }, [img]);
 
   return (
     <Container to={`/catalog/detail/${id}`}>
-      <ImageBook src={imagemFormatada} />
+      <ImageBook src={imageSrc} alt={title} />
       <Info>
         <Title>{title}</Title>
         <Author>por: <span>{author}</span></Author>
-        <Rating>rank {rank}<FaStar /></Rating>
+        <Rating>
+          rank {rank}
+          <FaStar />
+        </Rating>
       </Info>
     </Container>
   );
-}
+};
 
 export default Book;

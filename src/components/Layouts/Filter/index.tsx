@@ -114,8 +114,9 @@ const Filter: React.FC = () => {
           <Option value="list">Lista</Option>
         </Select>
       </Filters>
-      <Clean>
-        <ClearFiltersIcon title='Remover filtros' onClick={removeFilters} />
+      <Clean onClick={removeFilters}>
+        <ClearFiltersIcon title='Remover filtros' />
+        <span>Limpar Filtros</span>
       </Clean>
     </Container>
   );

@@ -36,6 +36,8 @@ import ReturnButton from "../../../Layouts/ReturnButton";
 import type { ViewStatusRequest } from "../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest";
 import BooksSection from "../../../Layouts/BooksSection";
 import Footer from "../../../Layouts/Footer";
+import { useAuth } from '../../../../hooks/useAuth';
+
 
 const Detail: React.FC = () => {
     const { id } = useParams();
@@ -46,6 +48,7 @@ const Detail: React.FC = () => {
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
     const [subfieldsDescriptions, setSubfieldsDescriptions] = useState<string[]>();
     const token = localStorage.getItem("@library_management:token") || "";
+    const { userData } = useAuth();
 
     useEffect(() => {
         const el = document.getElementById("top");
@@ -181,10 +184,12 @@ const Detail: React.FC = () => {
                                 <DateBook><FaBookmark title="Número de páginas" /> {getPages()}</DateBook>
                                 <DateBook><FaBarcode title="ISBN" /> {getIsbn()}</DateBook>
                             </InfoItems>
-                            <AdminButton to={`/catalog/editbook/${id}`}>
-                                <EditIcon />
-                                <span>Editar</span>
-                            </AdminButton>
+                            {
+                                userData?.admin_flg && <AdminButton to={`/catalog/editbook/${id}`}>
+                                    <EditIcon />
+                                    <span>Editar</span>
+                                </AdminButton>
+                            }
                         </TextContainer>
                     </BookInfo>
                     <BookContent>

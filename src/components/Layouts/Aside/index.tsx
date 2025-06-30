@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { IoBook, IoSettingsSharp, IoLogOutOutline, IoClose } from "react-icons/io5";
+import {
+  IoBook, IoSettingsSharp, IoLogOutOutline, IoClose
+} from "react-icons/io5";
 import { ImBooks } from "react-icons/im";
 import { FaBookOpenReader } from "react-icons/fa6";
 import { BiSolidDashboard } from "react-icons/bi";
 import { MdAdminPanelSettings } from "react-icons/md";
+
 import { useTheme } from '../../../hooks/useTheme';
 import { useAuth } from '../../../hooks/useAuth';
 import { useMenu } from '../../../hooks/useOpenMenu';
@@ -25,7 +28,7 @@ import {
   Button,
   Logo,
   CloseMenuButton
-} from './styles'
+} from './styles';
 
 import ThemeChanger from '../ThemeChanger';
 
@@ -35,7 +38,6 @@ const Aside: React.FC = () => {
   const { theme, changeTheme } = useTheme();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [selectTheme, setSelectTheme] = useState(theme.title === 'dark');
-
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   const handleToggle = (index: number) => {
@@ -67,10 +69,12 @@ const Aside: React.FC = () => {
             <IoClose />
           </CloseMenuButton>
         </Brand>
+
         <MenuContainer>
           <TitleContainer>Menus</TitleContainer>
+
           <li>
-            <MenuItem to='/' onClick={() => handleToggle(3)}>
+            <MenuItem to='/' onClick={() => handleToggle(99)}>
               <CircleIcon>
                 <BiSolidDashboard />
               </CircleIcon>
@@ -78,57 +82,72 @@ const Aside: React.FC = () => {
             </MenuItem>
           </li>
 
-          <li>
-            <MenuItem to='/circulation' onClick={() => handleToggle(0)}>
-              <CircleIcon>
-                <FaBookOpenReader />
-              </CircleIcon>
-              <p>Circulação</p>
-            </MenuItem>
-            <AccordionContent $isopen={openIndex === 0}>
-              <ul>
-                <li>Subitem 1</li>
-                <li>Subitem 2</li>
-              </ul>
-            </AccordionContent>
-          </li>
+          {userData?.circ_flg && (
+            <li>
+              <MenuItem to='/circulation' onClick={() => handleToggle(0)}>
+                <CircleIcon>
+                  <FaBookOpenReader />
+                </CircleIcon>
+                <p>Circulação</p>
+              </MenuItem>
+              <AccordionContent $isopen={openIndex === 0}>
+                <ul>
+                  <li>Subitem 1</li>
+                  <li>Subitem 2</li>
+                </ul>
+              </AccordionContent>
+            </li>
+          )}
 
-          <li>
-            <MenuItem to='/catalog' onClick={() => handleToggle(1)}>
+          {userData?.catalog_flg
+            ? (
+              <li>
+                <MenuItem to='/catalog' onClick={() => handleToggle(1)}>
+                  <CircleIcon>
+                    <IoBook />
+                  </CircleIcon>
+                  <p>Catálogo</p>
+                </MenuItem>
+                <AccordionContent $isopen={openIndex === 1}>
+                  <ul>
+                    <li><LinkItem to='/catalog/createbook'>Registrar Livro</LinkItem></li>
+                  </ul>
+                </AccordionContent>
+              </li>
+            )
+            : <MenuItem to='/catalog' onClick={() => handleToggle(1)}>
               <CircleIcon>
                 <IoBook />
               </CircleIcon>
               <p>Catálogo</p>
             </MenuItem>
-            <AccordionContent $isopen={openIndex === 1}>
-              <ul>
-                <li><LinkItem to={'/catalog/createbook'}>Registrar Livro</LinkItem></li>
-              </ul>
-            </AccordionContent>
-          </li>
+          }
 
-          <li>
-            <MenuItem to='/admin' onClick={() => handleToggle(2)}>
-              <CircleIcon>
-                <MdAdminPanelSettings />
-              </CircleIcon>
-              <p>Admin</p>
-            </MenuItem>
-            <AccordionContent $isopen={openIndex === 2}>
-              <ul>
-                <li><LinkItem to={'/admin/adminlist'}>Lista de Admins</LinkItem></li>
-                <li><LinkItem to={'/mbrclassify'}>Tipos de Usuários</LinkItem></li>
-                <li><LinkItem to={'/material'}>Tipos de Materiais</LinkItem></li>
-                <li><LinkItem to={'/collection'}>Tipos de Categorias</LinkItem></li>
-                <li><LinkItem to={'/mbrfield'}>Campos de Usuários</LinkItem></li>
-              </ul>
-            </AccordionContent>
-          </li>
+          {userData?.admin_flg && (
+            <li>
+              <MenuItem to='/admin' onClick={() => handleToggle(2)}>
+                <CircleIcon>
+                  <MdAdminPanelSettings />
+                </CircleIcon>
+                <p>Admin</p>
+              </MenuItem>
+              <AccordionContent $isopen={openIndex === 2}>
+                <ul>
+                  <li><LinkItem to='/admin/adminlist'>Lista de Admins</LinkItem></li>
+                  <li><LinkItem to='/mbrclassify'>Tipos de Usuários</LinkItem></li>
+                  <li><LinkItem to='/material'>Tipos de Materiais</LinkItem></li>
+                  <li><LinkItem to='/collection'>Tipos de Categorias</LinkItem></li>
+                  <li><LinkItem to='/mbrfield'>Campos de Usuários</LinkItem></li>
+                </ul>
+              </AccordionContent>
+            </li>
+          )}
         </MenuContainer>
+
         <MenuContainer>
           <TitleContainer>Configurações</TitleContainer>
           <li>
-            <ListItem onClick={() => changeTheme()}>
+            <ListItem onClick={changeTheme}>
               <CircleIcon>
                 <ThemeChanger theme={selectTheme} />
               </CircleIcon>
@@ -137,13 +156,12 @@ const Aside: React.FC = () => {
           </li>
         </MenuContainer>
       </MenuBox>
+
       <UserBox>
         <Profile>
           <User>
             <p>Bem-vindo(a)</p>
-            <span>
-              {userData?.first_name || 'Carlos'}
-            </span>
+            <span>{userData?.first_name || 'Usuário'}</span>
           </User>
           <Button onClick={signOut}>
             <IoLogOutOutline />
@@ -153,6 +171,6 @@ const Aside: React.FC = () => {
       </UserBox>
     </Container>
   );
-}
+};
 
 export default Aside;

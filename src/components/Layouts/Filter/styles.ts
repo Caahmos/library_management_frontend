@@ -91,6 +91,10 @@ export const Option = styled.option`
 export const Clean = styled.button`
   cursor: pointer;
   transition: 0.4s all ease-in;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  gap: 7px;
   background-color: transparent;
   color: ${(props) => props.theme.colors.white};
 

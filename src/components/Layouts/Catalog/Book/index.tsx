@@ -11,6 +11,7 @@ import {
 
 import { FaStar } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
+import { useAuth } from '../../../../hooks/useAuth';
 
 interface BookCard {
   id: number;
@@ -22,14 +23,17 @@ interface BookCard {
 }
 
 const Book: React.FC<BookCard> = ({ img, title, author, rank, id, order }) => {
-
+  const { userData } = useAuth();
   const imagemFormatada = `http://localhost:5000/imgs/biblio/${img}`;
 
   return (
     <Container>
-      <Circle to={`/catalog/editbook/${id}`}>
-        <MdEdit title='Editar livro' />
-      </Circle>
+      {
+        userData?.admin_flg &&
+        <Circle to={`/catalog/editbook/${id}`}>
+          <MdEdit title='Editar livro' />
+        </Circle>
+      }
       <Content to={`/catalog/detail/${id}`}>
         <Info>
           <ImageBook src={imagemFormatada} />

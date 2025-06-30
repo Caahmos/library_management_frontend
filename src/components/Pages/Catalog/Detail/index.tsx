@@ -5,6 +5,7 @@ import type { Copies } from "../../../../model/Biblio/BiblioCopy/Copies";
 import api from "../../../../utils/api";
 import { Rating as StarsRating } from 'react-simple-star-rating';
 import { FaCalendar } from "react-icons/fa";
+import { FaBookmark, FaBarcode } from "react-icons/fa6";
 
 import {
     Container,
@@ -28,7 +29,8 @@ import {
     CopyStatus,
     CopyButtons,
     AdminButton,
-    EditIcon
+    EditIcon,
+    InfoItems
 } from './styles';
 import ReturnButton from "../../../Layouts/ReturnButton";
 import type { ViewStatusRequest } from "../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest";
@@ -117,6 +119,16 @@ const Detail: React.FC = () => {
         return description?.description
     };
 
+    const getIsbn = (): string => {
+        if (bookInfo?.biblio_field) {
+            const foundDescription = bookInfo.biblio_field.find(
+                (field) => field.tag === 20 && field.subfield_cd === 'a'
+            );
+            return foundDescription ? foundDescription.field_data : 'ISBN';
+        }
+        return 'ISBN';
+    };
+
     const getDescription = (): string => {
         if (bookInfo?.biblio_field) {
             const foundDescription = bookInfo.biblio_field.find(
@@ -137,6 +149,16 @@ const Detail: React.FC = () => {
         return '0000';
     };
 
+    const getPages = (): string => {
+        if (bookInfo?.biblio_field) {
+            const foundDate = bookInfo.biblio_field.find(
+                (field) => field.tag === 300 && field.subfield_cd === 'a'
+            );
+            return foundDate ? foundDate.field_data : 'Páginas';
+        }
+        return 'Páginas';
+    };
+
     return (
         <Container id="top">
             <ReturnButton />
@@ -154,7 +176,11 @@ const Detail: React.FC = () => {
                                 ({bookInfo?.BiblioMedia[0]?.count_ranks || 0})
                             </Rating>
                             <Description>{getDescription()}</Description>
-                            <DateBook><FaCalendar /> {getDate()}</DateBook>
+                            <InfoItems>
+                                <DateBook><FaCalendar title="Data de lançamento" /> {getDate()}</DateBook>
+                                <DateBook><FaBookmark title="Número de páginas" /> {getPages()}</DateBook>
+                                <DateBook><FaBarcode title="ISBN" /> {getIsbn()}</DateBook>
+                            </InfoItems>
                             <AdminButton to={`/catalog/editbook/${id}`}>
                                 <EditIcon />
                                 <span>Editar</span>
@@ -174,7 +200,7 @@ const Detail: React.FC = () => {
                                                 <CopyDescription>{copyInfo.copy_desc || 'Sem descrição'}</CopyDescription>
                                             </CopyTitle>
                                             <CopyStatus>{styledStatusCode(copyInfo.status_cd)}</CopyStatus>
-                                            <CopyButtons>Botão</CopyButtons>
+                                            {/* <CopyButtons>Botão</CopyButtons> */}
                                         </CopyItem>
                                     ))
                                     : <p>Nenhuma cópia desse livro encontrada.</p>

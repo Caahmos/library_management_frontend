@@ -44,6 +44,9 @@ export const BookInfo = styled.div`
     width: 200px;
   }
   
+  @media (max-width: 1000px) {
+    width: 100%;
+  }
 `;
 
 export const TextContainer = styled.div`
@@ -55,6 +58,7 @@ export const TextContainer = styled.div`
   gap: 10px;
 
   @media (max-width: 800px) {
+    width: 100%;
     padding: 0px;
   }
 `;
@@ -138,11 +142,11 @@ export const AdminButton = styled(Link)`
   width: fit-content;
   margin-top: 30px;
   padding: 15px;
+  color: ${props => props.theme.colors.white};
   border: 1px solid ${props => props.theme.colors.success};
   display: flex;
   align-items: center;
   gap: 7px;
-  color: white;
   text-decoration: none;
   border-radius: 7px;
 
@@ -155,3 +159,9 @@ export const AdminButton = styled(Link)`
 export const EditIcon = styled(MdEdit)`
   color: ${props => props.theme.colors.success}
 `
+
+export const InfoItems = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 20px;
+`;

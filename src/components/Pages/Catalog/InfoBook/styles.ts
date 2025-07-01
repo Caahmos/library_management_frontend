@@ -15,7 +15,7 @@ export const Header = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-`
+`;
 
 export const BookSection = styled.div`
   justify-self: center;
@@ -91,9 +91,12 @@ export const Overlay = styled(Link)`
     cursor: pointer;
     background-color: #000000d9;
 
-    /* box-shadow: 3px 1px 31px 5px ${(props) => props.theme.colors.success + '22'};
-    -webkit-box-shadow: 3px 1px 31px 5px ${(props) => props.theme.colors.success + '22'};
-    -moz-box-shadow: 3px 1px 31px 5px ${(props) => props.theme.colors.success + '22'}; */
+    /* box-shadow: 3px 1px 31px 5px ${(props) =>
+      props.theme.colors.success + "22"};
+    -webkit-box-shadow: 3px 1px 31px 5px ${(props) =>
+      props.theme.colors.success + "22"};
+    -moz-box-shadow: 3px 1px 31px 5px ${(props) =>
+      props.theme.colors.success + "22"}; */
 
     ${EditIcon} {
       color: ${(props) => props.theme.colors.success};
@@ -166,7 +169,7 @@ export const Title = styled.p`
 `;
 
 export const CopyList = styled.ul`
-  margin: 20px 0 20px 0;
+  margin: 15px 0 20px 0;
 `;
 
 export const CopyItem = styled.li`
@@ -176,6 +179,34 @@ export const CopyItem = styled.li`
   list-style: none;
   background-color: ${(props) => props.theme.colors.secondary};
   display: flex;
+`;
+
+export const FormContainer = styled.form`
+  margin-top: 20px;
+  justify-content: space-between;
+  align-items: center;
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+  flex-wrap: wrap;
+  padding: 20px;
+  list-style: none;
+  background-color: ${(props) => props.theme.colors.secondary};
+  display: flex;
+`;
+
+export const FormItem = styled.div`
+  display: flex;
+  gap: 20px;
+
+  @media (max-width: 1000px) {
+    width: 100%;
+  }
+`;
+
+export const FormGroup = styled.div`
+  @media (max-width: 1000px) {
+    width: 100%;
+  }
 `;
 
 export const CopyTitle = styled.div`
@@ -231,3 +262,43 @@ export const InfoItem = styled.div`
 export const Tag = styled.div``;
 
 export const Data = styled.div``;
+
+export const Button = styled(Link)`
+  display: inline-block;
+  padding: 18px;
+  background-color: ${(props) => props.theme.colors.success};
+  color: ${(props) => props.theme.colors.white};
+  border-radius: 5px;
+  text-decoration: none;
+
+  &:hover {
+    opacity: 0.9;
+    transition: ease 0.4s all;
+  }
+
+  @media (max-width: 1000px) {
+    width: 100%;
+  }
+`;
+
+export const Functions = styled.div`
+    display: flex;
+
+    @media screen and (max-width: 1200px) {
+    width: 50%;
+    height: 20%;
+  }
+`
+
+export const LinkIcon = styled.div`
+  text-decoration: none;
+  color: ${props => props.theme.colors.success};
+  font-size: 20px;
+  margin-right: 8px;
+  transition: 0.3s all ease-in;
+  cursor: pointer;
+  
+  &:hover{
+    opacity: 0.7;
+  }
+`

@@ -1,15 +1,17 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import type { Biblio } from "../../../../model/Biblio/Biblio/SearchBiblioResponse";
 import type { Copies } from "../../../../model/Biblio/BiblioCopy/Copies";
 import api from "../../../../utils/api";
-import { Rating as StarsRating } from 'react-simple-star-rating';
-import { FaCalendar } from "react-icons/fa";
-import { FaBookmark, FaBarcode } from "react-icons/fa6";
+import { AxiosError } from 'axios';
+import useFlashMessage from '../../../../hooks/useFlashMessages';
+import { useNavigate } from 'react-router-dom';
+import { MdDelete } from "react-icons/md";
 
 import {
     Container,
     Header,
+    Button,
     BookSection,
     BookImage,
     BookInfo,
@@ -30,18 +32,17 @@ import {
     CopyNumber,
     CopyDescription,
     CopyStatus,
-    CopyButtons,
+    Functions,
+    LinkIcon,
     AdminButton,
     EditIcon,
     Image,
 } from './styles';
 import ReturnButton from "../../../Layouts/ReturnButton";
 import type { ViewStatusRequest } from "../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest";
-import BooksSection from "../../../Layouts/BooksSection";
-import Footer from "../../../Layouts/Footer";
 import { useAuth } from '../../../../hooks/useAuth';
 import type { BiblioField } from "../../../Layouts/Forms/Catalog/EditBookForm";
-
+import { FaEdit } from "react-icons/fa";
 
 const InfoBook: React.FC = () => {
     const { id } = useParams();
@@ -52,10 +53,16 @@ const InfoBook: React.FC = () => {
     const [bookCopies, setBookCopies] = useState<Copies[]>([]);
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
     const [subfieldsDescriptions, setSubfieldsDescriptions] = useState<string[]>();
+    const [formCopy, setFormCopy] = useState({
+        barcode_nmbr: '',
+        copy_desc: '',
+    });
     const defaultImage = 'http://localhost:5000/imgs/biblio/semcapa.png';
     const [imageSrc, setImageSrc] = useState(defaultImage);
     const token = localStorage.getItem("@library_management:token") || "";
     const { userData } = useAuth();
+    const navigate = useNavigate();
+    const { setFlashMessage } = useFlashMessage();
 
     useEffect(() => {
         const el = document.getElementById("top");
@@ -136,6 +143,39 @@ const InfoBook: React.FC = () => {
         return description?.description
     };
 
+    const deleteCopy = async (copyid: number) => {
+        let msgText = '';
+        let msgType = '';
+
+        try {
+            const response = await api.delete(`/bibliocopy/delete/${copyid}`, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            });
+
+            msgText = response.data.message;
+            msgType = 'success';
+
+            setBookCopies((prev) => prev.filter(copy => copy.id !== copyid));
+        } catch (error) {
+            const err = error as AxiosError;
+            console.error(err);
+            if (err.response && err.response.data) {
+                msgText = (err.response.data as { message: string }).message;
+            } else {
+                msgText = 'Erro desconhecido';
+            }
+            msgType = 'error';
+        }
+
+        setFlashMessage(msgText, msgType);
+    };
+
+    const editCopy = async (copyid: number) => {
+        navigate(`/catalog/editcopy/${id}/${copyid}`);
+    };
+
     const combinedSubfields = useMemo(() => {
         if (!bookFields || !subfieldsDescriptions) return [];
 
@@ -147,7 +187,7 @@ const InfoBook: React.FC = () => {
 
 
     return (
-        <Container id="top" onClick={() => { console.log(bookFields), console.log(subfieldsDescriptions) }}>
+        <Container id="top" onClick={() => { console.log(bookCopies), console.log(subfieldsDescriptions) }}>
             <ReturnButton />
             {bookInfo && bookInfo.BiblioMedia ? (
                 <>
@@ -192,23 +232,28 @@ const InfoBook: React.FC = () => {
                                         bookCopies.map((copyInfo) => (
                                             <CopyItem key={copyInfo.copyid}>
                                                 <CopyTitle>
-                                                    <CopyNumber>{copyInfo.copyid}</CopyNumber>
+                                                    <CopyNumber>{copyInfo.barcode_nmbr}</CopyNumber>
                                                     <CopyDescription>{copyInfo.copy_desc || 'Sem descrição'}</CopyDescription>
                                                 </CopyTitle>
                                                 <CopyStatus>{styledStatusCode(copyInfo.status_cd)}</CopyStatus>
-                                                {/* <CopyButtons>Botão</CopyButtons> */}
+                                                <Functions>
+                                                    <LinkIcon><FaEdit title='Editar Cópia' onClick={() => editCopy(copyInfo.id)}/></LinkIcon>
+                                                    <LinkIcon><MdDelete title='Deletar Cópia' onClick={() => deleteCopy(copyInfo.id)} /></LinkIcon>
+                                                </Functions>
                                             </CopyItem>
                                         ))
                                         : <p>Nenhuma cópia desse livro encontrada.</p>
                                 }
+                                <Button to={`/catalog/createcopy/${id}`}>Adicionar Cópia</Button>
                             </CopyList>
                         </BookContent>
                     </BookSection>
                 </>
             ) : (
                 <p>Carregando...</p>
-            )}
-        </Container>
+            )
+            }
+        </Container >
     );
 };
 

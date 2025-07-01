@@ -39,7 +39,7 @@ const Book: React.FC<BookCard> = ({ img, title, author, rank, id, order }) => {
   return (
     <Container>
       {userData?.admin_flg && (
-        <Circle to={`/catalog/editbook/${id}`}>
+        <Circle to={`/catalog/info/${id}`}>
           <MdEdit title="Editar livro" />
         </Circle>
       )}

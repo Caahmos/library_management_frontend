@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Container,
   Info,
+  Image as ImageEdit,
   ImageBook,
   Title,
   Author,
@@ -37,7 +38,7 @@ const Book: React.FC<BookCard> = ({ img, title, author, rank, id }) => {
 
   return (
     <Container to={`/catalog/detail/${id}`}>
-      <ImageBook src={imageSrc} alt={title} />
+      <ImageEdit image={imageSrc}/>
       <Info>
         <Title>{title}</Title>
         <Author>por: <span>{author}</span></Author>

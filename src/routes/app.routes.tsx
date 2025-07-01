@@ -27,6 +27,7 @@ import EditMemberField from "../components/Pages/Admin/EditMemberField";
 import CreateBook from "../components/Pages/Catalog/CreateBook";
 import EditBook from "../components/Pages/Catalog/EditBook";
 import ChangeImageBook from "../components/Pages/Catalog/ChangeImageBook";
+import InfoBook from "../components/Pages/Catalog/InfoBook";
 
 const AppRoutes: React.FC = () => {
 
@@ -40,6 +41,7 @@ const AppRoutes: React.FC = () => {
                         
                         <Route path="/catalog" element={<Catalog />} />
                         <Route path="/catalog/detail/:id" element={<Detail />} />
+                        <Route path="/catalog/info/:id" element={<InfoBook />} />
                         <Route path="/catalog/editbook/:id" element={<EditBook />} />
                         <Route path="/catalog/createbook" element={<CreateBook />} />
                         <Route path="/catalog/changeimage/:id" element={<ChangeImageBook />} />

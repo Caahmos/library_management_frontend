@@ -4,7 +4,7 @@ import {
   Content,
   Circle,
   Info,
-  ImageBook,
+  Image,
   Title,
   Author,
   Rating
@@ -46,7 +46,7 @@ const Book: React.FC<BookCard> = ({ img, title, author, rank, id, order }) => {
 
       <Content to={`/catalog/detail/${id}`}>
         <Info>
-          <ImageBook src={imageSrc} onError={handleImageError} alt={title} />
+          <Image image={imageSrc}/>
           <Title>{title}</Title>
           <Author>
             por: <span>{author}</span>

@@ -1,12 +1,21 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { MdOutlineMore } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 
 export const Container = styled.div`
   width: 100%;
   height: 100vh;
   color: ${(props) => props.theme.colors.white};
 `;
+
+export const Header = styled.div`
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`
 
 export const BookSection = styled.div`
   justify-self: center;
@@ -23,14 +32,32 @@ export const BookSection = styled.div`
   }
 `;
 
+export const EditIcon = styled(MdEdit)`
+  color: ${(props) => props.theme.colors.success};
+  margin-right: 7px;
+`;
+
 export const BookImage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 
   > img {
     width: 300px;
   }
+`;
+
+export const UpdateImage = styled.div`
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  /* border: 1px solid ${(props) => props.theme.colors.white}; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
 `;
 
 export const Image = styled.div<{ image: string }>`
@@ -45,6 +72,35 @@ export const Image = styled.div<{ image: string }>`
   background-color: #000;
 `;
 
+export const Overlay = styled(Link)`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #00000055;
+  transition: 0.4s all ease-in;
+
+  ${EditIcon} {
+    transition: 0.4s all ease-in;
+    color: ${(props) => props.theme.colors.white};
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: #000000d9;
+
+    /* box-shadow: 3px 1px 31px 5px ${(props) => props.theme.colors.success + '22'};
+    -webkit-box-shadow: 3px 1px 31px 5px ${(props) => props.theme.colors.success + '22'};
+    -moz-box-shadow: 3px 1px 31px 5px ${(props) => props.theme.colors.success + '22'}; */
+
+    ${EditIcon} {
+      color: ${(props) => props.theme.colors.success};
+    }
+  }
+`;
+
 export const BookInfo = styled.div`
   width: 60%;
   border-radius: 10px;
@@ -55,7 +111,7 @@ export const BookInfo = styled.div`
   > img {
     width: 200px;
   }
-  
+
   @media (max-width: 1000px) {
     width: 100%;
   }
@@ -76,7 +132,7 @@ export const TextContainer = styled.div`
 `;
 
 export const BookTitle = styled.div`
-  font-size: 1.5rem;
+  font-size: 2rem;
 `;
 
 export const Author = styled.div`
@@ -93,7 +149,6 @@ export const Description = styled.div`
 `;
 
 export const DateBook = styled.div`
-
   > svg {
     color: ${(props) => props.theme.colors.success};
   }
@@ -106,21 +161,13 @@ export const BookContent = styled.div`
   flex-direction: column;
 `;
 
-export const Content = styled.div`
-  width: 100%;
-  color: ${(props) => props.theme.colors.white};
-  display: flex;
-  flex-direction: column;
-`;
-
 export const Title = styled.p`
   font-size: 2rem;
 `;
 
 export const CopyList = styled.ul`
-margin: 20px 0 20px 0;
-
-`
+  margin: 20px 0 20px 0;
+`;
 
 export const CopyItem = styled.li`
   justify-content: space-between;
@@ -129,51 +176,58 @@ export const CopyItem = styled.li`
   list-style: none;
   background-color: ${(props) => props.theme.colors.secondary};
   display: flex;
-`
+`;
 
 export const CopyTitle = styled.div`
   display: flex;
-`
+`;
 
-export const CopyNumber = styled.div`
-  
-`
+export const CopyNumber = styled.div``;
 
 export const CopyDescription = styled.span`
   margin-left: 30px;
-`
+`;
 
-export const CopyStatus = styled.span`
-`
+export const CopyStatus = styled.span``;
 
-export const CopyButtons = styled.div`
-
-`
+export const CopyButtons = styled.div``;
 
 export const AdminButton = styled(Link)`
-  width: fit-content;
+  width: 100%;
   margin-top: 30px;
   padding: 15px;
-  color: ${props => props.theme.colors.white};
-  border: 1px solid ${props => props.theme.colors.success};
+  color: ${(props) => props.theme.colors.white};
+  border: 1px solid ${(props) => props.theme.colors.success};
   display: flex;
   align-items: center;
-  gap: 7px;
+  justify-content: center;
   text-decoration: none;
   border-radius: 7px;
 
-  &:hover{
+  &:hover {
     transition: 0.4s ease;
-    background-color: ${props => props.theme.colors.success + '55'};
+    background-color: ${(props) => props.theme.colors.success + "55"};
   }
-`
+`;
 
-export const EditIcon = styled(MdOutlineMore)`
-  color: ${props => props.theme.colors.success}
-`
+export const Content = styled.div`
+  width: 100%;
+  color: ${(props) => props.theme.colors.white};
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+`;
 
-export const InfoItems = styled.div`
+export const InfoItem = styled.div`
   width: 100%;
   display: flex;
-  gap: 20px;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: ${(props) => props.theme.colors.secondary};
+  border-radius: 12px;
 `;
+
+export const Tag = styled.div``;
+
+export const Data = styled.div``;

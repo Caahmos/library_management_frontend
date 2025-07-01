@@ -27,6 +27,18 @@ export const ImageBook = styled.img`
   background-color: #fff;
 `;
 
+export const Image = styled.div<{ image: string }>`
+  width: 152px;
+  height: 228px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url(${(props) => props.image});
+  background-size: cover;
+  background-color: #000;
+`;
+
 export const Title = styled.span`
   font-weight: bold;
   margin-bottom: 7px;

@@ -33,6 +33,7 @@ export interface BiblioField {
   tag: string;
   subfield_cd: string;
   field_data: string;
+  title?: string;
 }
 
 const FIELD_PRIORITY_MAP: Record<string, keyof Biblio> = {

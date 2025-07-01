@@ -12,6 +12,7 @@ import {
     Content,
     BookSection,
     BookImage,
+    Image,
     BookInfo,
     TextContainer,
     BookTitle,
@@ -175,11 +176,7 @@ const Detail: React.FC = () => {
             {bookInfo && bookInfo.BiblioMedia ? (
                 <BookSection>
                     <BookImage>
-                        <img
-                            src={imageSrc}
-                            onError={() => setImageSrc(defaultImage)}
-                            alt="Capa do Livro"
-                        />
+                        <Image image={imageSrc}/>
                     </BookImage>
                     <BookInfo>
                         <TextContainer>
@@ -196,9 +193,9 @@ const Detail: React.FC = () => {
                                 <DateBook><FaBarcode title="ISBN" /> {getIsbn()}</DateBook>
                             </InfoItems>
                             {
-                                userData?.admin_flg && <AdminButton to={`/catalog/editbook/${id}`}>
+                                userData?.admin_flg && <AdminButton to={`/catalog/info/${id}`}>
                                     <EditIcon />
-                                    <span>Editar</span>
+                                    <span>Mais Informações</span>
                                 </AdminButton>
                             }
                         </TextContainer>

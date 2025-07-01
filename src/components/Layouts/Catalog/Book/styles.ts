@@ -47,6 +47,19 @@ export const Circle = styled(Link)`
   z-index: 5;
 `
 
+export const Image = styled.div<{ image: string }>`
+  width: 100px;
+  height: 150px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: center;
+  background-image: url(${(props) => props.image});
+  background-size: cover;
+  background-color: #000;
+`;
+
 export const ImageBook = styled.img`
   width: 100px;
   align-self: center;

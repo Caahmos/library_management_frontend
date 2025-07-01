@@ -10,8 +10,10 @@ export const Container = styled.div`
 
 export const Header = styled.div`
   width: 100%;
-  height: 80px;
+  margin: 20px 0 20px 0;
+  padding: 0 20px 0 20px;
   display: flex;
+  text-align: center;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -283,6 +285,7 @@ export const Button = styled(Link)`
 
 export const Functions = styled.div`
     display: flex;
+    justify-content: end;
 
     @media screen and (max-width: 1200px) {
     width: 50%;

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import InputForm from "../../../Input/index";
 import {
   Container,
@@ -11,18 +11,27 @@ import type { Copies } from "../../../../../../model/Biblio/BiblioCopy/Copies";
 import type { Biblio } from "../../../../../../model/Biblio/Biblio/SearchBiblioResponse";
 
 interface IRegisterCopy {
+  type: string;
   button_text: string;
   handleSubmit(data: RegisterCopyRequest): void;
   biblioData?: Biblio;
   copyData?: Copies | undefined;
 }
 
-
-const CreateCopyForm: React.FC<IRegisterCopy> = ({ button_text, biblioData, copyData, handleSubmit }) => {
+const CreateCopyForm: React.FC<IRegisterCopy> = ({ button_text, biblioData, copyData, type, handleSubmit }) => {
   const [formCopy, setFormCopy] = useState({
     barcode_nmbr: '',
     copy_desc: '',
   });
+
+  useEffect(() => {
+    if (copyData) {
+      setFormCopy({
+        barcode_nmbr: copyData.barcode_nmbr || '',
+        copy_desc: copyData.copy_desc || '',
+      });
+    }
+  }, [copyData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -31,25 +40,24 @@ const CreateCopyForm: React.FC<IRegisterCopy> = ({ button_text, biblioData, copy
 
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    handleSubmit(formCopy)
+    handleSubmit(formCopy);
   };
 
   return (
     <Container onSubmit={handleOnSubmit}>
-      {
-        biblioData ?
+      {biblioData ? (
         <>
-          <Author>Adicionar uma cópia para:</Author>
+          <Author>{type}</Author>
           <Title>{biblioData.title}</Title>
         </>
-        :
+      ) : (
         <Title>Adicionar Cópia</Title>
-      }
+      )}
+
       <InputForm
         label="Tombo: *"
         name="barcode_nmbr"
-        value={copyData?.barcode_nmbr || ''}
+        value={formCopy.barcode_nmbr}
         required
         onChange={handleChange}
       />
@@ -57,7 +65,7 @@ const CreateCopyForm: React.FC<IRegisterCopy> = ({ button_text, biblioData, copy
       <InputForm
         label="Descrição *"
         name="copy_desc"
-        value={copyData?.copy_desc || ''}
+        value={formCopy.copy_desc}
         required
         onChange={handleChange}
       />

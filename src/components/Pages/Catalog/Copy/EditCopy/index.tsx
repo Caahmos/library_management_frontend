@@ -53,6 +53,15 @@ const EditCopy: React.FC = () => {
 
     }, [bookCopies, id, bibid, token]);
 
+    const handleBackClick = () => {
+        const lastPage = localStorage.getItem('lastPage');
+        if (lastPage) {
+            navigate(lastPage);
+        } else {
+            navigate(-1);
+        }
+    };
+
     const handleOnSubmit = async (formCopy: RegisterCopyRequest) => {
         console.log(formCopy);
 
@@ -76,14 +85,14 @@ const EditCopy: React.FC = () => {
         }
 
         setFlashMessage(msgText, msgType);
-        msgType === 'success' && navigate(`/catalog`);
+        msgType === 'success' && handleBackClick();
     }
 
     return (
         <Container onClick={() => {console.log(bookCopies)}}>
             <ReturnButton />
             <FormContainer>
-                <CreateCopyForm button_text='Adicionar Cópia' copyData={bookCopies} biblioData={book} handleSubmit={handleOnSubmit} />
+                <CreateCopyForm type="Editar uma cópia de:" button_text='Adicionar Cópia' copyData={bookCopies} biblioData={book} handleSubmit={handleOnSubmit} />
             </FormContainer>
         </Container>
     )

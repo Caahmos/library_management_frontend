@@ -52,6 +52,15 @@ const CreateCopy: React.FC = () => {
 
     }, [bookCopies, id, bibid]);
 
+    const handleBackClick = () => {
+        const lastPage = localStorage.getItem('lastPage');
+        if (lastPage) {
+            navigate(lastPage);
+        } else {
+            navigate(-1);
+        }
+    };
+
     const handleOnSubmit = async (formCopy: RegisterCopyRequest) => {
         console.log(formCopy);
 
@@ -75,14 +84,14 @@ const CreateCopy: React.FC = () => {
         }
 
         setFlashMessage(msgText, msgType);
-        msgType === 'success' && navigate(`/catalog`);
+        msgType === 'success' && handleBackClick();
     }
 
     return (
-        <Container onClick={() => { console.log(book)}}>
+        <Container onClick={() => { console.log(book) }}>
             <ReturnButton />
             <FormContainer>
-                <CreateCopyForm button_text='Adicionar Cópia' copyData={bookCopies} biblioData={book} handleSubmit={handleOnSubmit} />
+                <CreateCopyForm type="Adicionar uma cópia para:" button_text='Adicionar Cópia' copyData={bookCopies} biblioData={book} handleSubmit={handleOnSubmit} />
             </FormContainer>
         </Container>
     )

@@ -34,7 +34,10 @@ import {
     CopyStatus,
     Functions,
     LinkIcon,
+    DeleteContent,
+    DeleteInput,
     AdminButton,
+    DeleteButton,
     EditIcon,
     Image,
 } from './styles';
@@ -53,6 +56,8 @@ const InfoBook: React.FC = () => {
     const [bookCopies, setBookCopies] = useState<Copies[]>([]);
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
     const [subfieldsDescriptions, setSubfieldsDescriptions] = useState<string[]>();
+    const [confirmDelete, setConfirmDelete] = useState("");
+    const [isDeleting, setIsDeleting] = useState(false);
     const [formCopy, setFormCopy] = useState({
         barcode_nmbr: '',
         copy_desc: '',
@@ -176,6 +181,39 @@ const InfoBook: React.FC = () => {
         navigate(`/catalog/editcopy/${id}/${copyid}`);
     };
 
+    const handleDeleteBibliography = async () => {
+        let msgText = '';
+        let msgType = '';
+
+        if (confirmDelete !== 'deletar bibliografia') {
+            setFlashMessage('Digite exatamente "deletar bibliografia" para confirmar.', 'error');
+            return;
+        }
+
+        try {
+            const response = await api.delete(`/biblio/delete/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            });
+            const data = response.data;
+            msgText = data.message;
+            msgType = 'success';
+        } catch (error) {
+            const err = error as AxiosError;
+            console.error(err);
+            if (err.response && err.response.data) {
+                msgText = (err.response.data as { message: string }).message;
+            } else {
+                msgText = 'Erro desconhecido';
+            }
+            msgType = 'error';
+        }
+
+        setFlashMessage(msgText, msgType);
+        if (msgType === 'success') navigate('/catalog');
+    };
+
     const combinedSubfields = useMemo(() => {
         if (!bookFields || !subfieldsDescriptions) return [];
 
@@ -237,7 +275,7 @@ const InfoBook: React.FC = () => {
                                                 </CopyTitle>
                                                 <CopyStatus>{styledStatusCode(copyInfo.status_cd)}</CopyStatus>
                                                 <Functions>
-                                                    <LinkIcon><FaEdit title='Editar Cópia' onClick={() => editCopy(copyInfo.id)}/></LinkIcon>
+                                                    <LinkIcon><FaEdit title='Editar Cópia' onClick={() => editCopy(copyInfo.id)} /></LinkIcon>
                                                     <LinkIcon><MdDelete title='Deletar Cópia' onClick={() => deleteCopy(copyInfo.id)} /></LinkIcon>
                                                 </Functions>
                                             </CopyItem>
@@ -246,6 +284,25 @@ const InfoBook: React.FC = () => {
                                 }
                                 <Button to={`/catalog/createcopy/${id}`}>Adicionar Cópia</Button>
                             </CopyList>
+                            <DeleteContent>
+                                <Title>Exclusão de bibliografia</Title>
+                                <p>
+                                    Digite <strong style={{ color: confirmDelete === "deletar bibliografia" ? "#2ecc71" : "inherit" }}>
+                                        "deletar bibliografia"
+                                    </strong> para habilitar a exclusão:
+                                </p>
+                                <DeleteInput
+                                    type="text"
+                                    value={confirmDelete}
+                                    onChange={(e) => setConfirmDelete(e.target.value)}
+                                    placeholder='Digite exatamente: deletar bibliografia'
+                                />
+                                <DeleteButton
+                                    onClick={handleDeleteBibliography}
+                                >
+                                    Confirmar Exclusão
+                                </DeleteButton>
+                            </DeleteContent>
                         </BookContent>
                     </BookSection>
                 </>

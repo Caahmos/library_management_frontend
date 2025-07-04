@@ -4,7 +4,7 @@ import { Container } from "./styles";
 const Circulation: React.FC = () => {
     return (
         <Container>
-
+            
         </Container>
     );
 };

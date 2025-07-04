@@ -176,6 +176,7 @@ export const CopyList = styled.ul`
 
 export const CopyItem = styled.li`
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 15px;
   padding: 20px;
   list-style: none;
@@ -243,6 +244,53 @@ export const AdminButton = styled(Link)`
   }
 `;
 
+export const DeleteContent = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`
+
+export const DeleteInput = styled.input`
+  width: 450px;
+  padding: 20px;
+  margin-bottom: 10px;
+  color: ${(props) => props.theme.colors.white};
+  border: 1px solid ${(props) => props.theme.colors.white};
+  background-color: ${(props) => props.theme.colors.secondary};
+  border-radius: 7px;
+  transition: border 0.3s ease;
+
+  &:hover,
+  &:focus {
+    border: 1px solid ${(props) => props.theme.colors.warning};
+  }
+
+  @media (max-width: 1000px) {
+    width: 100%;
+  }
+`;
+
+export const DeleteButton = styled.button`
+  width: 100%;
+  padding: 20px;
+  color: ${(props) => props.theme.colors.white};
+  border: 1px solid ${(props) => props.theme.colors.warning};
+  background-color: ${(props) => props.theme.colors.warning};
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 7px;
+  transition: 0.4s ease;
+  
+  &:hover {
+    color: ${(props) => props.theme.colors.warning};
+    background-color: ${(props) => props.theme.colors.primary};
+  }
+`;
+
 export const Content = styled.div`
   width: 100%;
   color: ${(props) => props.theme.colors.white};
@@ -284,24 +332,24 @@ export const Button = styled(Link)`
 `;
 
 export const Functions = styled.div`
-    display: flex;
-    justify-content: end;
+  display: flex;
+  justify-content: end;
 
-    @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 1200px) {
     width: 50%;
     height: 20%;
   }
-`
+`;
 
 export const LinkIcon = styled.div`
   text-decoration: none;
-  color: ${props => props.theme.colors.success};
+  color: ${(props) => props.theme.colors.success};
   font-size: 20px;
   margin-right: 8px;
   transition: 0.3s all ease-in;
   cursor: pointer;
-  
-  &:hover{
+
+  &:hover {
     opacity: 0.7;
   }
-`
+`;

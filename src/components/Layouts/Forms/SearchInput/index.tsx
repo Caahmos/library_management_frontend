@@ -28,6 +28,7 @@ const SearchInput: React.FC<InputProps> = ({ icon, searchResults, isOpen, ...pro
                 <SelectMethod value={props.method} onChange={(e) => props.onChangeMethod(e.target.value)}>
                     <option value="title">Título</option>
                     <option value="author">Autor</option>
+                    <option value="barcode">Código</option>
                 </SelectMethod>
 
                 <CloseButton onClick={() => close()}>

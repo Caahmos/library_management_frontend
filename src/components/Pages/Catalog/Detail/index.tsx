@@ -209,7 +209,7 @@ const Detail: React.FC = () => {
                                     bookCopies.map((copyInfo) => (
                                         <CopyItem key={copyInfo.copyid}>
                                             <CopyTitle>
-                                                <CopyNumber>{copyInfo.copyid}</CopyNumber>
+                                                <CopyNumber>{copyInfo.barcode_nmbr}</CopyNumber>
                                                 <CopyDescription>{copyInfo.copy_desc || 'Sem descrição'}</CopyDescription>
                                             </CopyTitle>
                                             <CopyStatus>{styledStatusCode(copyInfo.status_cd)}</CopyStatus>

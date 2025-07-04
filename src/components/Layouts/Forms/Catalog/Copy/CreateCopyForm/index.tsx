@@ -60,7 +60,7 @@ const CreateCopyForm: React.FC<IRegisterCopy> = ({
     <Container onSubmit={handleOnSubmit}>
       {biblioData ? (
         <>
-          <Author>{type === 'editar' ? 'Editar uma cópia de:' : 'Criar cópia de:'}</Author>
+          <Author>{type === 'editar' ? 'Editar uma cópia de:' : 'Adicionar uma cópia de:'}</Author>
           <Title>{biblioData.title}</Title>
         </>
       ) : (

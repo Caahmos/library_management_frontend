@@ -14,10 +14,12 @@ import CreateCopyForm from '../../../../Layouts/Forms/Catalog/Copy/CreateCopyFor
 import type { RegisterCopyRequest } from '../../../../../model/Biblio/BiblioCopy/RegisterCopyRequest';
 import type { Biblio } from '../../../../../model/Biblio/Biblio/SearchBiblioResponse';
 import type { Copies } from '../../../../../model/Biblio/BiblioCopy/Copies';
+import type { ViewStatusRequest } from '../../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest';
 
 const EditCopy: React.FC = () => {
     const [bookCopies, setBookCopies] = useState<Copies>();
     const [book, setBook] = useState<Biblio>();
+    const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
     const token = localStorage.getItem("@library_management:token") || "";
     const navigate = useNavigate();
     const { setFlashMessage } = useFlashMessage();
@@ -52,6 +54,20 @@ const EditCopy: React.FC = () => {
             })
 
     }, [bookCopies, id, bibid, token]);
+
+    useEffect(() => {
+        api.get(`/bibliohist/viewstatus`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        })
+            .then((response) => {
+                setCodeStatus(response.data.statusDescription);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [id, token, bookCopies]);
 
     const handleBackClick = () => {
         const lastPage = localStorage.getItem('lastPage');
@@ -89,10 +105,10 @@ const EditCopy: React.FC = () => {
     }
 
     return (
-        <Container onClick={() => {console.log(bookCopies)}}>
+        <Container onClick={() => { console.log(bookCopies) }}>
             <ReturnButton />
             <FormContainer>
-                <CreateCopyForm type="Editar uma cópia de:" button_text='Adicionar Cópia' copyData={bookCopies} biblioData={book} handleSubmit={handleOnSubmit} />
+                <CreateCopyForm type="editar" button_text='Adicionar Cópia' copyData={bookCopies} biblioData={book} statusData={codeStatus} handleSubmit={handleOnSubmit} />
             </FormContainer>
         </Container>
     )

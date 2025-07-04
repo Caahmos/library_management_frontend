@@ -38,3 +38,42 @@ export const Button = styled.button`
     transition: ease 0.4s all;
   }
 `;
+
+export const Select = styled.select`
+  padding: 10px;
+  color: ${(props) => props.theme.colors.white};
+  background-color: ${(props) => props.theme.colors.primary};
+  cursor: pointer;
+  transition: background-color 0.3s, border 0.3s;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  padding: 18px;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${(props) => props.theme.colors.primary};
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${(props) => props.theme.colors.tertiary};
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: ${(props) => props.theme.colors.tertiary};
+  }
+
+  @media screen and (max-width: 1000px){
+    width: 100%;
+  }
+`;
+
+export const Option = styled.option`
+  color: ${(props) => props.theme.colors.white};
+  background-color: ${(props) => props.theme.colors.primary};
+`;

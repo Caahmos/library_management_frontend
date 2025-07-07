@@ -59,7 +59,7 @@ export const UpdateImage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 300;
+  z-index: 20;
 `;
 
 export const Image = styled.div<{ image: string }>`
@@ -235,6 +235,7 @@ export const AdminButton = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   text-decoration: none;
   border-radius: 7px;
 
@@ -320,6 +321,7 @@ export const Button = styled(Link)`
   color: ${(props) => props.theme.colors.white};
   border-radius: 5px;
   text-decoration: none;
+  text-align: center;
 
   &:hover {
     opacity: 0.9;

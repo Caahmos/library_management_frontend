@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, type JSX } from "react";
 import { useParams } from "react-router-dom";
 import type { Biblio } from "../../../../model/Biblio/Biblio/SearchBiblioResponse";
 import type { Copies } from "../../../../model/Biblio/BiblioCopy/Copies";
@@ -6,6 +6,7 @@ import api from "../../../../utils/api";
 import { Rating as StarsRating } from 'react-simple-star-rating';
 import { FaCalendar } from "react-icons/fa";
 import { FaBookmark, FaBarcode } from "react-icons/fa6";
+import { BsStars } from "react-icons/bs";
 
 import {
     Container,
@@ -140,14 +141,18 @@ const Detail: React.FC = () => {
         return 'ISBN';
     };
 
-    const getDescription = (): string => {
+    const getDescription = (): JSX.Element | string => {
         if (bookInfo?.biblio_field) {
             const foundDescription = bookInfo.biblio_field.find(
                 (field) => field.tag === 520 && field.subfield_cd === 'a'
             );
-            return foundDescription ? foundDescription.field_data : 'Nenhuma descrição encontrada ...';
+            return foundDescription ? (
+                foundDescription.field_data
+            ) : (
+                <span><BsStars /> Gerando descrição...</span>
+            );
         }
-        return 'Nenhuma descrição encontrada ...';
+        return <span><BsStars /> Gerando descrição...</span>;
     };
 
     const getDate = (): string => {
@@ -176,7 +181,7 @@ const Detail: React.FC = () => {
             {bookInfo && bookInfo.BiblioMedia ? (
                 <BookSection>
                     <BookImage>
-                        <Image image={imageSrc}/>
+                        <Image image={imageSrc} />
                     </BookImage>
                     <BookInfo>
                         <TextContainer>

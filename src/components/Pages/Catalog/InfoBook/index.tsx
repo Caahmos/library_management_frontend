@@ -46,12 +46,15 @@ import type { ViewStatusRequest } from "../../../../model/Biblio/BiblioStatusHis
 import { useAuth } from '../../../../hooks/useAuth';
 import type { BiblioField } from "../../../Layouts/Forms/Catalog/EditBookForm";
 import { FaEdit } from "react-icons/fa";
+import type { ViewHistsRequest } from "../../../../model/Biblio/BiblioStatusHist/ViewHistRequest";
+import BookHistItem from "../../../Layouts/Catalog/BookHistItem";
 
 const InfoBook: React.FC = () => {
     const { id } = useParams();
     const [books, setBooks] = useState<Biblio[]>([]);
     const [bookCollection, setBookCollection] = useState<string>("");
     const [bookInfo, setBookInfo] = useState<Biblio>();
+    const [bookHist, setBookHist] = useState<ViewHistsRequest[]>();
     const [bookFields, setBookFields] = useState<BiblioField[]>();
     const [bookCopies, setBookCopies] = useState<Copies[]>([]);
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
@@ -140,6 +143,21 @@ const InfoBook: React.FC = () => {
             });
     }, [id, token, bookCopies]);
 
+    useEffect(() => {
+        api.get(`/bibliohist/viewhists?bibid=${id}&limit=${10}`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        })
+            .then((response) => {
+                setBookHist(response.data.foundHists);
+                console.log(response.data.foundHists);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [id, token]);
+
     const styledStatusCode = (code: string) => {
         const description = codeStatus.find((item) => {
             return item.code === code
@@ -223,6 +241,13 @@ const InfoBook: React.FC = () => {
         }));
     }, [bookFields, subfieldsDescriptions]);
 
+    const fields = [
+        { key: 'barcode_nmbr', label: 'Tombo' },
+        { key: 'mbrid', label: 'Membro' },
+        { key: 'status_cd', label: 'Status' },
+        { key: 'due_back_dt', label: 'Devolução' },
+    ];
+
 
     return (
         <Container id="top" onClick={() => { console.log(bookCopies), console.log(subfieldsDescriptions) }}>
@@ -283,6 +308,14 @@ const InfoBook: React.FC = () => {
                                         : <p>Nenhuma cópia desse livro encontrada.</p>
                                 }
                                 <Button to={`/catalog/createcopy/${id}`}>Adicionar Cópia</Button>
+                            </CopyList>
+                            <CopyList>
+                                <Title>Histórico</Title>
+                                {
+                                    bookHist ?
+                                        <BookHistItem fields={fields} items={bookHist} />
+                                        : <p>Nenhum histórico encontrado.</p>
+                                }
                             </CopyList>
                             <DeleteContent>
                                 <Title>Exclusão de bibliografia</Title>

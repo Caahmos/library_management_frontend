@@ -26,7 +26,7 @@ export const GridContainer = styled.div`
   grid-template-areas:
     "SG1 SG2 SG3 SG4 AG"
     "CG1 CG1 CG2 CG2 AG"
-    "RG RG RG RG .";
+    "RG RG RG RG AG";
 
   @media screen and (max-width: 1280px) {
     grid-template-columns: 1fr;
@@ -154,9 +154,14 @@ export const RetangleGrid = styled.div`
 
 export const AsideGrid = styled.div`
   grid-area: AG;
-  padding: 10px;
+  min-height: fit-content;
+  `;
+
+export const AsideContent = styled.div`
   background-color: ${(props) => props.theme.colors.secondary};
-`;
+  padding: 20px;
+  min-height: 1000px;
+`
 
 export const ChartGrid1 = styled.div`
   grid-area: CG1;

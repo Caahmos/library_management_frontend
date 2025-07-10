@@ -92,8 +92,10 @@ const Aside: React.FC = () => {
               </MenuItem>
               <AccordionContent $isopen={openIndex === 0}>
                 <ul>
-                  <li>Subitem 1</li>
-                  <li>Subitem 2</li>
+                  <li><LinkItem to='/admin/adminlist'>Check-in</LinkItem></li>
+                  <li><LinkItem to='/mbrclassify'>Buscar Membro</LinkItem></li>
+                  <li><LinkItem to='/material'>Adicionar Membro</LinkItem></li>
+                  <li><LinkItem to='/collection'>Membros Bloqueados</LinkItem></li>
                 </ul>
               </AccordionContent>
             </li>

@@ -1,0 +1,43 @@
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+
+export const Container = styled(Link)`
+    text-decoration: none;
+    color: ${props => props.theme.colors.white};
+    width: 100%;
+    /* border-bottom: 1px solid ${props => props.theme.colors.white}; */
+    padding: 15px 0px;
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+`
+export const Content = styled.div`
+    display: flex;
+`
+
+export const Count = styled.div`
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+`
+
+export const Info = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
+export const Image = styled.div`
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    background-color: ${(props) => props.theme.colors.tertiary};
+`
+
+export const Title = styled.div`
+`
+
+export const Author = styled.div`
+    font-size: 0.8rem;
+    color: ${props => props.theme.colors.success};
+`
+

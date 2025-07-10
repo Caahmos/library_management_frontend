@@ -22,10 +22,13 @@ import {
     IconUsers,
     IconBooks,
     IconCategory,
-    Title
+    Title,
+    AsideContent
 } from './styles';
 import type { ViewHistsRequest } from "../../../model/Biblio/BiblioStatusHist/ViewHistRequest";
 import BookHistViewItem from "../../Layouts/Catalog/BookHistItem";
+import type { ViewMembersRequest } from "../../../model/Member/Member/ViewMembersRequest";
+import MemberItem from "../../Layouts/Circulation/MemberItem";
 
 export interface StatusCount {
     status: string;
@@ -50,6 +53,7 @@ const Circulation: React.FC = () => {
     const [bookHist, setBookHist] = useState<ViewHistsRequest[]>();
     const [booksBalance, setBooksBalance] = useState<BookBalance>();
     const [membersBalance, setMembersBalance] = useState<MemberBalance>();
+    const [members, setMembers] = useState<ViewMembersRequest[]>();
     const token = localStorage.getItem("@library_management:token") || "";
 
     useEffect(() => {
@@ -91,6 +95,21 @@ const Circulation: React.FC = () => {
             .then((response) => {
                 setMembersBalance(response.data.balance);
                 console.log(response.data.balance);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [token]);
+    
+    useEffect(() => {
+        api.get(`/member/viewmembers?limit=15&sort=desc`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        })
+            .then((response) => {
+                setMembers(response.data.members);
+                console.log(response.data.members);
             })
             .catch((err) => {
                 console.error(err);
@@ -232,8 +251,18 @@ const Circulation: React.FC = () => {
                     )}
                 </ChartGrid2>
                 <AsideGrid>
-                    <Title>Membros Recentes</Title>
-
+                    <AsideContent>
+                        <Header>Membros Recentes</Header>
+                         {
+                        members && members.length > 0 ?
+                            members.map((member) => {
+                                return <MemberItem mbrid={member.mbrid} first_name={member.first_name} barcode_nmbr={member.barcode_nmbr}/>
+                            }) :
+                            <>
+                                Nenhum membro encontrado...
+                            </>
+                    }
+                    </AsideContent>
                 </AsideGrid>
             </GridContainer>
         </Container>

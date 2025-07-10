@@ -20,7 +20,7 @@ export const Container = styled.div`
     "CG1 CG1 CG2 CG2 AG"
     "RG RG RG RG .";
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 1280px) {
     grid-template-columns: 1fr;
     grid-template-rows: 120px 120px 120px 120px auto;
     grid-template-areas:
@@ -28,10 +28,10 @@ export const Container = styled.div`
       "SG2"
       "SG3"
       "SG4"
-      "AG"
-      "RG"
       "CG1"
-      "CG2";
+      "CG2"
+      "AG"
+      "RG";
   }
 `;
 
@@ -151,11 +151,17 @@ export const AsideGrid = styled.div`
 
 export const ChartGrid1 = styled.div`
   grid-area: CG1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   padding: 20px;
   background-color: ${(props) => props.theme.colors.secondary};
 `;
 export const ChartGrid2 = styled.div`
   grid-area: CG2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   padding: 20px;
   background-color: ${(props) => props.theme.colors.secondary};
 `;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { FiArrowUpRight } from "react-icons/fi";
 import api from "../../../utils/api";
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 
 import {
     Container,
@@ -36,11 +36,19 @@ export interface BookBalance {
     statusCounts: StatusCount[];
 }
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF6666', '#A28DFF', '#00B3AD'];
+export interface MemberBalance {
+    total: number;
+    blocked: number;
+    active: number;
+    recent: number;
+}
+
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#F27052', '#d62a2a', '#A28DFF', '#00B3AD'];
 
 const Circulation: React.FC = () => {
     const [bookHist, setBookHist] = useState<ViewHistsRequest[]>();
     const [booksBalance, setBooksBalance] = useState<BookBalance>();
+    const [membersBalance, setMembersBalance] = useState<MemberBalance>();
     const token = localStorage.getItem("@library_management:token") || "";
 
     useEffect(() => {
@@ -59,7 +67,7 @@ const Circulation: React.FC = () => {
     }, [token]);
 
     useEffect(() => {
-        api.get(`/biblioreports/balance`, {
+        api.get(`/biblioreports/booksbalance`, {
             headers: {
                 Authorization: `Bearer ${JSON.parse(token)}`
             }
@@ -73,12 +81,38 @@ const Circulation: React.FC = () => {
             });
     }, [token]);
 
+    useEffect(() => {
+        api.get(`/biblioreports/membersbalance`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        })
+            .then((response) => {
+                setMembersBalance(response.data.balance);
+                console.log(response.data.balance);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [token]);
+
     const fields = [
         { key: 'barcode_nmbr', label: 'Tombo' },
         { key: 'mbrid', label: 'Membro' },
         { key: 'status_cd', label: 'Status' },
         { key: 'due_back_dt', label: 'Devolução' },
     ];
+
+    const memberChartData = useMemo(() => {
+        if (!membersBalance) return [];
+
+        return [
+            { name: 'Total', qtd: membersBalance.total },
+            { name: 'Bloqueados', qtd: membersBalance.blocked },
+            { name: 'Ativos', qtd: membersBalance.active },
+            { name: 'Recentes', qtd: membersBalance.recent },
+        ];
+    }, [membersBalance]);
 
     return (
         <Container>
@@ -148,9 +182,9 @@ const Circulation: React.FC = () => {
                                     ord: "Encomendado",
                                     crt: "Corrigido"
                                 };
-                                
+
                                 const label = translations[props.payload.status] || props.payload.status;
-                               
+
                                 return [`${value}`, label];
                             }} />
                             <Legend
@@ -181,7 +215,19 @@ const Circulation: React.FC = () => {
                 )}
             </ChartGrid1>
             <ChartGrid2>
-                Balanço Membros
+                <Header>Balanço Membros</Header>
+                {memberChartData.length > 0 ? (
+                    <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={memberChartData}>
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Bar dataKey="qtd" fill="#F27052" radius={[4, 4, 0, 0]} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                ) : (
+                    <p>Carregando gráfico...</p>
+                )}
             </ChartGrid2>
             <AsideGrid>
                 <Title>Membros Recentes</Title>

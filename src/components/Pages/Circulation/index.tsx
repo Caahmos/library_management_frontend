@@ -5,6 +5,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, BarChart, Ba
 
 import {
     Container,
+    GridContainer,
     Header,
     Square1,
     Square2,
@@ -116,82 +117,64 @@ const Circulation: React.FC = () => {
 
     return (
         <Container>
-            <Square1 to={'/circulation/checkin'}>
-                <SquareContent>
-                    <SquareTitle>Check-in</SquareTitle>
-                    <SquareSpan>Acessar painel <FiArrowUpRight /></SquareSpan>
-                </SquareContent>
-                <IconAdm />
-            </Square1>
-            <Square2 to={'/circulation/findmember'}>
-                <SquareContent>
-                    <SquareTitle>Buscar Membro</SquareTitle>
-                    <SquareSpan>Acessar painel <FiArrowUpRight /></SquareSpan>
-                </SquareContent>
-                <IconUsers />
-            </Square2>
-            <Square3 to={'/circulation/registermember'}>
-                <SquareContent>
-                    <SquareTitle>Adicionar Membro</SquareTitle>
-                    <SquareSpan>Acessar painel <FiArrowUpRight /></SquareSpan>
-                </SquareContent>
-                <IconBooks />
-            </Square3>
-            <Square4 to={'/collection'}>
-                <SquareContent>
-                    <SquareTitle>Membros Bloqueados</SquareTitle>
-                    <SquareSpan>Acessar painel <FiArrowUpRight /></SquareSpan>
-                </SquareContent>
-                <IconCategory />
-            </Square4>
-            <RetangleGrid>
-                <Header>
-                    Aluguéis Atrasados
-                </Header>
-                {
-                    bookHist ?
-                        <BookHistViewItem fields={fields} items={bookHist} />
-                        : <p>Nenhum histórico encontrado.</p>
-                }
-            </RetangleGrid>
-            <ChartGrid1>
-                <Header>Balanço de Livros</Header>
-                {booksBalance?.statusCounts ? (
-                    <ResponsiveContainer width="100%" height={300}>
-                        <PieChart>
-                            <Pie
-                                data={booksBalance.statusCounts}
-                                dataKey="count"
-                                nameKey="status"
-                                cx="50%"
-                                cy="50%"
-                                outerRadius={100}
-                                labelLine={false}
-                            >
-                                {booksBalance.statusCounts.map((entry, index) => (
-                                    <Cell key={`cell-${entry.status}`} fill={COLORS[index % COLORS.length]} />
-                                ))}
-                            </Pie>
-                            <Tooltip formatter={(value: any, name: any, props: any) => {
-                                const translations: Record<string, string> = {
-                                    in: "Disponível",
-                                    out: "Emprestado",
-                                    hld: "Reservado",
-                                    dis: "Danificado",
-                                    lst: "Perdido",
-                                    ord: "Encomendado",
-                                    crt: "Corrigido"
-                                };
-
-                                const label = translations[props.payload.status] || props.payload.status;
-
-                                return [`${value}`, label];
-                            }} />
-                            <Legend
-                                layout="horizontal"
-                                verticalAlign="bottom"
-                                align="center"
-                                formatter={(value: any, entry: any) => {
+            <GridContainer>
+                <Square1 to={'/circulation/checkin'}>
+                    <SquareContent>
+                        <SquareTitle>Check-in</SquareTitle>
+                        <SquareSpan>Acessar painel <FiArrowUpRight /></SquareSpan>
+                    </SquareContent>
+                    <IconAdm />
+                </Square1>
+                <Square2 to={'/circulation/findmember'}>
+                    <SquareContent>
+                        <SquareTitle>Buscar Membro</SquareTitle>
+                        <SquareSpan>Acessar painel <FiArrowUpRight /></SquareSpan>
+                    </SquareContent>
+                    <IconUsers />
+                </Square2>
+                <Square3 to={'/circulation/registermember'}>
+                    <SquareContent>
+                        <SquareTitle>Adicionar Membro</SquareTitle>
+                        <SquareSpan>Acessar painel <FiArrowUpRight /></SquareSpan>
+                    </SquareContent>
+                    <IconBooks />
+                </Square3>
+                <Square4 to={'/collection'}>
+                    <SquareContent>
+                        <SquareTitle>Membros Bloqueados</SquareTitle>
+                        <SquareSpan>Acessar painel <FiArrowUpRight /></SquareSpan>
+                    </SquareContent>
+                    <IconCategory />
+                </Square4>
+                <RetangleGrid>
+                    <Header>
+                        Aluguéis Atrasados
+                    </Header>
+                    {
+                        bookHist ?
+                            <BookHistViewItem fields={fields} items={bookHist} />
+                            : <p>Nenhum histórico encontrado.</p>
+                    }
+                </RetangleGrid>
+                <ChartGrid1>
+                    <Header>Balanço de Livros</Header>
+                    {booksBalance?.statusCounts ? (
+                        <ResponsiveContainer width="100%" height={300}>
+                            <PieChart>
+                                <Pie
+                                    data={booksBalance.statusCounts}
+                                    dataKey="count"
+                                    nameKey="status"
+                                    cx="50%"
+                                    cy="50%"
+                                    outerRadius={100}
+                                    labelLine={false}
+                                >
+                                    {booksBalance.statusCounts.map((entry, index) => (
+                                        <Cell key={`cell-${entry.status}`} fill={COLORS[index % COLORS.length]} />
+                                    ))}
+                                </Pie>
+                                <Tooltip formatter={(value: any, name: any, props: any) => {
                                     const translations: Record<string, string> = {
                                         in: "Disponível",
                                         out: "Emprestado",
@@ -202,37 +185,57 @@ const Circulation: React.FC = () => {
                                         crt: "Corrigido"
                                     };
 
-                                    const label = translations[value] || value;
-                                    const count = entry?.payload?.count ?? 0;
+                                    const label = translations[props.payload.status] || props.payload.status;
 
-                                    return `${label} (${count})`;
-                                }}
-                            />
-                        </PieChart>
-                    </ResponsiveContainer>
-                ) : (
-                    <p>Carregando gráfico...</p>
-                )}
-            </ChartGrid1>
-            <ChartGrid2>
-                <Header>Balanço Membros</Header>
-                {memberChartData.length > 0 ? (
-                    <ResponsiveContainer width="100%" height={300}>
-                        <BarChart data={memberChartData}>
-                            <XAxis dataKey="name" />
-                            <YAxis />
-                            <Tooltip />
-                            <Bar dataKey="qtd" fill="#F27052" radius={[4, 4, 0, 0]} />
-                        </BarChart>
-                    </ResponsiveContainer>
-                ) : (
-                    <p>Carregando gráfico...</p>
-                )}
-            </ChartGrid2>
-            <AsideGrid>
-                <Title>Membros Recentes</Title>
+                                    return [`${value}`, label];
+                                }} />
+                                <Legend
+                                    layout="horizontal"
+                                    verticalAlign="bottom"
+                                    align="center"
+                                    formatter={(value: any, entry: any) => {
+                                        const translations: Record<string, string> = {
+                                            in: "Disponível",
+                                            out: "Emprestado",
+                                            hld: "Reservado",
+                                            dis: "Danificado",
+                                            lst: "Perdido",
+                                            ord: "Encomendado",
+                                            crt: "Corrigido"
+                                        };
 
-            </AsideGrid>
+                                        const label = translations[value] || value;
+                                        const count = entry?.payload?.count ?? 0;
+
+                                        return `${label} (${count})`;
+                                    }}
+                                />
+                            </PieChart>
+                        </ResponsiveContainer>
+                    ) : (
+                        <p>Carregando gráfico...</p>
+                    )}
+                </ChartGrid1>
+                <ChartGrid2>
+                    <Header>Balanço Membros</Header>
+                    {memberChartData.length > 0 ? (
+                        <ResponsiveContainer width="100%" height={300}>
+                            <BarChart data={memberChartData}>
+                                <XAxis dataKey="name" />
+                                <YAxis />
+                                <Tooltip />
+                                <Bar dataKey="qtd" fill="#F27052" radius={[4, 4, 0, 0]} />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    ) : (
+                        <p>Carregando gráfico...</p>
+                    )}
+                </ChartGrid2>
+                <AsideGrid>
+                    <Title>Membros Recentes</Title>
+
+                </AsideGrid>
+            </GridContainer>
         </Container>
     );
 }

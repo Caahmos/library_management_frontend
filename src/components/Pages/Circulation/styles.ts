@@ -17,8 +17,8 @@ export const Container = styled.div`
   grid-template-rows: 120px auto;
   grid-template-areas:
     "SG1 SG2 SG3 SG4 AG"
-    "RG RG RG RG AG"
-    "CG1 CG1 CG2 CG2 .";
+    "CG1 CG1 CG2 CG2 AG"
+    "RG RG RG RG .";
 
   @media screen and (max-width: 800px) {
     grid-template-columns: 1fr;
@@ -141,7 +141,6 @@ export const RetangleGrid = styled.div`
   color: ${(props) => props.theme.colors.white};
   display: flex;
   flex-direction: column;
-  gap: 20px;
 `;
 
 export const AsideGrid = styled.div`
@@ -152,10 +151,12 @@ export const AsideGrid = styled.div`
 
 export const ChartGrid1 = styled.div`
   grid-area: CG1;
+  padding: 20px;
   background-color: ${(props) => props.theme.colors.secondary};
 `;
 export const ChartGrid2 = styled.div`
   grid-area: CG2;
+  padding: 20px;
   background-color: ${(props) => props.theme.colors.secondary};
 `;
 

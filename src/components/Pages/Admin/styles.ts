@@ -154,7 +154,7 @@ export const RetangleGrid = styled.div`
 
 export const AsideGrid = styled.div`
   grid-area: AG;
-  padding: 10px;
+  padding: 20px;
   background-color: ${(props) => props.theme.colors.secondary};
 `;
 

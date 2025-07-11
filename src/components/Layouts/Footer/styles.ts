@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { FaGithub } from "react-icons/fa";
 
 export const Container = styled.footer`
     width: 100%;
@@ -28,4 +29,27 @@ export const Sign = styled.div`
     background-color: ${ props => props.theme.colors.primary };
     display: flex;
     justify-content: space-between;
+`
+
+export const GithubIcon = styled(FaGithub)`
+    font-size: 1rem;
+    color: ${ props => props.theme.colors.success };
+    `
+export const Copyright = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 5px;
+`
+
+export const AppAuthor = styled.a`
+    display: flex;
+    color: ${ props => props.theme.colors.white };
+    align-items: center;
+    text-decoration: none;
+    gap: 5px;
+    transition: 0.4s all ease;
+    
+    &:hover{
+        color: ${ props => props.theme.colors.success };
+    }
 `

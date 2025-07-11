@@ -3,7 +3,10 @@ import React from 'react';
 import {
     Container,
     Content,
-    Sign
+    Sign,
+    GithubIcon,
+    Copyright,
+    AppAuthor,
 } from './styles';
 
 const Footer: React.FC = () => {
@@ -15,7 +18,9 @@ const Footer: React.FC = () => {
             </Content>
             <Sign>
                 <p>Library App - Livros e Documentos</p>
-                <p>©Todos os diretos reservados - Cauã Morales</p>
+                <Copyright>
+                    <span>©Todos os diretos reservados - </span><AppAuthor href='https://github.com/Caahmos'><GithubIcon/><span> Cauã Morales</span></AppAuthor>
+                </Copyright>
             </Sign>
         </Container>
     )

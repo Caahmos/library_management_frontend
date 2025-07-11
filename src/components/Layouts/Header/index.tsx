@@ -8,7 +8,8 @@ import { useMenu } from '../../../hooks/useOpenMenu';
 
 import {
   Container,
-  MenuIcon
+  MenuIcon,
+  Notifications
 } from './styles';
 import SearchInput from '../Forms/SearchInput';
 
@@ -58,6 +59,7 @@ const Header: React.FC = () => {
         method={method}
         onChangeMethod={setMethod}
       />
+      <Notifications/>
     </Container>
   );
 };

@@ -25,6 +25,7 @@ import {
     IconCategory,
     Title,
     TooltipEdited,
+    AsideContent,
     GridContainer
 } from './styles';
 import BookItem from "../../Layouts/Admin/BookItem";
@@ -162,16 +163,18 @@ const Admin: React.FC = () => {
                     Top Categorias
                 </ChartGrid2>
                 <AsideGrid>
-                    <Title>Mais lidos</Title>
-                    {
-                        topBooks && topBooks.length > 0 ?
-                            topBooks.map((book) => {
-                                return <BookItem bibid={book.bibid} author={book.author} count={book.count} title={book.title} />
-                            }) :
-                            <>
-                                Nenhum livro encontrado...
-                            </>
-                    }
+                    <AsideContent>
+                        <Title>Mais lidos</Title>
+                        {
+                            topBooks && topBooks.length > 0 ?
+                                topBooks.map((book) => {
+                                    return <BookItem bibid={book.bibid} author={book.author} count={book.count} title={book.title} />
+                                }) :
+                                <>
+                                    Nenhum livro encontrado...
+                                </>
+                        }
+                    </AsideContent>
                 </AsideGrid>
             </GridContainer>
         </Container>

@@ -9,4 +9,5 @@ export interface ViewMembersRequest {
     last_change_userid?: number
     classification?: number
     mbrid: number
+    imageUrl?: string
 }

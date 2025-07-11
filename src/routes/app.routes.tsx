@@ -31,6 +31,7 @@ import InfoBook from "../components/Pages/Catalog/InfoBook";
 import CreateCopy from "../components/Pages/Catalog/Copy/CreateCopy";
 import EditCopy from "../components/Pages/Catalog/Copy/EditCopy";
 import CreateMember from "../components/Pages/Circulation/Member/CreateMember";
+import AddMemberImage from "../components/Pages/Circulation/Member/AddMemberImage";
 
 const AppRoutes: React.FC = () => {
 
@@ -66,6 +67,7 @@ const AppRoutes: React.FC = () => {
                         <Route path="/collection/edit/:id" element={<EditCategory />} />
 
                         <Route path="/member/register" element={<CreateMember />} />
+                        <Route path="/member/addimage/:mbrid" element={<AddMemberImage />} />
 
                         <Route path="/material" element={<MaterialsList />} />
                         <Route path="/material/create" element={<CreateMaterial />} />

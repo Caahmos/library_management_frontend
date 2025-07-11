@@ -256,7 +256,7 @@ const Circulation: React.FC = () => {
                          {
                         members && members.length > 0 ?
                             members.map((member) => {
-                                return <MemberItem mbrid={member.mbrid} first_name={member.first_name} barcode_nmbr={member.barcode_nmbr}/>
+                                return <MemberItem mbrid={member.mbrid} first_name={member.first_name} barcode_nmbr={member.barcode_nmbr} imageUrl={member.imageUrl}/>
                             }) :
                             <>
                                 Nenhum membro encontrado...

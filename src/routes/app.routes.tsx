@@ -32,6 +32,7 @@ import CreateCopy from "../components/Pages/Catalog/Copy/CreateCopy";
 import EditCopy from "../components/Pages/Catalog/Copy/EditCopy";
 import CreateMember from "../components/Pages/Circulation/Member/CreateMember";
 import AddMemberImage from "../components/Pages/Circulation/Member/AddMemberImage";
+import FindMember from "../components/Pages/Circulation/Member/FindMember";
 
 const AppRoutes: React.FC = () => {
 
@@ -68,6 +69,7 @@ const AppRoutes: React.FC = () => {
 
                         <Route path="/member/register" element={<CreateMember />} />
                         <Route path="/member/addimage/:mbrid" element={<AddMemberImage />} />
+                        <Route path="/member/findmember" element={<FindMember />} />
 
                         <Route path="/material" element={<MaterialsList />} />
                         <Route path="/material/create" element={<CreateMaterial />} />

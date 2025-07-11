@@ -144,7 +144,7 @@ const Circulation: React.FC = () => {
                     </SquareContent>
                     <IconAdm />
                 </Square1>
-                <Square2 to={'/circulation/findmember'}>
+                <Square2 to={'/member/findmember'}>
                     <SquareContent>
                         <SquareTitle>Buscar Membro</SquareTitle>
                         <SquareSpan>Acessar painel <FiArrowUpRight /></SquareSpan>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReturnButton from '../../../../Layouts/ReturnButton';
+import { RiUserSearchLine } from "react-icons/ri";
 
 import {
     Container
@@ -12,7 +13,7 @@ const FindMember: React.FC = () => {
     return (
         <Container>
             <ReturnButton />
-            <SearchMemberInput placeholder='Pesquise por um membro'/>
+            <SearchMemberInput icon={<RiUserSearchLine/>} placeholder='Pesquise por um membro'/>
         </Container>
     )
 };

@@ -10,6 +10,7 @@ import {
     Image,
     Title,
     Author,
+    FingerprintIcon
 } from './styles';
 import type { ViewMembersRequest } from "../../../../model/Member/Member/ViewMembersRequest";
 
@@ -26,7 +27,7 @@ const MemberItem: React.FC<ViewMembersRequest> = ({ first_name, barcode_nmbr, mb
                 </Count>
                 <Info>
                     <Title>{first_name}</Title>
-                    <Author>{barcode_nmbr}</Author>
+                    <Author><FingerprintIcon/> {barcode_nmbr}</Author>
                 </Info>
             </Content>
             <IoIosArrowForward />

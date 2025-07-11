@@ -30,6 +30,7 @@ import ChangeImageBook from "../components/Pages/Catalog/ChangeImageBook";
 import InfoBook from "../components/Pages/Catalog/InfoBook";
 import CreateCopy from "../components/Pages/Catalog/Copy/CreateCopy";
 import EditCopy from "../components/Pages/Catalog/Copy/EditCopy";
+import CreateMember from "../components/Pages/Circulation/Member/CreateMember";
 
 const AppRoutes: React.FC = () => {
 
@@ -40,7 +41,7 @@ const AppRoutes: React.FC = () => {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/circulation" element={<Circulation />} />
-                        
+
                         <Route path="/catalog" element={<Catalog />} />
                         <Route path="/catalog/detail/:id" element={<Detail />} />
                         <Route path="/catalog/info/:id" element={<InfoBook />} />
@@ -49,25 +50,27 @@ const AppRoutes: React.FC = () => {
                         <Route path="/catalog/changeimage/:id" element={<ChangeImageBook />} />
                         <Route path="/catalog/createcopy/:bibid/:id?" element={<CreateCopy />} />
                         <Route path="/catalog/editcopy/:bibid/:id?" element={<EditCopy />} />
-                        
+
                         <Route path="/admin" element={<Admin />} />
                         <Route path="/admin/createadmin" element={<CreateAdmin />} />
                         <Route path="/admin/editadmin/:id" element={<EditAdmin />} />
                         <Route path="/admin/cpass/:id" element={<ChangeAdminPassword />} />
                         <Route path="/admin/adminlist" element={<AdminList />} />
-                       
+
                         <Route path="/mbrclassify" element={<MemberList />} />
                         <Route path="/mbrclassify/create" element={<CreateMemberType />} />
                         <Route path="/mbrclassify/edit/:id" element={<EditMemberType />} />
-                        
+
                         <Route path="/collection" element={<CategoryList />} />
                         <Route path="/collection/create" element={<CreateCategory />} />
                         <Route path="/collection/edit/:id" element={<EditCategory />} />
-                        
+
+                        <Route path="/member/register" element={<CreateMember />} />
+
                         <Route path="/material" element={<MaterialsList />} />
                         <Route path="/material/create" element={<CreateMaterial />} />
                         <Route path="/material/edit/:id" element={<EditMaterial />} />
-                        
+
                         <Route path="/mbrfield" element={<MemberFieldsList />} />
                         <Route path="/mbrfield/create" element={<CreateMemberField />} />
                         <Route path="/mbrfield/edit/:id" element={<EditMemberField />} />

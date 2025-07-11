@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, type JSX } from 'react';
 import {
     Container,
     Header,
     Item,
     DueDate,
     HistDate,
-    DaysLate
+    DaysLate,
+    BarcodeIcon,
+    InfoIcon,
+    RefundIcon,
+    UsersIcon
 } from './styles';
 import type { ViewHistsRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
 import api from '../../../../utils/api';
@@ -70,13 +74,22 @@ const BookHistViewItem: React.FC<BookHistViewItemProps> = ({ items, fields }) =>
         return description?.description;
     };
 
+    const iconMap: Record<string, JSX.Element> = {
+        barcode_nmbr: <BarcodeIcon />,
+        mbrid: <UsersIcon />,
+        status_cd: <InfoIcon />,
+        due_back_dt: <RefundIcon />,
+    };
+
     return (
         <Container>
             <Header>
                 {
                     fields && fields.length > 0
                         ? fields.map(field => (
-                            <p key={field.key}>{field.label}</p>
+                            <p key={field.key} style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                                {iconMap[field.key]} {field.label}
+                            </p>
                         ))
                         : <p>Nenhum cabeçalho para renderizar</p>
                 }
@@ -92,7 +105,7 @@ const BookHistViewItem: React.FC<BookHistViewItemProps> = ({ items, fields }) =>
                                 ? (
 
                                     <DueDate overdue={item.status_cd === 'out' && isOverdue(item.due_back_dt)}>
-                                        <HistDate> 
+                                        <HistDate>
                                             <FiAlertTriangle /> { } {formatDate(item.due_back_dt)}
                                         </HistDate>
                                         <DaysLate>

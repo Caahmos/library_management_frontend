@@ -1,4 +1,32 @@
 import styled from 'styled-components';
+import { FaBarcode } from "react-icons/fa6";
+import { HiMiniUsers } from "react-icons/hi2";
+import { MdInfoOutline } from "react-icons/md";
+import { HiMiniReceiptRefund } from "react-icons/hi2";
+
+export const BarcodeIcon = styled(FaBarcode)`
+  font-size: 1rem;
+  color: ${(props) => props.theme.colors.success};
+  margin-right: 5px;
+`;
+
+export const UsersIcon = styled(HiMiniUsers)`
+  font-size: 1rem;
+  color: ${(props) => props.theme.colors.success};
+  margin-right: 5px;
+`;
+
+export const InfoIcon = styled(MdInfoOutline)`
+  font-size: 1rem;
+  color: ${(props) => props.theme.colors.success};
+  margin-right: 5px;
+`;
+
+export const RefundIcon = styled(HiMiniReceiptRefund)`
+  font-size: 1rem;
+  color: ${(props) => props.theme.colors.success};
+  margin-right: 5px;
+`;
 
 export const Container = styled.div`
   width: 100%;

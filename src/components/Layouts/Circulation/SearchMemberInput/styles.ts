@@ -109,6 +109,7 @@ export const SelectMethod = styled.select`
 
 export const ResultsContainer = styled.div`
   width: 100%;
-  height: 2000px;
+  height: fit-content;
   background-color: ${props => props.theme.colors.secondary};
+  padding: 20px;
 `

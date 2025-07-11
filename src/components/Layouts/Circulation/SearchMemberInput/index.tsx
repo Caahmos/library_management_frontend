@@ -25,18 +25,21 @@ const SearchMemberInput: React.FC<InputProps> = ({ icon }) => {
     const [searchValue, setSearchValue] = useState("");
     const [method, setMethod] = useState("name");
     const [hasSearched, setHasSearched] = useState(false);
-    const token = localStorage.getItem("@library_management:token") || "";
+    const [token, setToken] = useState(
+        localStorage.getItem("@library_management:token") || ""
+    );
 
     useEffect(() => {
-        console.log(searchValue, method)
-        api.get(`/member/search?method=${method}&data=${searchValue}`, {
-                headers: {
-                    Authorization: `Bearer ${JSON.parse(token)}`,
-                    Accept: "application/json",
-                },
-            })
+        api.get(`/member/search?method=${method}&data=${searchValue}&limit=${25}`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`,
+                Accept: "application/json",
+            },
+        })
             .then((response) => {
-                setMembers(response.data.members || []);
+                const result = response.data.foundMember;
+                const formatted = Array.isArray(result) ? result : result ? [result] : [];
+                setMembers(formatted);
                 setHasSearched(true);
             })
             .catch((error) => {
@@ -44,7 +47,7 @@ const SearchMemberInput: React.FC<InputProps> = ({ icon }) => {
                 setMembers([]);
                 setHasSearched(true);
             });
-    }, [searchValue, method]);
+    }, [searchValue, method, token]);
 
     const handleClose = () => {
         setSearchValue("");

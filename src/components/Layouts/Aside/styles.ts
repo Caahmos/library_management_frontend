@@ -63,6 +63,25 @@ export const MenuBox = styled.nav`
   width: 100%;
   height: 95%;
   overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${(props) => props.theme.colors.primary};
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${(props) => props.theme.colors.tertiary};
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: ${(props) => props.theme.colors.success};
+  }
 `;
 
 export const UserBox = styled.div`

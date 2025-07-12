@@ -33,6 +33,7 @@ import EditCopy from "../components/Pages/Catalog/Copy/EditCopy";
 import CreateMember from "../components/Pages/Circulation/Member/CreateMember";
 import AddMemberImage from "../components/Pages/Circulation/Member/AddMemberImage";
 import FindMember from "../components/Pages/Circulation/Member/FindMember";
+import PrivateRoutes from "../components/Layouts/PrivateRoutes";
 
 const AppRoutes: React.FC = () => {
 
@@ -42,43 +43,49 @@ const AppRoutes: React.FC = () => {
                 <Layout>
                     <Routes>
                         <Route path="/" element={<Home />} />
-                        <Route path="/circulation" element={<Circulation />} />
-
                         <Route path="/catalog" element={<Catalog />} />
                         <Route path="/catalog/detail/:id" element={<Detail />} />
-                        <Route path="/catalog/info/:id" element={<InfoBook />} />
-                        <Route path="/catalog/editbook/:id" element={<EditBook />} />
-                        <Route path="/catalog/createbook" element={<CreateBook />} />
-                        <Route path="/catalog/changeimage/:id" element={<ChangeImageBook />} />
-                        <Route path="/catalog/createcopy/:bibid/:id?" element={<CreateCopy />} />
-                        <Route path="/catalog/editcopy/:bibid/:id?" element={<EditCopy />} />
 
-                        <Route path="/admin" element={<Admin />} />
-                        <Route path="/admin/createadmin" element={<CreateAdmin />} />
-                        <Route path="/admin/editadmin/:id" element={<EditAdmin />} />
-                        <Route path="/admin/cpass/:id" element={<ChangeAdminPassword />} />
-                        <Route path="/admin/adminlist" element={<AdminList />} />
+                        <Route element={<PrivateRoutes permission="catalog_flg" />}>
+                            <Route path="/catalog/info/:id" element={<InfoBook />} />
+                            <Route path="/catalog/editbook/:id" element={<EditBook />} />
+                            <Route path="/catalog/createbook" element={<CreateBook />} />
+                            <Route path="/catalog/changeimage/:id" element={<ChangeImageBook />} />
+                            <Route path="/catalog/createcopy/:bibid/:id?" element={<CreateCopy />} />
+                            <Route path="/catalog/editcopy/:bibid/:id?" element={<EditCopy />} />
 
-                        <Route path="/mbrclassify" element={<MemberList />} />
-                        <Route path="/mbrclassify/create" element={<CreateMemberType />} />
-                        <Route path="/mbrclassify/edit/:id" element={<EditMemberType />} />
+                            <Route path="/collection" element={<CategoryList />} />
+                            <Route path="/collection/create" element={<CreateCategory />} />
+                            <Route path="/collection/edit/:id" element={<EditCategory />} />
 
-                        <Route path="/collection" element={<CategoryList />} />
-                        <Route path="/collection/create" element={<CreateCategory />} />
-                        <Route path="/collection/edit/:id" element={<EditCategory />} />
+                            <Route path="/material" element={<MaterialsList />} />
+                            <Route path="/material/create" element={<CreateMaterial />} />
+                            <Route path="/material/edit/:id" element={<EditMaterial />} />
+                        </Route>
 
-                        <Route path="/member/register" element={<CreateMember />} />
-                        <Route path="/member/addimage/:mbrid" element={<AddMemberImage />} />
-                        <Route path="/member/findmember" element={<FindMember />} />
+                        <Route element={<PrivateRoutes permission="admin_flg" />}>
+                            <Route path="/admin" element={<Admin />} />
+                            <Route path="/admin/createadmin" element={<CreateAdmin />} />
+                            <Route path="/admin/editadmin/:id" element={<EditAdmin />} />
+                            <Route path="/admin/cpass/:id" element={<ChangeAdminPassword />} />
+                            <Route path="/admin/adminlist" element={<AdminList />} />
+                        </Route>
 
-                        <Route path="/material" element={<MaterialsList />} />
-                        <Route path="/material/create" element={<CreateMaterial />} />
-                        <Route path="/material/edit/:id" element={<EditMaterial />} />
+                        <Route element={<PrivateRoutes permission="circ_flg" />}>
+                            <Route path="/circulation" element={<Circulation />} />
 
-                        <Route path="/mbrfield" element={<MemberFieldsList />} />
-                        <Route path="/mbrfield/create" element={<CreateMemberField />} />
-                        <Route path="/mbrfield/edit/:id" element={<EditMemberField />} />
+                            <Route path="/mbrclassify" element={<MemberList />} />
+                            <Route path="/mbrclassify/create" element={<CreateMemberType />} />
+                            <Route path="/mbrclassify/edit/:id" element={<EditMemberType />} />
 
+                            <Route path="/member/register" element={<CreateMember />} />
+                            <Route path="/member/addimage/:mbrid" element={<AddMemberImage />} />
+                            <Route path="/member/findmember" element={<FindMember />} />
+
+                            <Route path="/mbrfield" element={<MemberFieldsList />} />
+                            <Route path="/mbrfield/create" element={<CreateMemberField />} />
+                            <Route path="/mbrfield/edit/:id" element={<EditMemberField />} />
+                        </Route>
                     </Routes>
                 </Layout>
             </HandleSearchProvider>

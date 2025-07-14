@@ -3,6 +3,7 @@ export interface ViewMembersRequest {
     last_name?: string
     barcode_nmbr: string
     address?: string
+    createdAt?: string
     home_phone?: string
     work_phone?: string
     email?: string

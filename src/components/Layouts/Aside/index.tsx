@@ -95,7 +95,7 @@ const Aside: React.FC = () => {
                   <li><LinkItem to='/admin/adminlist'>Check-in</LinkItem></li>
                   <li><LinkItem to='/member/findmember'>Buscar Membro</LinkItem></li>
                   <li><LinkItem to='/member/register'>Adicionar Membro</LinkItem></li>
-                  <li><LinkItem to='/collection'>Membros Bloqueados</LinkItem></li>
+                  <li><LinkItem to='/member/blocked'>Membros Bloqueados</LinkItem></li>
                 </ul>
               </AccordionContent>
             </li>

@@ -158,7 +158,7 @@ const Circulation: React.FC = () => {
                     </SquareContent>
                     <IconBooks />
                 </Square3>
-                <Square4 to={'/collection'}>
+                <Square4 to={'/member/blocked'}>
                     <SquareContent>
                         <SquareTitle>Membros Bloqueados</SquareTitle>
                         <SquareSpan>Acessar painel <FiArrowUpRight /></SquareSpan>

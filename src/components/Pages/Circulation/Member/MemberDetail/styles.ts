@@ -54,7 +54,7 @@ export const MemberContent = styled.div`
 
 export const HistContent = styled.div`
   width: 100%;
-  height: 500px;
+  min-height: 500px;
   border-radius: 7px;
   padding: 20px;
   color: ${(props) => props.theme.colors.white};
@@ -83,6 +83,10 @@ export const MemberCard = styled.div`
   background-color: ${(props) => props.theme.colors.tertiary};
   display: flex;
   overflow: hidden;
+  
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
 export const Left = styled.div`
@@ -94,6 +98,11 @@ export const Left = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media screen and (max-width: 800px) {
+    max-width: 100%;
+    width: 100%;
+  }
 `;
 
 export const Right = styled.div`
@@ -102,7 +111,7 @@ export const Right = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 15px;
 `;
 
 export const Image = styled.div<{ image: string | undefined }>`
@@ -210,7 +219,7 @@ export const Button2 = styled.div`
 `;
 
 export const Button3 = styled.div`
-  grid-area: B3;  
+  grid-area: B3;
   width: 100%;
   height: 80px;
   border-radius: 7px;
@@ -220,4 +229,60 @@ export const Button3 = styled.div`
 export const Title = styled.p`
   font-size: 1.2rem;
   font-weight: bold;
+`;
+
+export const InfoCards = styled.div`
+  width: 100%;
+  height: 100%;
+  /* background-color: ${(props) => props.theme.colors.secondary}; */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+`;
+
+export const Card = styled.div`
+  width: 35%;
+  min-height: 90px;
+  height: 100%;
+  border: 1px solid ${(props) => props.theme.colors.primary};
+  border-radius: 7px;
+  display: flex;
+  overflow: hidden;
+`;
+
+export const CardLeft = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  color: ${(props) => props.theme.colors.white};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+export const CardRight = styled.div`
+  width: 50px;
+  height: 100%;
+  /* background-color: ${(props) => props.theme.colors.primary}; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: ${(props) => props.theme.colors.white};
+`;
+
+export const TopCard = styled.div`
+  font-size: 1.2rem;
+`;
+
+export const BottomCard = styled.div``;
+
+export const CardTitle = styled.div`
+  font-size: 0.9rem;
+  font-weight: bold;
+`;
+
+export const CardDescription = styled.div`
+  font-size: 0.7rem;
 `;

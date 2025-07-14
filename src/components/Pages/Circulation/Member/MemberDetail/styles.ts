@@ -3,6 +3,8 @@ import { RiFingerprint2Fill } from "react-icons/ri";
 import { LuCircleUser } from "react-icons/lu";
 import { MdOutlineMail } from "react-icons/md";
 import { MdOutlineLocationOn } from "react-icons/md";
+import { RiCalendarLine } from "react-icons/ri";
+import { PiMedal } from "react-icons/pi";
 
 export const Container = styled.div`
   width: 100%;
@@ -132,7 +134,14 @@ export const Barcode = styled.div`
   gap: 5px;
 `;
 
-export const BookQtd = styled.div``;
+export const BookQtd = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  align-items: center;
+  justify-content: center;
+  color: ${(props) => props.theme.colors.white};
+`;
 
 export const FingerprintIcon = styled(RiFingerprint2Fill)`
   font-size: 1rem;
@@ -144,6 +153,11 @@ export const MailIcon = styled(MdOutlineMail)`
   color: ${(props) => props.theme.colors.success};
 `;
 
+export const CalendarIcon = styled(RiCalendarLine)`
+  font-size: 1rem;
+  color: ${(props) => props.theme.colors.success};
+`;
+
 export const UserIcon = styled(LuCircleUser)`
   font-size: 2rem;
   color: ${(props) => props.theme.colors.success};
@@ -151,6 +165,11 @@ export const UserIcon = styled(LuCircleUser)`
 
 export const LocationIcon = styled(MdOutlineLocationOn)`
   font-size: 1rem;
+  color: ${(props) => props.theme.colors.success};
+`;
+
+export const MedalIcon = styled(PiMedal)`
+  font-size: 2rem;
   color: ${(props) => props.theme.colors.success};
 `;
 
@@ -239,6 +258,10 @@ export const InfoCards = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   gap: 20px;
+
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 export const Card = styled.div`
@@ -249,6 +272,10 @@ export const Card = styled.div`
   border-radius: 7px;
   display: flex;
   overflow: hidden;
+
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 export const CardLeft = styled.div`

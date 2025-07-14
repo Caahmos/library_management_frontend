@@ -48,16 +48,20 @@ import {
     TopCard,
     BottomCard,
     CardTitle,
-    CardDescription
+    CardDescription,
+    MedalIcon,
+    CalendarIcon
 } from './styles';
 import type { ViewMembersRequest } from '../../../../../model/Member/Member/ViewMembersRequest';
 import type { ViewHistsRequest } from '../../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
 import MiniBookHistItem from '../../../../Layouts/Catalog/MiniBookHistItem';
+import type { MemberRank } from '../../../../../model/Biblio/BiblioReports/MemberRankInterface';
 
 const MemberDetail: React.FC = () => {
     const { mbrid } = useParams();
     const [bookHist, setBookHist] = useState<ViewHistsRequest[]>();
     const [member, setMember] = useState<ViewMembersRequest>();
+    const [memberRank, setMemberRank] = useState<MemberRank[]>();
     const [memberImage, setMemberImage] = useState('');
     const token = localStorage.getItem("@library_management:token") || "";
 
@@ -74,6 +78,21 @@ const MemberDetail: React.FC = () => {
                 if (memberData.imageUrl) {
                     setMemberImage(`http://localhost:5000/imgs/member/${memberData.imageUrl}`);
                 }
+            })
+            .catch((err: AxiosError) => {
+                console.error(err);
+            });
+    }, [token, mbrid]);
+    
+    useEffect(() => {
+        api.get(`/biblioreports/memberranks?mbrid=${mbrid}`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        })
+            .then((response) => {
+                console.log(response.data.ranks);
+                setMemberRank(response.data.ranks);
             })
             .catch((err: AxiosError) => {
                 console.error(err);
@@ -129,7 +148,7 @@ const MemberDetail: React.FC = () => {
                                         <Barcode>
                                             <FingerprintIcon /><BarcodeText>{member.barcode_nmbr}</BarcodeText>
                                         </Barcode>
-                                        <BookQtd></BookQtd>
+                                        <BookQtd><MedalIcon/><p>{memberRank && memberRank.length > 0 ? memberRank[0].rank  + 'º' : 'Sem rank'}</p></BookQtd>
                                     </Left>
                                     <Right>
                                         <Name>
@@ -137,7 +156,7 @@ const MemberDetail: React.FC = () => {
                                                 <UserIcon /><Text>{member.first_name + ' ' + member.last_name}</Text>
                                             </NameContent>
                                             <Since>
-                                                <MailIcon />
+                                                <CalendarIcon />
                                                 <Description>
                                                     <SinceDate>membro desde:</SinceDate>
                                                     <NormalText>{formatDate(member.createdAt)}</NormalText>

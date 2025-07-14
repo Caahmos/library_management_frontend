@@ -85,7 +85,7 @@ export const MemberCard = styled.div`
   background-color: ${(props) => props.theme.colors.tertiary};
   display: flex;
   overflow: hidden;
-  
+
   @media screen and (max-width: 800px) {
     flex-direction: column;
   }
@@ -225,7 +225,9 @@ export const Button1 = styled.div`
   grid-area: B1;
   width: 100%;
   height: 80px;
+  display: flex;
   border-radius: 7px;
+  padding: 20px;
   background-color: ${(props) => props.theme.colors.tertiary};
 `;
 
@@ -233,7 +235,9 @@ export const Button2 = styled.div`
   grid-area: B2;
   width: 100%;
   height: 80px;
+  display: flex;
   border-radius: 7px;
+  padding: 20px;
   background-color: ${(props) => props.theme.colors.tertiary};
 `;
 
@@ -241,7 +245,9 @@ export const Button3 = styled.div`
   grid-area: B3;
   width: 100%;
   height: 80px;
+  display: flex;
   border-radius: 7px;
+  padding: 20px;
   background-color: ${(props) => props.theme.colors.tertiary};
 `;
 
@@ -266,8 +272,7 @@ export const InfoCards = styled.div`
 
 export const Card = styled.div`
   width: 35%;
-  min-height: 90px;
-  height: 100%;
+  height: 90px;
   border: 1px solid ${(props) => props.theme.colors.primary};
   border-radius: 7px;
   display: flex;
@@ -313,3 +318,22 @@ export const CardTitle = styled.div`
 export const CardDescription = styled.div`
   font-size: 0.7rem;
 `;
+
+export const ButtonLeft = styled.div`
+  height: 100%;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: ${(props) => props.theme.colors.success};
+`;
+
+export const ButtonRight = styled.div`
+  height: 100%;
+  width: 100%;
+  color: ${(props) => props.theme.colors.white};
+  display: flex;
+  font-weight: bold;
+`;
+
+export const ButtonText = styled.div``;

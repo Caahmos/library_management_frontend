@@ -7,8 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { RiImageAddLine, RiAdminLine } from "react-icons/ri";
+import { TbUserEdit } from "react-icons/tb";
 import { FiPhone } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa6";
+import { TbLock, TbLockOpen } from "react-icons/tb";
 
 import {
     Container,
@@ -40,6 +42,9 @@ import {
     Button1,
     Button2,
     Button3,
+    ButtonLeft,
+    ButtonRight,
+    ButtonText,
     Title,
     InfoCards,
     Card,
@@ -215,9 +220,36 @@ const MemberDetail: React.FC = () => {
                                 </p>
                         }
                     </MemberCard>
-                    <Button1></Button1>
-                    <Button2></Button2>
-                    <Button3></Button3>
+                    <Button1>
+                        <ButtonLeft>
+                            <RiImageAddLine/>
+                        </ButtonLeft>
+                        <ButtonRight>
+                            <ButtonText>
+                                Editar ou Adicionar uma Imagem
+                            </ButtonText>
+                        </ButtonRight>
+                    </Button1>
+                    <Button2>
+                        <ButtonLeft>
+                            <TbUserEdit/>
+                        </ButtonLeft>
+                        <ButtonRight>
+                            <ButtonText>
+                                Editar Dados do Membro
+                            </ButtonText>
+                        </ButtonRight>
+                    </Button2>
+                    <Button3>
+                        <ButtonLeft>
+                            <TbLock/>
+                        </ButtonLeft>
+                        <ButtonRight>
+                            <ButtonText>
+                                Bloquear Usuário
+                            </ButtonText>
+                        </ButtonRight>
+                    </Button3>
                     <MemberContent>
                         <Content>
 

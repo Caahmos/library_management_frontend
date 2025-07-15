@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import { FaBarcode } from "react-icons/fa6";
 import { HiMiniUsers } from "react-icons/hi2";
 import { MdInfoOutline } from "react-icons/md";
 import { HiMiniReceiptRefund } from "react-icons/hi2";
+import { Link } from "react-router-dom";
 
 export const BarcodeIcon = styled(FaBarcode)`
   font-size: 1rem;
@@ -37,11 +38,27 @@ export const Container = styled.div`
   gap: 7px;
 `;
 
+export const BookInfo = styled(Link)`
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%;
+  text-decoration: none;
+  color: ${(props) => props.theme.colors.white};
+  `;
+
+export const BookTitle = styled.p`
+color: ${(props) => props.theme.colors.success};
+  font-size: 0.7rem;
+`;
+
 export const Header = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  color: ${props => props.theme.colors.success};
+  color: ${(props) => props.theme.colors.success};
   font-weight: bold;
 `;
 
@@ -56,18 +73,29 @@ interface DueDateProps {
 }
 
 export const DueDate = styled.p<DueDateProps>`
-  color: ${({ overdue, theme }) => (overdue ? 'red' : theme.colors.white)};
-  font-weight: ${({ overdue }) => (overdue ? 'bold' : 'normal')};
+  color: ${({ overdue, theme }) => (overdue ? "red" : theme.colors.white)};
+  font-weight: ${({ overdue }) => (overdue ? "bold" : "normal")};
   display: flex;
   flex-direction: column;
   gap: 4px;
 `;
 
-export const HistDate = styled.div`
-
-`;
+export const HistDate = styled.div``;
 
 export const DaysLate = styled.div`
   font-size: 0.8rem;
 `;
 
+export const Due = styled.div<{$in: string}>`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  color: ${({ $in }) => ($in === 'yes' ? "green" : "")};
+`
+
+export const Returned = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`

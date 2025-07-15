@@ -52,6 +52,9 @@ export const MemberGrid = styled.div`
 export const MemberContent = styled.div`
   grid-area: CT;
   height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
 export const HistContent = styled.div`
@@ -72,7 +75,7 @@ export const Content = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: 2000px;
+  padding: 20px;
   border-radius: 7px;
   background-color: ${(props) => props.theme.colors.tertiary};
 `;

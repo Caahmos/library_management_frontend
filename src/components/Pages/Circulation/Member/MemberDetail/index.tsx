@@ -287,6 +287,9 @@ const MemberDetail: React.FC = () => {
                         <Content>
                             <CirculationForm button_text='' onSubmit={handleCheckout} />
                         </Content>
+                        <Content>
+                            <CirculationForm button_text='' onSubmit={handleCheckout} />
+                        </Content>
                     </MemberContent>
                 </MemberGrid>
             </MemberContainer>

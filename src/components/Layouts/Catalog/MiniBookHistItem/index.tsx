@@ -9,12 +9,18 @@ import {
     BarcodeIcon,
     InfoIcon,
     RefundIcon,
-    UsersIcon
+    UsersIcon,
+    BookInfo,
+    BookTitle,
+    Due,
+    Returned
 } from './styles';
 import type { ViewHistsRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
 import api from '../../../../utils/api';
 import type { ViewStatusRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest';
 import { FiAlertTriangle } from "react-icons/fi";
+import type { Biblio } from '../../../../model/Biblio/Biblio/SearchBiblioResponse';
+import { FiCheck } from "react-icons/fi";
 
 type Field = {
     key: string;
@@ -98,7 +104,10 @@ const MiniBookHistItem: React.FC<BookHistViewItemProps> = ({ items, fields }) =>
                 items && items.length > 0
                     ? items.map((item, index) => (
                         <Item key={index}>
-                            <p>{item.biblio_copy.barcode_nmbr}</p>
+                            <BookInfo to={`/catalog/detail/${item.bibid}`}>
+                                <BookTitle>{item.biblio.title}</BookTitle>
+                                <p>{item.biblio_copy.barcode_nmbr}</p>
+                            </BookInfo>
                             {item.status_cd === 'out' && isOverdue(item.due_back_dt)
                                 ? (
 
@@ -113,7 +122,15 @@ const MiniBookHistItem: React.FC<BookHistViewItemProps> = ({ items, fields }) =>
 
                                 )
                                 :
-                                formatDate(item.due_back_dt)
+                                <>
+                                    {
+                                        item.returned_at 
+                                        ?
+                                        <Returned><FiCheck style={{color: 'green'}}/><Due $in='yes'>{formatDate(item.returned_at)}</Due></Returned>
+                                        :
+                                        <Due $in='no'>{formatDate(item.due_back_dt)}</Due>
+                                    }
+                                </>
                             }
                         </Item>
                     ))

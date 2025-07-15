@@ -18,6 +18,10 @@ export interface ViewHistsRequest {
     first_name: string;
     last_name: string;
   };
+  biblio: {
+    title?: string;
+    title_remainder?: string;
+  };
   copyid?: string;
   mbrid?: string;
   status_cd?: string;
@@ -25,6 +29,7 @@ export interface ViewHistsRequest {
   limit?: number;
   status_begin_dt?: string;
   due_back_dt?: string;
+  returned_at?: string;
 }
 
 export interface ViewHistsSearch {

@@ -213,7 +213,7 @@ const MemberDetail: React.FC = () => {
                                     <Right>
                                         <Name>
                                             <NameContent>
-                                                <UserIcon />
+                                                {/* <UserIcon /> */}
                                                 <NameDisplay>
                                                     <Tag description={memberClassify?.description}/>
                                                     <Text>{member.first_name + ' ' + member.last_name}</Text>

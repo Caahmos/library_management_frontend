@@ -1,3 +1,5 @@
+import type { ViewFieldsRequest } from "../MemberFieldsDM/ViewFieldsRequest"
+
 export interface RegisterMemberRequest {
     first_name?: string
     last_name?: string
@@ -9,4 +11,5 @@ export interface RegisterMemberRequest {
     code?: string[]
     data?: string[]
     classification: number
+    member_fields?: ViewFieldsRequest[]
 }

@@ -51,7 +51,7 @@ const CreateMember: React.FC = () => {
         <Container>
             <ReturnButton />
             <FormContainer>
-                <CreateMemberForm button_text='Próximo' handleSubmit={handleOnSubmit} />
+                <CreateMemberForm type='create' button_text='Próximo' handleSubmit={handleOnSubmit} />
             </FormContainer>
         </Container>
     )

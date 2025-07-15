@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import api from "../../../../../../utils/api";
 import InputForm from "../../../Input";
+
 import {
   Container,
   Title,
@@ -18,32 +19,33 @@ import type { ViewAllClassifiesRequest } from "../../../../../../model/Member/Me
 import type { ViewFieldsRequest } from "../../../../../../model/Member/MemberFieldsDM/ViewFieldsRequest";
 
 interface IMemberForm {
+  type: "create" | "edit";
   button_text: string;
   memberData?: RegisterMemberRequest;
   handleSubmit(data: RegisterMemberRequest): void;
 }
 
-const CreateMemberForm: React.FC<IMemberForm> = ({ button_text, handleSubmit, memberData }) => {
+const CreateMemberForm: React.FC<IMemberForm> = ({
+  button_text,
+  handleSubmit,
+  memberData,
+  type
+}) => {
   const [classifies, setClassifies] = useState<ViewAllClassifiesRequest[]>([]);
   const [fields, setFields] = useState<ViewFieldsRequest[]>([]);
+  const [memberFields, setMemberFields] = useState<ViewFieldsRequest[]>([]);
 
-  const [selectedCode, setSelectedCode] = useState("");
-  const [typedData, setTypedData] = useState("");
-
-  const [member, setMember] = useState<RegisterMemberRequest>(
-    memberData || {
-      first_name: "",
-      last_name: "",
-      barcode_nmbr: "",
-      address: "",
-      home_phone: "",
-      work_phone: "",
-      email: "",
-      code: [],
-      data: [],
-      classification: 0
-    }
-  );
+  const [member, setMember] = useState<RegisterMemberRequest>({
+    first_name: "",
+    last_name: "",
+    barcode_nmbr: "",
+    address: "",
+    home_phone: "",
+    work_phone: "",
+    email: "",
+    classification: 0,
+    member_fields: [],
+  });
 
   useEffect(() => {
     const token = localStorage.getItem("@library_management:token") || "";
@@ -63,6 +65,29 @@ const CreateMemberForm: React.FC<IMemberForm> = ({ button_text, handleSubmit, me
       .catch(err => console.error("Erro ao buscar campos:", err));
   }, []);
 
+  useEffect(() => {
+    if (memberData) {
+      setMember({
+        ...memberData,
+        member_fields: undefined,
+      });
+
+      const extraFields: ViewFieldsRequest[] = memberData.member_fields?.length
+        ? memberData.member_fields
+        : (memberData.code || []).map((code, index) => {
+          return {
+            code,
+            description: "",
+            data: memberData.data?.[index] ?? "",
+            default_flg: false
+          };
+        });
+
+      console.log(extraFields);
+      setMemberFields(extraFields);
+    }
+  }, [memberData]);
+
   const handleInputChange = (name: string, value: string | number) => {
     setMember(prev => ({
       ...prev,
@@ -70,23 +95,68 @@ const CreateMemberForm: React.FC<IMemberForm> = ({ button_text, handleSubmit, me
     }));
   };
 
+  const handleExtraChange = (
+    index: number,
+    key: "code" | "data",
+    value: string
+  ) => {
+    const updated = [...memberFields];
+    updated[index] = {
+      ...updated[index],
+      [key]: value,
+      default_flg: updated[index]?.default_flg ?? false
+    };
+    setMemberFields(updated);
+  };
+
+  const addExtraField = () => {
+    const available = fields.find(f =>
+      !memberFields.some(existing => existing.code === f.code)
+    );
+
+    if (available) {
+      setMemberFields(prev => [
+        ...prev,
+        {
+          code: available.code,
+          description: available.description ?? "",
+          data: "",
+          default_flg: false
+        }
+      ]);
+    } else {
+      alert("Todos os campos disponíveis já foram utilizados.");
+    }
+  };
+
+  const removeExtraField = (index: number) => {
+    setMemberFields(prev => prev.filter((_, i) => i !== index));
+  };
+
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!member.first_name || !member.last_name || !member.barcode_nmbr) {
+    if (
+      type === "create" &&
+      (!member.first_name || !member.last_name || !member.barcode_nmbr)
+    ) {
       alert("Preencha nome, sobrenome e código de barras.");
       return;
     }
 
-    if (!selectedCode) {
-      alert("Selecione um código (ex: Aluno, Professor...)");
+    if (memberFields.length === 0) {
+      alert("Adicione ao menos uma informação extra.");
       return;
     }
 
+    const code = memberFields.map((field) => field.code ?? "");
+    const data = memberFields.map((field) => field.data ?? "");
+
     const finalData: RegisterMemberRequest = {
       ...member,
-      code: [selectedCode],
-      data: [typedData],
+      code,
+      data,
+      member_fields: undefined
     };
 
     console.log(finalData);
@@ -95,13 +165,15 @@ const CreateMemberForm: React.FC<IMemberForm> = ({ button_text, handleSubmit, me
 
   return (
     <Container onSubmit={handleOnSubmit}>
-      <Title>Registrar Membro</Title>
+      <Title>{type === "edit" ? "Editar Membro" : "Registrar Membro"}</Title>
 
       <Select
         name="classification"
         value={member.classification}
-        onChange={(e) => handleInputChange("classification", parseInt(e.target.value))}
-        required
+        onChange={(e) =>
+          handleInputChange("classification", parseInt(e.target.value))
+        }
+        required={type === "create"}
       >
         <Option value="">Classificação *</Option>
         {classifies.map((cls) => (
@@ -115,7 +187,7 @@ const CreateMemberForm: React.FC<IMemberForm> = ({ button_text, handleSubmit, me
         label="Nome *"
         name="first_name"
         value={member.first_name}
-        required
+        required={type === "create"}
         onChange={(e) => handleInputChange("first_name", e.target.value)}
       />
 
@@ -123,7 +195,7 @@ const CreateMemberForm: React.FC<IMemberForm> = ({ button_text, handleSubmit, me
         label="Sobrenome *"
         name="last_name"
         value={member.last_name}
-        required
+        required={type === "create"}
         onChange={(e) => handleInputChange("last_name", e.target.value)}
       />
 
@@ -131,7 +203,7 @@ const CreateMemberForm: React.FC<IMemberForm> = ({ button_text, handleSubmit, me
         label="Código de Barras *"
         name="barcode_nmbr"
         value={member.barcode_nmbr}
-        required
+        required={type === "create"}
         onChange={(e) => handleInputChange("barcode_nmbr", e.target.value)}
       />
 
@@ -165,27 +237,58 @@ const CreateMemberForm: React.FC<IMemberForm> = ({ button_text, handleSubmit, me
 
       <InfoFields>
         <Label>Informações Extras</Label>
-        <Content>
-          <Select
-            name="code"
-            value={selectedCode}
-            onChange={(e) => setSelectedCode(e.target.value)}
-            required
-          >
-            <Option value="">Selecionar Campo *</Option>
-            {fields.map((f) => (
-              <Option key={f.code} value={f.description}>
-                {f.description}
-              </Option>
-            ))}
-          </Select>
+        {memberFields.map((field, index) => {
+          const usedCodes = memberFields
+            .map((f, i) => (i !== index ? f.code : null))
+            .filter(Boolean);
 
-          <StyledInput
-            name="data"
-            value={typedData}
-            onChange={(e) => setTypedData(e.target.value)}
-          />
-        </Content>
+          return (
+            <Content key={index}>
+              <Select
+                name={`code-${index}`}
+                value={field.code ?? ""}
+                onChange={(e) => handleExtraChange(index, "code", e.target.value)}
+                required={type === "create"}
+              >
+                <Option value="">Selecionar Campo *</Option>
+                {fields.map((f) => (
+                  <Option
+                    key={f.code}
+                    value={f.code}
+                    disabled={usedCodes.includes(f.code)}
+                  >
+                    {f.code}
+                  </Option>
+                ))}
+              </Select>
+
+              <StyledInput
+                name={`data-${index}`}
+                placeholder="Valor"
+                value={field.data ?? ""}
+                onChange={(e) => handleExtraChange(index, "data", e.target.value)}
+              />
+
+              <button
+                type="button"
+                onClick={() => removeExtraField(index)}
+                style={{
+                  backgroundColor: "red",
+                  color: "white",
+                  padding: "8px",
+                  borderRadius: "5px",
+                  border: "none",
+                  cursor: "pointer"
+                }}
+              >
+                Remover
+              </button>
+            </Content>
+          );
+        })}
+        <Button type="button" onClick={addExtraField}>
+          Adicionar Campo Extra
+        </Button>
       </InfoFields>
 
       <Button type="submit">{button_text}</Button>

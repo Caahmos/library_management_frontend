@@ -73,6 +73,11 @@ const MemberDetail: React.FC = () => {
     const { setFlashMessage } = useFlashMessage();
     const navigate = useNavigate();
 
+    useEffect(() => {
+            const el = document.getElementById("top");
+            el?.scrollIntoView({ behavior: "smooth" });
+        }, [mbrid]);
+
     const handleCheckout = async (barcode_nmbr: string) => {
         try {
             const response = await api.post(`/bibliohist/checkout/${mbrid}`, {
@@ -163,7 +168,7 @@ const MemberDetail: React.FC = () => {
     ];
 
     return (
-        <Container>
+        <Container id="top">
             <ReturnButton />
             <MemberContainer>
                 <MemberGrid>

@@ -11,7 +11,10 @@ import {
     RefundIcon,
     UsersIcon,
     BookInfo,
-    BookTitle
+    BookTitle,
+    MemberContent,
+    Member,
+    ArrowIcon
 } from './styles';
 import type { ViewHistsRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
 import api from '../../../../utils/api';
@@ -104,7 +107,7 @@ const BookHistViewItem: React.FC<BookHistViewItemProps> = ({ items, fields }) =>
                                 <BookTitle>{item.biblio.title}</BookTitle>
                                 <p>{item.biblio_copy.barcode_nmbr}</p>
                             </BookInfo>
-                            <p>{item.member.first_name}</p>
+                            <MemberContent to={`/member/detail/${item.mbrid}`}><ArrowIcon/><Member>{item.member.first_name}</Member></MemberContent>
                             <p>{item.status_cd && styledStatusCode(item.status_cd)}</p>
                             {item.status_cd === 'out' && isOverdue(item.due_back_dt)
                                 ? (

@@ -1,9 +1,10 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import { FaBarcode } from "react-icons/fa6";
 import { HiMiniUsers } from "react-icons/hi2";
 import { MdInfoOutline } from "react-icons/md";
 import { HiMiniReceiptRefund } from "react-icons/hi2";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 
 export const BarcodeIcon = styled(FaBarcode)`
   font-size: 1rem;
@@ -20,10 +21,10 @@ export const BookInfo = styled(Link)`
   max-width: 90%;
   text-decoration: none;
   color: ${(props) => props.theme.colors.white};
-  `;
+`;
 
 export const BookTitle = styled.p`
-color: ${(props) => props.theme.colors.success};
+  color: ${(props) => props.theme.colors.success};
   font-size: 0.7rem;
 `;
 
@@ -61,7 +62,7 @@ export const Header = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: 7px;
-  color: ${props => props.theme.colors.success};
+  color: ${(props) => props.theme.colors.success};
   font-weight: bold;
 `;
 
@@ -77,18 +78,41 @@ interface DueDateProps {
 }
 
 export const DueDate = styled.p<DueDateProps>`
-  color: ${({ overdue, theme }) => (overdue ? 'red' : theme.colors.white)};
-  font-weight: ${({ overdue }) => (overdue ? 'bold' : 'normal')};
+  color: ${({ overdue, theme }) => (overdue ? "red" : theme.colors.white)};
+  font-weight: ${({ overdue }) => (overdue ? "bold" : "normal")};
   display: flex;
   flex-direction: column;
   gap: 4px;
 `;
 
-export const HistDate = styled.div`
-
-`;
+export const HistDate = styled.div``;
 
 export const DaysLate = styled.div`
   font-size: 0.8rem;
 `;
 
+export const MemberContent = styled(Link)`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-wrap: wrap;
+  color: ${(props) => props.theme.colors.white};
+  gap: 10px;
+  transition: 0.4s all ease;
+
+  &:hover {
+    color: ${(props) => props.theme.colors.success};
+  }
+`;
+
+export const Member = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const ArrowIcon = styled(FaArrowUpRightFromSquare)`
+  font-size: 0.9rem;
+  color: ${(props) => props.theme.colors.success};
+`;

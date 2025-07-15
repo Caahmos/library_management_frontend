@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReturnButton from '../../../../Layouts/ReturnButton';
 import { RiUserSearchLine } from "react-icons/ri";
 
@@ -8,12 +8,15 @@ import {
 import SearchMemberInput from '../../../../Layouts/Circulation/SearchMemberInput';
 
 const FindMember: React.FC = () => {
-   
+    useEffect(() => {
+        const el = document.getElementById("top");
+        el?.scrollIntoView({ behavior: "smooth" });
+    }, []);
 
     return (
-        <Container>
+        <Container id="top">
             <ReturnButton />
-            <SearchMemberInput icon={<RiUserSearchLine/>} placeholder='Pesquise por um membro'/>
+            <SearchMemberInput icon={<RiUserSearchLine />} placeholder='Pesquise por um membro' />
         </Container>
     )
 };

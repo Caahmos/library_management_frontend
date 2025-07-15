@@ -57,6 +57,11 @@ const Circulation: React.FC = () => {
     const token = localStorage.getItem("@library_management:token") || "";
 
     useEffect(() => {
+            const el = document.getElementById("top");
+            el?.scrollIntoView({ behavior: "smooth" });
+        }, []);
+
+    useEffect(() => {
         api.get(`/bibliohist/viewhists?due=yes&limit=100`, {
             headers: {
                 Authorization: `Bearer ${JSON.parse(token)}`
@@ -135,7 +140,7 @@ const Circulation: React.FC = () => {
     }, [membersBalance]);
 
     return (
-        <Container>
+        <Container id="top">
             <GridContainer>
                 <Square1 to={'/circulation/checkin'}>
                     <SquareContent>

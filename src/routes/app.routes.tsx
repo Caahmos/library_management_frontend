@@ -81,6 +81,7 @@ const AppRoutes: React.FC = () => {
                             <Route path="/mbrclassify/edit/:id" element={<EditMemberType />} />
 
                             <Route path="/member/register" element={<CreateMember />} />
+                            <Route path="/member/edit/:mbrid" element={<CreateMember />} />
                             <Route path="/member/addimage/:mbrid" element={<AddMemberImage />} />
                             <Route path="/member/findmember" element={<FindMember />} />
                             <Route path="/member/blocked" element={<BlockedMembers />} />

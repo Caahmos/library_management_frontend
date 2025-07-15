@@ -279,7 +279,7 @@ const MemberDetail: React.FC = () => {
                                 </p>
                         }
                     </MemberCard>
-                    <Button1>
+                    <Button1 to={`/member/addimage/${mbrid}`}>
                         <ButtonLeft>
                             <RiImageAddLine />
                         </ButtonLeft>
@@ -289,7 +289,7 @@ const MemberDetail: React.FC = () => {
                             </ButtonText>
                         </ButtonRight>
                     </Button1>
-                    <Button2>
+                    <Button2 to={`/member/edit/${mbrid}`}>
                         <ButtonLeft>
                             <TbUserEdit />
                         </ButtonLeft>

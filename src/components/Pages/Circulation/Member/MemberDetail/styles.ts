@@ -5,6 +5,7 @@ import { MdOutlineMail } from "react-icons/md";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { RiCalendarLine } from "react-icons/ri";
 import { PiMedal } from "react-icons/pi";
+import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   width: 100%;
@@ -229,20 +230,22 @@ export const SinceDate = styled.div`
   color: ${(props) => props.theme.colors.white};
 `;
 
-export const Button1 = styled.div`
+export const Button1 = styled(Link)`
   grid-area: B1;
   width: 100%;
   display: flex;
   border-radius: 7px;
+  text-decoration: none;
   padding: 20px;
   background-color: ${(props) => props.theme.colors.tertiary};
 `;
 
-export const Button2 = styled.div`
+export const Button2 = styled(Link)`
   grid-area: B2;
   width: 100%;
   display: flex;
   border-radius: 7px;
+  text-decoration: none;
   padding: 20px;
   background-color: ${(props) => props.theme.colors.tertiary};
 `;

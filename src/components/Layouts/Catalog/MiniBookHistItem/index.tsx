@@ -104,7 +104,7 @@ const MiniBookHistItem: React.FC<BookHistViewItemProps> = ({ items, fields }) =>
                 items && items.length > 0
                     ? items.map((item, index) => (
                         <Item key={index}>
-                            <BookInfo to={`/catalog/detail/${item.bibid}`}>
+                            <BookInfo to={`/catalog/info/${item.bibid}`}>
                                 <BookTitle>{item.biblio.title}</BookTitle>
                                 <p>{item.biblio_copy.barcode_nmbr}</p>
                             </BookInfo>

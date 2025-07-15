@@ -55,18 +55,22 @@ import {
     CardTitle,
     CardDescription,
     MedalIcon,
-    CalendarIcon
+    CalendarIcon,
+    NameDisplay
 } from './styles';
 import type { ViewMembersRequest } from '../../../../../model/Member/Member/ViewMembersRequest';
 import type { ViewHistsRequest } from '../../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
 import MiniBookHistItem from '../../../../Layouts/Catalog/MiniBookHistItem';
 import type { MemberRank } from '../../../../../model/Biblio/BiblioReports/MemberRankInterface';
 import CirculationForm from '../../../../Layouts/Forms/Circulation/CirculationForm';
+import type { ViewAllClassifiesRequest } from '../../../../../model/Member/MemberClassifyDM/ViewAllClassifiesRequest';
+import Tag from '../../../../Layouts/Tag';
 
 const MemberDetail: React.FC = () => {
     const { mbrid } = useParams();
     const [bookHist, setBookHist] = useState<ViewHistsRequest[]>();
     const [member, setMember] = useState<ViewMembersRequest>();
+    const [memberClassify, setMemberClassify] = useState<ViewAllClassifiesRequest>();
     const [memberRank, setMemberRank] = useState<MemberRank[]>();
     const [memberImage, setMemberImage] = useState('');
     const token = localStorage.getItem("@library_management:token") || "";
@@ -74,9 +78,9 @@ const MemberDetail: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-            const el = document.getElementById("top");
-            el?.scrollIntoView({ behavior: "smooth" });
-        }, [mbrid]);
+        const el = document.getElementById("top");
+        el?.scrollIntoView({ behavior: "smooth" });
+    }, [mbrid]);
 
     const handleCheckout = async (barcode_nmbr: string) => {
         try {
@@ -120,7 +124,20 @@ const MemberDetail: React.FC = () => {
 
                 if (memberData.imageUrl) {
                     setMemberImage(`http://localhost:5000/imgs/member/${memberData.imageUrl}`);
-                }
+                };
+
+                api.get(`/mbrclassifydm/detail/${response.data.member.classification}`, {
+                    headers: {
+                        Authorization: `Bearer ${JSON.parse(token)}`
+                    }
+                })
+                    .then((response) => {
+                        setMemberClassify(response.data.classify);
+                        console.log(response.data.classify);
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    });
             })
             .catch((err: AxiosError) => {
                 console.error(err);
@@ -196,7 +213,11 @@ const MemberDetail: React.FC = () => {
                                     <Right>
                                         <Name>
                                             <NameContent>
-                                                <UserIcon /><Text>{member.first_name + ' ' + member.last_name}</Text>
+                                                <UserIcon />
+                                                <NameDisplay>
+                                                    <Tag description={memberClassify?.description}/>
+                                                    <Text>{member.first_name + ' ' + member.last_name}</Text>
+                                                </NameDisplay>
                                             </NameContent>
                                             <Since>
                                                 <CalendarIcon />

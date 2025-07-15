@@ -57,6 +57,11 @@ export const MemberContent = styled.div`
   gap: 20px;
 `;
 
+export const NameDisplay = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
 export const HistContent = styled.div`
   width: 100%;
   min-height: 500px;

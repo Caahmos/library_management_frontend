@@ -61,6 +61,7 @@ import type { ViewMembersRequest } from '../../../../../model/Member/Member/View
 import type { ViewHistsRequest } from '../../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
 import MiniBookHistItem from '../../../../Layouts/Catalog/MiniBookHistItem';
 import type { MemberRank } from '../../../../../model/Biblio/BiblioReports/MemberRankInterface';
+import CirculationForm from '../../../../Layouts/Forms/Circulation/CirculationForm';
 
 const MemberDetail: React.FC = () => {
     const { mbrid } = useParams();
@@ -69,6 +70,38 @@ const MemberDetail: React.FC = () => {
     const [memberRank, setMemberRank] = useState<MemberRank[]>();
     const [memberImage, setMemberImage] = useState('');
     const token = localStorage.getItem("@library_management:token") || "";
+    const { setFlashMessage } = useFlashMessage();
+    const navigate = useNavigate();
+
+    const handleCheckout = async (barcode_nmbr: string) => {
+        try {
+            const response = await api.post(`/bibliohist/checkout/${mbrid}`, {
+                barcode_nmbr
+            }, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            });
+
+            setFlashMessage("Empréstimo realizado com sucesso!", "success");
+
+            api.get(`/bibliohist/viewhists?mbrid=${mbrid}&limit=50`, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            })
+                .then((response) => {
+                    setBookHist(response.data.foundHists);
+                });
+
+        } catch (error) {
+            const err = error as AxiosError
+            console.error(err);
+            setFlashMessage(err.response?.data
+                ? (err.response.data as { message: string }).message
+                : 'Erro desconhecido', 'error');
+        }
+    };
 
     useEffect(() => {
         api.get(`/member/detail/${mbrid}`, {
@@ -88,7 +121,7 @@ const MemberDetail: React.FC = () => {
                 console.error(err);
             });
     }, [token, mbrid]);
-    
+
     useEffect(() => {
         api.get(`/biblioreports/memberranks?mbrid=${mbrid}&yearsAgo=4`, {
             headers: {
@@ -105,19 +138,19 @@ const MemberDetail: React.FC = () => {
     }, [token, mbrid]);
 
     useEffect(() => {
-            api.get(`/bibliohist/viewhists?mbrid=${mbrid}&limit=${50}`, {
-                headers: {
-                    Authorization: `Bearer ${JSON.parse(token)}`
-                }
+        api.get(`/bibliohist/viewhists?mbrid=${mbrid}&limit=${50}`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        })
+            .then((response) => {
+                setBookHist(response.data.foundHists);
+                console.log(response.data.foundHists);
             })
-                .then((response) => {
-                    setBookHist(response.data.foundHists);
-                    console.log(response.data.foundHists);
-                })
-                .catch((err) => {
-                    console.error(err);
-                });
-        }, [token, mbrid]);
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [token, mbrid]);
 
     const formatDate = (date?: string | Date | null) => {
         if (!date) return '-';
@@ -153,7 +186,7 @@ const MemberDetail: React.FC = () => {
                                         <Barcode>
                                             <FingerprintIcon /><BarcodeText>{member.barcode_nmbr}</BarcodeText>
                                         </Barcode>
-                                        <BookQtd><MedalIcon/><p>{memberRank && memberRank.length > 0 ? memberRank[0].rank  + 'º' : 'Sem rank'}</p></BookQtd>
+                                        <BookQtd><MedalIcon /><p>{memberRank && memberRank.length > 0 ? memberRank[0].rank + 'º' : 'Sem rank'}</p></BookQtd>
                                     </Left>
                                     <Right>
                                         <Name>
@@ -177,38 +210,38 @@ const MemberDetail: React.FC = () => {
                                         <InfoCards>
                                             <Card>
                                                 <CardLeft>
-                                                    <TopCard><FaWhatsapp/></TopCard>
+                                                    <TopCard><FaWhatsapp /></TopCard>
                                                     <BottomCard>
                                                         <CardTitle>Whatsapp</CardTitle>
                                                         <CardDescription>{member.home_phone || '(19) 99999-9999'}</CardDescription>
                                                     </BottomCard>
                                                 </CardLeft>
                                                 <CardRight>
-                                                    <IoIosArrowForward/>
+                                                    <IoIosArrowForward />
                                                 </CardRight>
                                             </Card>
                                             <Card>
                                                 <CardLeft>
-                                                    <TopCard><FiPhone/></TopCard>
+                                                    <TopCard><FiPhone /></TopCard>
                                                     <BottomCard>
                                                         <CardTitle>Telefone 2</CardTitle>
                                                         <CardDescription>{member.work_phone || '(19) 99999-9999'}</CardDescription>
                                                     </BottomCard>
                                                 </CardLeft>
                                                 <CardRight>
-                                                    <IoIosArrowForward/>
+                                                    <IoIosArrowForward />
                                                 </CardRight>
                                             </Card>
                                             <Card>
                                                 <CardLeft>
-                                                    <TopCard><RiAdminLine/></TopCard>
+                                                    <TopCard><RiAdminLine /></TopCard>
                                                     <BottomCard>
                                                         <CardTitle>Admin Res</CardTitle>
                                                         <CardDescription>{member.last_change_userid}</CardDescription>
                                                     </BottomCard>
                                                 </CardLeft>
                                                 <CardRight>
-                                                    <IoIosArrowForward/>
+                                                    <IoIosArrowForward />
                                                 </CardRight>
                                             </Card>
                                         </InfoCards>
@@ -222,7 +255,7 @@ const MemberDetail: React.FC = () => {
                     </MemberCard>
                     <Button1>
                         <ButtonLeft>
-                            <RiImageAddLine/>
+                            <RiImageAddLine />
                         </ButtonLeft>
                         <ButtonRight>
                             <ButtonText>
@@ -232,7 +265,7 @@ const MemberDetail: React.FC = () => {
                     </Button1>
                     <Button2>
                         <ButtonLeft>
-                            <TbUserEdit/>
+                            <TbUserEdit />
                         </ButtonLeft>
                         <ButtonRight>
                             <ButtonText>
@@ -242,7 +275,7 @@ const MemberDetail: React.FC = () => {
                     </Button2>
                     <Button3>
                         <ButtonLeft>
-                            <TbLock/>
+                            <TbLock />
                         </ButtonLeft>
                         <ButtonRight>
                             <ButtonText>
@@ -252,7 +285,7 @@ const MemberDetail: React.FC = () => {
                     </Button3>
                     <MemberContent>
                         <Content>
-
+                            <CirculationForm button_text='' onSubmit={handleCheckout} />
                         </Content>
                     </MemberContent>
                 </MemberGrid>

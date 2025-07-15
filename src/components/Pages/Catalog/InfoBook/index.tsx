@@ -38,6 +38,7 @@ import {
     DeleteInput,
     AdminButton,
     DeleteButton,
+    BookContainer,
     EditIcon,
     Image,
 } from './styles';
@@ -258,86 +259,88 @@ const InfoBook: React.FC = () => {
                         <BookTitle>{bookInfo.title}{bookInfo.title_remainder ? ' - ' + bookInfo.title_remainder : ''}</BookTitle>
                         <Author>Informações do item:</Author>
                     </Header>
-                    <BookSection>
-                        <BookImage>
-                            <Image image={imageSrc}>
-                                <Overlay to={`/catalog/changeimage/${id}`}>
-                                    <UpdateImage>
-                                        <EditIcon size={200} />
-                                    </UpdateImage>
-                                </Overlay>
-                            </Image>
-                        </BookImage>
-                        <BookInfo>
-                            <TextContainer>
-                                <Content>
-                                    {combinedSubfields.map((field, index) => (
-                                        <InfoItem key={field.id}>
-                                            <Tag>{field.title}</Tag>
-                                            <Data>{field.field_data}</Data>
-                                        </InfoItem>
-                                    ))}
-                                </Content>
-                                {
-                                    userData?.admin_flg && <AdminButton to={`/catalog/editbook/${id}`}>
-                                        <EditIcon />
-                                        <span>Editar</span>
-                                    </AdminButton>
-                                }
-                            </TextContainer>
-                        </BookInfo>
-                        <BookContent>
-                            <Title>Cópias cadastradas</Title>
-                            <CopyList>
-                                {
-                                    bookCopies && bookCopies.length > 0
-                                        ?
-                                        bookCopies.map((copyInfo) => (
-                                            <CopyItem key={copyInfo.copyid}>
-                                                <CopyTitle>
-                                                    <CopyNumber>{copyInfo.barcode_nmbr}</CopyNumber>
-                                                    <CopyDescription>{copyInfo.copy_desc || 'Sem descrição'}</CopyDescription>
-                                                </CopyTitle>
-                                                <CopyStatus>{styledStatusCode(copyInfo.status_cd)}</CopyStatus>
-                                                <Functions>
-                                                    <LinkIcon><FaEdit title='Editar Cópia' onClick={() => editCopy(copyInfo.id)} /></LinkIcon>
-                                                    <LinkIcon><MdDelete title='Deletar Cópia' onClick={() => deleteCopy(copyInfo.id)} /></LinkIcon>
-                                                </Functions>
-                                            </CopyItem>
-                                        ))
-                                        : <p>Nenhuma cópia desse livro encontrada.</p>
-                                }
-                                <Button to={`/catalog/createcopy/${id}`}>Adicionar Cópia</Button>
-                            </CopyList>
-                            <CopyList>
-                                <Title>Histórico</Title>
-                                {
-                                    bookHist ?
-                                        <BookHistItem fields={fields} items={bookHist} />
-                                        : <p>Nenhum histórico encontrado.</p>
-                                }
-                            </CopyList>
-                            <DeleteContent>
-                                <Title>Exclusão de bibliografia</Title>
-                                <p>
-                                    Digite <strong style={{ color: confirmDelete === "deletar bibliografia" ? "#2ecc71" : "inherit" }}>
-                                        "deletar bibliografia"
-                                    </strong> para habilitar a exclusão:
-                                </p>
-                                <DeleteInput
-                                    type="text"
-                                    value={confirmDelete}
-                                    onChange={(e) => setConfirmDelete(e.target.value)}
-                                    placeholder='Digite exatamente: deletar bibliografia'
-                                />
-                                <DeleteButton
-                                    onClick={handleDeleteBibliography}
-                                >
-                                    Confirmar Exclusão
-                                </DeleteButton>
-                            </DeleteContent>
-                        </BookContent>
-                    </BookSection>
+                    <BookContainer>
+                        <BookSection>
+                            <BookImage>
+                                <Image image={imageSrc}>
+                                    <Overlay to={`/catalog/changeimage/${id}`}>
+                                        <UpdateImage>
+                                            <EditIcon size={200} />
+                                        </UpdateImage>
+                                    </Overlay>
+                                </Image>
+                            </BookImage>
+                            <BookInfo>
+                                <TextContainer>
+                                    <Content>
+                                        {combinedSubfields.map((field, index) => (
+                                            <InfoItem key={field.id}>
+                                                <Tag>{field.title}</Tag>
+                                                <Data>{field.field_data}</Data>
+                                            </InfoItem>
+                                        ))}
+                                    </Content>
+                                    {
+                                        userData?.admin_flg && <AdminButton to={`/catalog/editbook/${id}`}>
+                                            <EditIcon />
+                                            <span>Editar</span>
+                                        </AdminButton>
+                                    }
+                                </TextContainer>
+                            </BookInfo>
+                            <BookContent>
+                                <Title>Cópias cadastradas</Title>
+                                <CopyList>
+                                    {
+                                        bookCopies && bookCopies.length > 0
+                                            ?
+                                            bookCopies.map((copyInfo) => (
+                                                <CopyItem key={copyInfo.copyid}>
+                                                    <CopyTitle>
+                                                        <CopyNumber>{copyInfo.barcode_nmbr}</CopyNumber>
+                                                        <CopyDescription>{copyInfo.copy_desc || 'Sem descrição'}</CopyDescription>
+                                                    </CopyTitle>
+                                                    <CopyStatus>{styledStatusCode(copyInfo.status_cd)}</CopyStatus>
+                                                    <Functions>
+                                                        <LinkIcon><FaEdit title='Editar Cópia' onClick={() => editCopy(copyInfo.id)} /></LinkIcon>
+                                                        <LinkIcon><MdDelete title='Deletar Cópia' onClick={() => deleteCopy(copyInfo.id)} /></LinkIcon>
+                                                    </Functions>
+                                                </CopyItem>
+                                            ))
+                                            : <p>Nenhuma cópia desse livro encontrada.</p>
+                                    }
+                                    <Button to={`/catalog/createcopy/${id}`}>Adicionar Cópia</Button>
+                                </CopyList>
+                                <CopyList>
+                                    <Title>Histórico</Title>
+                                    {
+                                        bookHist ?
+                                            <BookHistItem fields={fields} items={bookHist} />
+                                            : <p>Nenhum histórico encontrado.</p>
+                                    }
+                                </CopyList>
+                                <DeleteContent>
+                                    <Title>Exclusão de bibliografia</Title>
+                                    <p>
+                                        Digite <strong style={{ color: confirmDelete === "deletar bibliografia" ? "#2ecc71" : "inherit" }}>
+                                            "deletar bibliografia"
+                                        </strong> para habilitar a exclusão:
+                                    </p>
+                                    <DeleteInput
+                                        type="text"
+                                        value={confirmDelete}
+                                        onChange={(e) => setConfirmDelete(e.target.value)}
+                                        placeholder='Digite exatamente: deletar bibliografia'
+                                    />
+                                    <DeleteButton
+                                        onClick={handleDeleteBibliography}
+                                    >
+                                        Confirmar Exclusão
+                                    </DeleteButton>
+                                </DeleteContent>
+                            </BookContent>
+                        </BookSection>
+                    </BookContainer>
                 </>
             ) : (
                 <p>Carregando...</p>

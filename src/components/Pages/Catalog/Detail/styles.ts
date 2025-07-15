@@ -4,23 +4,24 @@ import { MdOutlineMore } from "react-icons/md";
 
 export const Container = styled.div`
   width: 100%;
-  height: 100vh;
   color: ${(props) => props.theme.colors.white};
+`;
+
+export const BookContainer = styled.div`
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
 `;
 
 export const BookSection = styled.div`
   justify-self: center;
-  max-width: 70%;
-  padding: 20px 0 20px 0;
+  max-width: 1000px;
+  width: 100%;
   justify-content: space-between;
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-
-  @media (max-width: 800px) {
-    padding: 20px;
-    max-width: 100%;
-  }
 `;
 
 export const BookImage = styled.div`

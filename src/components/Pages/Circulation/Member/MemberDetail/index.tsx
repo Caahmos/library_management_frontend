@@ -90,7 +90,7 @@ const MemberDetail: React.FC = () => {
     }, [token, mbrid]);
     
     useEffect(() => {
-        api.get(`/biblioreports/memberranks?mbrid=${mbrid}`, {
+        api.get(`/biblioreports/memberranks?mbrid=${mbrid}&yearsAgo=4`, {
             headers: {
                 Authorization: `Bearer ${JSON.parse(token)}`
             }

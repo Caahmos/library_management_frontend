@@ -32,7 +32,8 @@ import {
     CopyButtons,
     AdminButton,
     EditIcon,
-    InfoItems
+    InfoItems,
+    BookContainer
 } from './styles';
 import ReturnButton from "../../../Layouts/ReturnButton";
 import type { ViewStatusRequest } from "../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest";
@@ -178,62 +179,64 @@ const Detail: React.FC = () => {
     return (
         <Container id="top">
             <ReturnButton />
-            {bookInfo && bookInfo.BiblioMedia ? (
-                <BookSection>
-                    <BookImage>
-                        <Image image={imageSrc} />
-                    </BookImage>
-                    <BookInfo>
-                        <TextContainer>
-                            <BookTitle>{bookInfo.title}{bookInfo.title_remainder ? ' - ' + bookInfo.title_remainder : ''}</BookTitle>
-                            <Author>por {bookInfo.author}</Author>
-                            <Rating>
-                                <StarsRating size={14} readonly={true} initialValue={bookInfo?.BiblioMedia[0]?.rank || 0} />
-                                ({bookInfo?.BiblioMedia[0]?.count_ranks || 0})
-                            </Rating>
-                            <Description>{getDescription()}</Description>
-                            <InfoItems>
-                                <DateBook><FaCalendar title="Data de lançamento" /> {getDate()}</DateBook>
-                                <DateBook><FaBookmark title="Número de páginas" /> {getPages()}</DateBook>
-                                <DateBook><FaBarcode title="ISBN" /> {getIsbn()}</DateBook>
-                            </InfoItems>
-                            {
-                                userData?.admin_flg && <AdminButton to={`/catalog/info/${id}`}>
-                                    <EditIcon />
-                                    <span>Mais Informações</span>
-                                </AdminButton>
-                            }
-                        </TextContainer>
-                    </BookInfo>
-                    <BookContent>
-                        <Title>Cópias cadastradas</Title>
-                        <CopyList>
-                            {
-                                bookCopies && bookCopies.length > 0
-                                    ?
-                                    bookCopies.map((copyInfo) => (
-                                        <CopyItem key={copyInfo.copyid}>
-                                            <CopyTitle>
-                                                <CopyNumber>{copyInfo.barcode_nmbr}</CopyNumber>
-                                                <CopyDescription>{copyInfo.copy_desc || 'Sem descrição'}</CopyDescription>
-                                            </CopyTitle>
-                                            <CopyStatus>{styledStatusCode(copyInfo.status_cd)}</CopyStatus>
-                                            {/* <CopyButtons>Botão</CopyButtons> */}
-                                        </CopyItem>
-                                    ))
-                                    : <p>Nenhuma cópia desse livro encontrada.</p>
-                            }
-                        </CopyList>
-                    </BookContent>
-                    <Content>
-                        <Title>Livros relacionados a {bookCollection}</Title>
-                        <BooksSection collection={bookCollection} title="" biblioData={books} />
-                        <Footer />
-                    </Content>
-                </BookSection>
-            ) : (
-                <p>Carregando...</p>
-            )}
+            <BookContainer>
+                {bookInfo && bookInfo.BiblioMedia ? (
+                    <BookSection>
+                        <BookImage>
+                            <Image image={imageSrc} />
+                        </BookImage>
+                        <BookInfo>
+                            <TextContainer>
+                                <BookTitle>{bookInfo.title}{bookInfo.title_remainder ? ' - ' + bookInfo.title_remainder : ''}</BookTitle>
+                                <Author>por {bookInfo.author}</Author>
+                                <Rating>
+                                    <StarsRating size={14} readonly={true} initialValue={bookInfo?.BiblioMedia[0]?.rank || 0} />
+                                    ({bookInfo?.BiblioMedia[0]?.count_ranks || 0})
+                                </Rating>
+                                <Description>{getDescription()}</Description>
+                                <InfoItems>
+                                    <DateBook><FaCalendar title="Data de lançamento" /> {getDate()}</DateBook>
+                                    <DateBook><FaBookmark title="Número de páginas" /> {getPages()}</DateBook>
+                                    <DateBook><FaBarcode title="ISBN" /> {getIsbn()}</DateBook>
+                                </InfoItems>
+                                {
+                                    userData?.admin_flg && <AdminButton to={`/catalog/info/${id}`}>
+                                        <EditIcon />
+                                        <span>Mais Informações</span>
+                                    </AdminButton>
+                                }
+                            </TextContainer>
+                        </BookInfo>
+                        <BookContent>
+                            <Title>Cópias cadastradas</Title>
+                            <CopyList>
+                                {
+                                    bookCopies && bookCopies.length > 0
+                                        ?
+                                        bookCopies.map((copyInfo) => (
+                                            <CopyItem key={copyInfo.copyid}>
+                                                <CopyTitle>
+                                                    <CopyNumber>{copyInfo.barcode_nmbr}</CopyNumber>
+                                                    <CopyDescription>{copyInfo.copy_desc || 'Sem descrição'}</CopyDescription>
+                                                </CopyTitle>
+                                                <CopyStatus>{styledStatusCode(copyInfo.status_cd)}</CopyStatus>
+                                                {/* <CopyButtons>Botão</CopyButtons> */}
+                                            </CopyItem>
+                                        ))
+                                        : <p>Nenhuma cópia desse livro encontrada.</p>
+                                }
+                            </CopyList>
+                        </BookContent>
+                        <Content>
+                            <Title>Livros relacionados a {bookCollection}</Title>
+                            <BooksSection collection={bookCollection} title="" biblioData={books} />
+                            <Footer />
+                        </Content>
+                    </BookSection>
+                ) : (
+                    <p>Carregando...</p>
+                )}
+            </BookContainer>
         </Container>
     );
 };

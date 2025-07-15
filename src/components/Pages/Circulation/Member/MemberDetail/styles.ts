@@ -224,7 +224,6 @@ export const SinceDate = styled.div`
 export const Button1 = styled.div`
   grid-area: B1;
   width: 100%;
-  height: 80px;
   display: flex;
   border-radius: 7px;
   padding: 20px;
@@ -234,7 +233,6 @@ export const Button1 = styled.div`
 export const Button2 = styled.div`
   grid-area: B2;
   width: 100%;
-  height: 80px;
   display: flex;
   border-radius: 7px;
   padding: 20px;
@@ -244,7 +242,6 @@ export const Button2 = styled.div`
 export const Button3 = styled.div`
   grid-area: B3;
   width: 100%;
-  height: 80px;
   display: flex;
   border-radius: 7px;
   padding: 20px;

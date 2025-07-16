@@ -66,10 +66,13 @@ import type { MemberRank } from '../../../../../model/Biblio/BiblioReports/Membe
 import CirculationForm from '../../../../Layouts/Forms/Circulation/CirculationForm';
 import type { ViewAllClassifiesRequest } from '../../../../../model/Member/MemberClassifyDM/ViewAllClassifiesRequest';
 import Tag from '../../../../Layouts/Tag';
+import type { ViewHoldsRequest } from '../../../../../model/Biblio/BiblioStatusHist/ViewHoldsRequest';
 
 const MemberDetail: React.FC = () => {
     const { mbrid } = useParams();
     const [bookHist, setBookHist] = useState<ViewHistsRequest[]>();
+    const [booksOut, setBooksOut] = useState<ViewHistsRequest[]>();
+    const [bookHolds, setBookHolds] = useState<ViewHoldsRequest[]>();
     const [member, setMember] = useState<ViewMembersRequest>();
     const [memberClassify, setMemberClassify] = useState<ViewAllClassifiesRequest>();
     const [memberRank, setMemberRank] = useState<MemberRank[]>();
@@ -113,6 +116,36 @@ const MemberDetail: React.FC = () => {
         }
     };
 
+    const handleHold = async (barcode_nmbr: string) => {
+        try {
+            const response = await api.post(`/bibliohist/hold/${mbrid}`, {
+                barcode_nmbr
+            }, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            });
+
+            setFlashMessage(response.data.message, "success");
+
+            api.get(`/bibliohist/viewholds?mbrid=${mbrid}`, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            })
+                .then((response) => {
+                    setBookHolds(response.data.foundHist);
+                });
+
+        } catch (error) {
+            const err = error as AxiosError
+            console.error(err);
+            setFlashMessage(err.response?.data
+                ? (err.response.data as { message: string }).message
+                : 'Erro desconhecido', 'error');
+        }
+    };
+
     useEffect(() => {
         api.get(`/member/detail/${mbrid}`, {
             headers: {
@@ -134,7 +167,6 @@ const MemberDetail: React.FC = () => {
                 })
                     .then((response) => {
                         setMemberClassify(response.data.classify);
-                        console.log(response.data.classify);
                     })
                     .catch((err) => {
                         console.error(err);
@@ -152,13 +184,12 @@ const MemberDetail: React.FC = () => {
             }
         })
             .then((response) => {
-                console.log(response.data.ranks);
                 setMemberRank(response.data.ranks);
             })
             .catch((err: AxiosError) => {
                 console.error(err);
             });
-    }, [token, mbrid]);
+    }, [token, mbrid, bookHist]);
 
     useEffect(() => {
         api.get(`/bibliohist/viewhists?mbrid=${mbrid}&limit=${50}`, {
@@ -168,12 +199,40 @@ const MemberDetail: React.FC = () => {
         })
             .then((response) => {
                 setBookHist(response.data.foundHists);
-                console.log(response.data.foundHists);
             })
             .catch((err) => {
                 console.error(err);
             });
     }, [token, mbrid]);
+    
+    useEffect(() => {
+        api.get(`/bibliohist/viewhists?mbrid=${mbrid}&status_cd=out`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        })
+            .then((response) => {
+                setBooksOut(response.data.foundHists);
+                console.log(response.data.foundHists);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [token, mbrid, bookHist]);
+    
+    useEffect(() => {
+        api.get(`/bibliohist/viewholds?mbrid=${mbrid}`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        })
+            .then((response) => {
+                setBookHolds(response.data.foundHist);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [token, mbrid, bookHist]);
 
     const formatDate = (date?: string | Date | null) => {
         if (!date) return '-';
@@ -313,10 +372,10 @@ const MemberDetail: React.FC = () => {
                     </Button3>
                     <MemberContent>
                         <Content>
-                            <CirculationForm button_text='' onSubmit={handleCheckout} />
+                            <CirculationForm type='out' button_text='' onSubmit={handleCheckout} booksHist={booksOut}/>                            
                         </Content>
                         <Content>
-                            <CirculationForm button_text='' onSubmit={handleCheckout} />
+                            <CirculationForm type='hld' button_text='' onSubmit={handleHold} holdsHist={bookHolds} />
                         </Content>
                     </MemberContent>
                 </MemberGrid>

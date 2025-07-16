@@ -84,6 +84,7 @@ export const Content = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 20px;
   padding: 20px;
   border-radius: 7px;
   background-color: ${(props) => props.theme.colors.tertiary};

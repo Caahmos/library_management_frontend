@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { Container, Title, Button, StyledInput, Content } from "./styles";
+import type { ViewHistsRequest } from "../../../../../model/Biblio/BiblioStatusHist/ViewHistRequest";
+import type { ViewHoldsRequest } from "../../../../../model/Biblio/BiblioStatusHist/ViewHoldsRequest";
+import BookHoldItem from "../../../Catalog/BookHoldItem";
+import BookOutItem from "../../../Catalog/BookOutItem";
 
 interface CirculationFormProps {
+  type: 'hld' | 'out';
   button_text: string;
+  booksHist?: ViewHistsRequest[]
+  holdsHist?: ViewHoldsRequest[]
   onSubmit: (barcode_nmbr: string) => void;
 }
 
-const CirculationForm: React.FC<CirculationFormProps> = ({ button_text, onSubmit }) => {
+const CirculationForm: React.FC<CirculationFormProps> = ({ button_text, onSubmit, type, booksHist, holdsHist }) => {
   const [barcode, setBarcode] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -19,7 +26,7 @@ const CirculationForm: React.FC<CirculationFormProps> = ({ button_text, onSubmit
 
   return (
     <Container onSubmit={handleSubmit}>
-      <Title>Fazer Empréstimo</Title>
+      <Title>{type === 'out' ? 'Fazer um empréstimo' : 'Deixar em espera'}</Title>
 
       <Content>
         <StyledInput
@@ -32,6 +39,25 @@ const CirculationForm: React.FC<CirculationFormProps> = ({ button_text, onSubmit
 
         <Button type="submit">{button_text || "Registrar Empréstimo"}</Button>
       </Content>
+      <Title>
+        {type === 'out' ? 'Livros emprestados' : 'Livros em espera'}
+      </Title>
+
+      {
+        type === 'hld' && holdsHist && holdsHist.length > 0 && <BookHoldItem fields={[
+          { key: 'position', label: 'Posição' },
+          { key: 'barcode_nmbr', label: 'Tombo' },
+          { key: 'actions', label: 'Ações' },
+        ]} items={holdsHist} />
+      }
+      
+      {
+        type === 'out' && booksHist && booksHist.length > 0 && <BookOutItem fields={[
+          { key: 'barcode_nmbr', label: 'Tombo' },
+          { key: 'due_back_dt', label: 'Devolução' },
+          { key: 'actions', label: 'Ações' },
+        ]} items={booksHist} />
+      }
     </Container>
   );
 };

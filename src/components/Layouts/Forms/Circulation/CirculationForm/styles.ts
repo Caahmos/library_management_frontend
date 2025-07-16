@@ -88,6 +88,7 @@ export const Content = styled.div`
   display: flex;
   gap: 10px;
   align-items: center;
+  margin-bottom: 10px;
 
   @media screen and (max-width: 600px) {
     flex-direction: column;

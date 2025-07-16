@@ -186,7 +186,7 @@ const MemberDetail: React.FC = () => {
     ];
 
     return (
-        <Container id="top">
+        <Container $block={member?.isBlocked || false} id="top">
             <ReturnButton />
             <MemberContainer>
                 <MemberGrid>

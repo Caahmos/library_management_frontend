@@ -8,8 +8,10 @@ import { PiMedal } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { ImBlocked } from "react-icons/im";
 
-export const Container = styled.div`
+export const Container = styled.div<{$block: boolean}>`
   width: 100%;
+  background: ${props => props.$block ? 'linear-gradient(35deg,rgba(212, 40, 40, 0) 60%, rgba(212, 40, 40, 0.86) 100%)' : 'none'};
+  height: fit-content;
 `;
 
 export const MemberContainer = styled.div`

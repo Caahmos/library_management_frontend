@@ -11,4 +11,5 @@ export interface ViewMembersRequest {
     classification?: number
     mbrid: number
     imageUrl?: string
+    isBlocked?: boolean
 }

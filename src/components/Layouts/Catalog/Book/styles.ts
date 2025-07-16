@@ -40,7 +40,7 @@ export const Circle = styled(Link)`
   border-radius: 30px;
   right: 10px;
   background-color: ${props => props.theme.colors.success};
-  color: ${props => props.theme.colors.white};
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -46,6 +46,7 @@ export const GridContainer = styled.div`
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
+  color: ${(props) => props.theme.colors.white};
 `;
 
 export const Square1 = styled(Link)`

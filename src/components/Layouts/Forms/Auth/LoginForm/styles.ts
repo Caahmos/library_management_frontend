@@ -25,7 +25,7 @@ export const Button = styled.button`
   width: 100%;
   padding: 18px;
   background-color: ${(props) => props.theme.colors.success};
-  color: ${(props) => props.theme.colors.white};
+  color: #fff;
   border-radius: 12px;
   margin-top: 20px;
 

@@ -36,7 +36,7 @@ export const Image = styled.div<{ image: string | undefined }>`
   justify-content: center;
   background-image: url(${(props) => props.image});
   background-size: cover;
-  background-color: ${(props) => props.theme.colors.tertiary};
+  background-color: ${(props) => props.theme.colors.primary};
   `;
 
 export const Title = styled.div``;

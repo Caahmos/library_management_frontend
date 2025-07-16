@@ -1,11 +1,11 @@
 export default {
     "title": "light",
     "colors": {
-        primary: '#D5DCF3',
-        secondary: '#fff',
-        tertiary: '#fff',
+        primary: '#DFDFE9',
+        secondary: '#F8FAFC',
+        tertiary: '#F8FAFC',
 
-        white: '#0D0D0D',
+        white: '#373A4E',
         black: '#FFF',
         gray: '#BFBFBF',
 

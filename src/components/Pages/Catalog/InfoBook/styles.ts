@@ -276,7 +276,7 @@ export const DeleteInput = styled.input`
 export const DeleteButton = styled.button`
   width: 100%;
   padding: 20px;
-  color: ${(props) => props.theme.colors.white};
+  color: #fff;
   border: 1px solid ${(props) => props.theme.colors.warning};
   background-color: ${(props) => props.theme.colors.warning};
   display: flex;
@@ -319,7 +319,7 @@ export const Button = styled(Link)`
   display: inline-block;
   padding: 18px;
   background-color: ${(props) => props.theme.colors.success};
-  color: ${(props) => props.theme.colors.white};
+  color: #fff;
   border-radius: 5px;
   text-decoration: none;
   text-align: center;

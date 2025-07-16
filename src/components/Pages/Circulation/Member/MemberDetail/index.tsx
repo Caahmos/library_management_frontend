@@ -56,7 +56,8 @@ import {
     CardDescription,
     MedalIcon,
     CalendarIcon,
-    NameDisplay
+    NameDisplay,
+    IconBlocked
 } from './styles';
 import type { ViewMembersRequest } from '../../../../../model/Member/Member/ViewMembersRequest';
 import type { ViewHistsRequest } from '../../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
@@ -211,6 +212,7 @@ const MemberDetail: React.FC = () => {
                                         <BookQtd><MedalIcon /><p>{memberRank && memberRank.length > 0 ? memberRank[0].rank + 'º' : 'Sem rank'}</p></BookQtd>
                                     </Left>
                                     <Right>
+                                        <IconBlocked $block={member.isBlocked || false}/>
                                         <Name>
                                             <NameContent>
                                                 {/* <UserIcon /> */}

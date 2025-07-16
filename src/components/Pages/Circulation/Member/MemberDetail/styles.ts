@@ -6,6 +6,7 @@ import { MdOutlineLocationOn } from "react-icons/md";
 import { RiCalendarLine } from "react-icons/ri";
 import { PiMedal } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import { ImBlocked } from "react-icons/im";
 
 export const Container = styled.div`
   width: 100%;
@@ -122,6 +123,7 @@ export const Right = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
+  position: relative;
   gap: 15px;
 `;
 
@@ -259,6 +261,16 @@ export const Button3 = styled.div`
   background-color: ${(props) => props.theme.colors.tertiary};
 `;
 
+export const IconBlocked = styled(ImBlocked)<{$block: boolean}>`
+  font-size: 300px;
+  position: absolute;
+  display: ${props => props.$block ? 'block' : 'none'};
+  top: -15px;
+  right: -20px;
+  opacity: 0.1;
+  color: #000;
+`;
+
 export const Title = styled.p`
   font-size: 1.2rem;
   font-weight: bold;
@@ -316,7 +328,9 @@ export const TopCard = styled.div`
   font-size: 1.2rem;
 `;
 
-export const BottomCard = styled.div``;
+export const BottomCard = styled.div`
+
+`;
 
 export const CardTitle = styled.div`
   font-size: 0.9rem;

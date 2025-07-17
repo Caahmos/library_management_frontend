@@ -9,7 +9,11 @@ import {
     BookInfo,
     BookTitle,
     Due,
-    Returned
+    Returned,
+    DeleteHold,
+    HoldText,
+    HoldInfo,
+    DeleteIcon
 } from './styles';
 import type { ViewHoldsRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewHoldsRequest';
 
@@ -21,9 +25,10 @@ type Field = {
 interface BookHistViewItemProps {
     items: ViewHoldsRequest[];
     fields: Field[];
+    onDelete(barcode_nmbr: string): void;
 }
 
-const BookHoldItem: React.FC<BookHistViewItemProps> = ({ items, fields }) => {
+const BookHoldItem: React.FC<BookHistViewItemProps> = ({ items, fields, onDelete }) => {
     const iconMap: Record<string, JSX.Element> = {
         barcode_nmbr: <BarcodeIcon />,
         position: <InfoIcon />,
@@ -52,6 +57,9 @@ const BookHoldItem: React.FC<BookHistViewItemProps> = ({ items, fields }) => {
                                 <BookTitle>{item.biblio.title}</BookTitle>
                                 <p>{item.biblio_copy.barcode_nmbr}</p>
                             </BookInfo>
+                            <HoldInfo>
+                                <DeleteHold onClick={() => {onDelete(item.biblio_copy.barcode_nmbr)}}><DeleteIcon /> Desistir</DeleteHold>
+                            </HoldInfo>
                         </Item>
                     ))
                     : <p>Nenhum item foi encontrado</p>

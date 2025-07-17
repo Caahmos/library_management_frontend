@@ -8,7 +8,7 @@ import { Tooltip } from "recharts";
 
 export const Container = styled.div`
   width: 100%;
-  max-width: 1920px;
+  max-width: 1280px;
   min-height: fit-content;
   padding: 20px;
   display: flex;
@@ -51,6 +51,7 @@ export const Header = styled.div`
 
 export const Square1 = styled(Link)`
   grid-area: SG1;
+  border-radius: 7px;
   background-color: ${(props) => props.theme.colors.secondary};
   text-decoration: none;
   position: relative;
@@ -123,6 +124,7 @@ export const SquareContent = styled.div`
 
 export const Square2 = styled(Link)`
   grid-area: SG2;
+  border-radius: 7px;
   background-color: ${(props) => props.theme.colors.secondary};
   text-decoration: none;
   position: relative;
@@ -130,6 +132,7 @@ export const Square2 = styled(Link)`
 `;
 export const Square3 = styled(Link)`
   grid-area: SG3;
+  border-radius: 7px;
   background-color: ${(props) => props.theme.colors.secondary};
   text-decoration: none;
   position: relative;
@@ -137,6 +140,7 @@ export const Square3 = styled(Link)`
 `;
 export const Square4 = styled(Link)`
   grid-area: SG4;
+  border-radius: 7px;
   background-color: ${(props) => props.theme.colors.secondary};
   text-decoration: none;
   position: relative;
@@ -146,6 +150,7 @@ export const Square4 = styled(Link)`
 export const RetangleGrid = styled.div`
   padding: 20px;
   grid-area: RG;
+  border-radius: 7px;
   background-color: ${(props) => props.theme.colors.secondary};
   color: ${(props) => props.theme.colors.white};
   display: flex;
@@ -155,17 +160,21 @@ export const RetangleGrid = styled.div`
 
 export const AsideGrid = styled.div`
   grid-area: AG;
+  border-radius: 7px;
   min-height: fit-content;
+  overflow: hidden;
   `;
 
 export const AsideContent = styled.div`
   background-color: ${(props) => props.theme.colors.secondary};
   padding: 20px;
   min-height: 1000px;
+  border-radius: 7px;
 `
 
 export const ChartGrid1 = styled.div`
   grid-area: CG1;
+  border-radius: 7px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -174,6 +183,7 @@ export const ChartGrid1 = styled.div`
 `;
 export const ChartGrid2 = styled.div`
   grid-area: CG2;
+  border-radius: 7px;
   display: flex;
   flex-direction: column;
   gap: 20px;

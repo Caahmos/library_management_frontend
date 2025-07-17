@@ -147,7 +147,11 @@ const MemberDetail: React.FC = () => {
     };
 
     const handleDeleteHold = async (barcode_nmbr: string) => {
+        console.log('Deletando hold para barcode:', barcode_nmbr);
+        console.log('Membro ID:', mbrid);
+
         try {
+            
             const response = await api.delete(`/bibliohist/deletehold/${mbrid}/${barcode_nmbr}`, {
                 headers: {
                     Authorization: `Bearer ${JSON.parse(token)}`
@@ -156,31 +160,51 @@ const MemberDetail: React.FC = () => {
 
             setFlashMessage(response.data.message, "success");
 
-            api.get(`/bibliohist/viewholds?mbrid=${mbrid}`, {
+            setBookHolds(prev =>
+                prev?.filter(hold => hold.biblio_copy.barcode_nmbr !== barcode_nmbr) || []
+            );
+
+            const holdsResponse = await api.get(`/bibliohist/viewholds?mbrid=${mbrid}`, {
                 headers: {
                     Authorization: `Bearer ${JSON.parse(token)}`
                 }
-            })
-                .then((response) => {
-                    setBookHolds(response.data.foundHist);
-                });
+            });
+
+            console.log('Resposta da API após deletar:', holdsResponse.data);
+
+            const updatedHolds = holdsResponse.data.foundHist || [];
+            console.log('Holds atualizados:', updatedHolds);
+
+            setBookHolds(updatedHolds);
 
         } catch (error) {
-            const err = error as AxiosError
-            console.error(err);
-            setFlashMessage(err.response?.data
-                ? (err.response.data as { message: string }).message
-                : 'Erro desconhecido', 'error');
+            const err = error as AxiosError;
+            console.error('Erro ao deletar hold:', err);
+
+            try {
+                const freshResponse = await api.get(`/bibliohist/viewholds?mbrid=${mbrid}`, {
+                    headers: {
+                        Authorization: `Bearer ${JSON.parse(token)}`
+                    }
+                });
+                setBookHolds(freshResponse.data.foundHist || []);
+            } catch (fetchError) {
+                console.error('Erro ao buscar holds atualizados:', fetchError);
+                setBookHolds([]);
+            }
         }
 
-        api.get(`/bibliohist/viewhists?mbrid=${mbrid}&limit=50`, {
-            headers: {
-                Authorization: `Bearer ${JSON.parse(token)}`
-            }
-        })
-            .then((response) => {
-                setBookHist(response.data.foundHists);
+        // Atualiza o histórico (opcional - remova se não for necessário)
+        try {
+            const histResponse = await api.get(`/bibliohist/viewhists?mbrid=${mbrid}&limit=50`, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
             });
+            setBookHist(histResponse.data.foundHists || []);
+        } catch (histError) {
+            console.error('Erro ao atualizar histórico:', histError);
+        }
     };
 
     useEffect(() => {
@@ -412,7 +436,7 @@ const MemberDetail: React.FC = () => {
                             <CirculationForm type='out' button_text='' onSubmit={handleCheckout} booksHist={booksOut} />
                         </Content>
                         <Content>
-                            <CirculationForm type='hld' button_text='' onSubmit={handleHold} holdsHist={bookHolds} />
+                            <CirculationForm type='hld' button_text='' onSubmit={handleHold} holdsHist={bookHolds} onDeleteHold={handleDeleteHold} />
                         </Content>
                     </MemberContent>
                 </MemberGrid>

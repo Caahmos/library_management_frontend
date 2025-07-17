@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FaBarcode } from "react-icons/fa6";
 import { HiMiniUsers } from "react-icons/hi2";
-import { MdInfoOutline } from "react-icons/md";
+import { MdAutoDelete, MdInfoOutline } from "react-icons/md";
 import { CgOptions } from "react-icons/cg";
 import { Link } from "react-router-dom";
 
@@ -99,3 +99,35 @@ export const Returned = styled.div`
   align-items: center;
   gap: 5px;
 `
+
+export const DeleteIcon = styled(MdAutoDelete)`
+  font-size: 0.8;
+  margin-right: 5px;
+`;
+
+export const DeleteHold = styled.div`
+ font-size: 1rem;
+ cursor: pointer;
+ transition: 0.4s all ease-in;
+ color: #ff0000;
+ display: flex;
+ align-items: center;
+ 
+ &:hover{
+   color: #ff0000a1;
+ }
+`;
+
+export const HoldText = styled.div`
+  font-size: 1rem;
+  
+`;
+
+export const HoldInfo = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+`;

@@ -112,4 +112,5 @@ export const ResultsContainer = styled.div`
   height: fit-content;
   background-color: ${props => props.theme.colors.secondary};
   padding: 20px;
+  border-radius: 7px;
 `

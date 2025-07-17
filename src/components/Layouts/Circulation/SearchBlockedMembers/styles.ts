@@ -13,6 +13,7 @@ export const CloseButton = styled.button`
 
 export const Container = styled.div`
   width: 100%;
+  height: fit-content;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -23,7 +24,9 @@ export const Container = styled.div`
 export const InputContainer = styled.div`
   position: relative;
   width: 100%;
-  margin: 0 10px;   
+  margin: 0 10px;  
+  border-radius: 8px; 
+  background-color: ${props => props.theme.colors.primary};
 
   @media (max-width: 1000px) {
     width: 100%;
@@ -112,4 +115,5 @@ export const ResultsContainer = styled.div`
   height: fit-content;
   background-color: ${props => props.theme.colors.secondary};
   padding: 20px;
+  border-radius: 7px;
 `

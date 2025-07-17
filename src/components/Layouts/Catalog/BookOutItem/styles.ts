@@ -47,10 +47,10 @@ export const BookInfo = styled(Link)`
   max-width: 90%;
   text-decoration: none;
   color: ${(props) => props.theme.colors.white};
-  `;
+`;
 
 export const BookTitle = styled.p`
-color: ${(props) => props.theme.colors.success};
+  color: ${(props) => props.theme.colors.success};
   font-size: 0.7rem;
 `;
 
@@ -91,11 +91,30 @@ export const Due = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  color: ${props => props.theme.colors.white};
-`
+  color: ${(props) => props.theme.colors.white};
+`;
 
 export const Returned = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
-`
+`;
+
+export const IconLink = styled(Link)`
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  color: ${(props) => props.theme.colors.white};
+  gap: 10px;
+
+  > svg {
+    color: ${(props) => props.theme.colors.success};
+  }
+  
+  &:hover{
+    color: ${(props) => props.theme.colors.success};
+    transition: 0.2s all ease-in;
+  }
+`;

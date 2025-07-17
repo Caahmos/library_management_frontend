@@ -12,10 +12,12 @@ import {
     Returned,
     DaysLate,
     DueDate,
-    HistDate
+    HistDate,
+    IconLink
 } from './styles';
 import type { ViewHistsRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
 import { FiAlertTriangle, FiCheck } from "react-icons/fi";
+import { TbBookUpload } from "react-icons/tb";
 
 type Field = {
     key: string;
@@ -101,6 +103,7 @@ const BookOutItem: React.FC<BookHistViewItemProps> = ({ items, fields }) => {
                                     }
                                 </>
                             }
+                            <IconLink to={`/circulation/checkin?barcode_nmbr=${item.biblio_copy.barcode_nmbr}`}><TbBookUpload/> Devolver</IconLink>
                         </Item>
                     ))
                     : <p>Nenhum item foi encontrado</p>

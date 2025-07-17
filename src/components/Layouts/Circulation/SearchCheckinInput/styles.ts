@@ -147,8 +147,7 @@ export const BookSection = styled.div`
   width: 100%;
   justify-content: space-between;
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
 
   @media screen and (max-width: 1000px) {
     flex-direction: column;
@@ -156,6 +155,7 @@ export const BookSection = styled.div`
 `;
 
 export const BookImage = styled.div`
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;

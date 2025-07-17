@@ -146,6 +146,43 @@ const MemberDetail: React.FC = () => {
         }
     };
 
+    const handleDeleteHold = async (barcode_nmbr: string) => {
+        try {
+            const response = await api.delete(`/bibliohist/deletehold/${mbrid}/${barcode_nmbr}`, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            });
+
+            setFlashMessage(response.data.message, "success");
+
+            api.get(`/bibliohist/viewholds?mbrid=${mbrid}`, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            })
+                .then((response) => {
+                    setBookHolds(response.data.foundHist);
+                });
+
+        } catch (error) {
+            const err = error as AxiosError
+            console.error(err);
+            setFlashMessage(err.response?.data
+                ? (err.response.data as { message: string }).message
+                : 'Erro desconhecido', 'error');
+        }
+
+        api.get(`/bibliohist/viewhists?mbrid=${mbrid}&limit=50`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        })
+            .then((response) => {
+                setBookHist(response.data.foundHists);
+            });
+    };
+
     useEffect(() => {
         api.get(`/member/detail/${mbrid}`, {
             headers: {
@@ -204,7 +241,7 @@ const MemberDetail: React.FC = () => {
                 console.error(err);
             });
     }, [token, mbrid]);
-    
+
     useEffect(() => {
         api.get(`/bibliohist/viewhists?mbrid=${mbrid}&status_cd=out`, {
             headers: {
@@ -219,7 +256,7 @@ const MemberDetail: React.FC = () => {
                 console.error(err);
             });
     }, [token, mbrid, bookHist]);
-    
+
     useEffect(() => {
         api.get(`/bibliohist/viewholds?mbrid=${mbrid}`, {
             headers: {
@@ -254,7 +291,7 @@ const MemberDetail: React.FC = () => {
                             <Title>Histórico</Title>
                             {
                                 bookHist ?
-                                    <MiniBookHistItem fields={fields} items={bookHist} />
+                                    <MiniBookHistItem onDelete={handleDeleteHold} fields={fields} items={bookHist} />
                                     : <p>Nenhum histórico encontrado.</p>
                             }
                         </HistContent>
@@ -271,12 +308,12 @@ const MemberDetail: React.FC = () => {
                                         <BookQtd><MedalIcon /><p>{memberRank && memberRank.length > 0 ? memberRank[0].rank + 'º' : 'Sem rank'}</p></BookQtd>
                                     </Left>
                                     <Right>
-                                        <IconBlocked $block={member.isBlocked || false}/>
+                                        <IconBlocked $block={member.isBlocked || false} />
                                         <Name>
                                             <NameContent>
                                                 {/* <UserIcon /> */}
                                                 <NameDisplay>
-                                                    <Tag description={memberClassify?.description}/>
+                                                    <Tag description={memberClassify?.description} />
                                                     <Text>{member.first_name + ' ' + member.last_name}</Text>
                                                 </NameDisplay>
                                             </NameContent>
@@ -372,7 +409,7 @@ const MemberDetail: React.FC = () => {
                     </Button3>
                     <MemberContent>
                         <Content>
-                            <CirculationForm type='out' button_text='' onSubmit={handleCheckout} booksHist={booksOut}/>                            
+                            <CirculationForm type='out' button_text='' onSubmit={handleCheckout} booksHist={booksOut} />
                         </Content>
                         <Content>
                             <CirculationForm type='hld' button_text='' onSubmit={handleHold} holdsHist={bookHolds} />

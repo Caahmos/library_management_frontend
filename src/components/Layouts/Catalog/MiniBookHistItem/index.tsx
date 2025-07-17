@@ -13,7 +13,11 @@ import {
     BookInfo,
     BookTitle,
     Due,
-    Returned
+    Returned,
+    DeleteHold,
+    HoldText,
+    HoldInfo,
+    DeleteIcon
 } from './styles';
 import type { ViewHistsRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
 import api from '../../../../utils/api';
@@ -28,11 +32,12 @@ type Field = {
 };
 
 interface BookHistViewItemProps {
+    onDelete(barcode_nmbr: string): void;
     items: ViewHistsRequest[];
     fields: Field[];
 }
 
-const MiniBookHistItem: React.FC<BookHistViewItemProps> = ({ items, fields }) => {
+const MiniBookHistItem: React.FC<BookHistViewItemProps> = ({ items, fields, onDelete }) => {
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
     const token = localStorage.getItem("@library_management:token") || "";
 
@@ -123,12 +128,18 @@ const MiniBookHistItem: React.FC<BookHistViewItemProps> = ({ items, fields }) =>
                                 )
                                 :
                                 <>
-                                    {
-                                        item.returned_at 
+                                    {item.status_cd === 'hld' && item.biblio_copy.barcode_nmbr
                                         ?
-                                        <Returned><FiCheck style={{color: 'green'}}/><Due $in='yes'>{formatDate(item.returned_at)}</Due></Returned>
+                                        <HoldInfo>
+                                            <HoldText>Sua vez de alugar!</HoldText>
+                                            <DeleteHold onClick={() => {onDelete(item.biblio_copy.barcode_nmbr as string)}}><DeleteIcon/> Desistir</DeleteHold>
+                                        </HoldInfo>
                                         :
-                                        <Due $in='no'>{formatDate(item.due_back_dt)}</Due>
+                                        item.returned_at
+                                            ?
+                                            <Returned><FiCheck style={{ color: 'green' }} /><Due $in='yes'>{formatDate(item.returned_at)}</Due></Returned>
+                                            :
+                                            <Due $in='no'>{formatDate(item.due_back_dt)}</Due>
                                     }
                                 </>
                             }

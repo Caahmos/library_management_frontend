@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReturnButton from '../../../Layouts/ReturnButton';
-import { RiUserSearchLine } from "react-icons/ri";
+import { GrBook } from "react-icons/gr";
 
 import {
     Container
@@ -16,7 +16,7 @@ const Checkin: React.FC = () => {
     return (
         <Container id="top">
             <ReturnButton />
-            <SearchCheckinInput/>
+            <SearchCheckinInput icon={<GrBook/>}/>
         </Container>
     )
 };

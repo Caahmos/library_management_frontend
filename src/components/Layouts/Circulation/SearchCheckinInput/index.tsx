@@ -97,12 +97,6 @@ const SearchCheckinInput: React.FC<InputProps> = ({ icon }) => {
         console.log(searchValue)
     }, [searchValue])
 
-    const handleClose = () => {
-        setSearchValue("");
-        setBook([]);
-        setHasSearched(false);
-    };
-
     const findMember = (biblio: Biblio[], barcode_nmbr: string) => {
         const copyFinded = biblio[0].biblio_copy.find((copy) => {
             return copy.barcode_nmbr == barcode_nmbr
@@ -161,9 +155,6 @@ const SearchCheckinInput: React.FC<InputProps> = ({ icon }) => {
                         placeholder="Digite o tombo do livro"
                     />
 
-                    <CloseButton onClick={handleClose}>
-                        <IoCloseSharp />
-                    </CloseButton>
                 </StyledInputContainer>
                 <Button type="submit">Procurar</Button>
             </InputContainer>

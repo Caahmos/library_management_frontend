@@ -19,7 +19,13 @@ import {
     TextContainer,
     Author,
     DateBook,
-    InfoItems
+    FingerprintIcon,
+    InfoItems,
+    ObservationContent,
+    ObservationText,
+    ObservationTitle,
+    Title,
+    ButtonCheckin
 } from "./styles";
 import { IoCloseSharp } from "react-icons/io5";
 import type { ViewMembersRequest } from "../../../../model/Member/Member/ViewMembersRequest";
@@ -27,6 +33,9 @@ import MemberItem from "../MemberItem";
 import type { Biblio, BiblioCopy } from "../../../../model/Biblio/Biblio/SearchBiblioResponse";
 import { FaUserClock } from "react-icons/fa";
 import type { Copies } from "../../../../model/Biblio/BiblioCopy/Copies";
+import { useNavigate } from "react-router-dom";
+import useFlashMessage from "../../../../hooks/useFlashMessages";
+import type { AxiosError } from "axios";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label?: string;
@@ -34,10 +43,12 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const SearchCheckinInput: React.FC<InputProps> = ({ icon }) => {
+    const navigate = useNavigate();
+    const { setFlashMessage } = useFlashMessage();
     const [book, setBook] = useState<Biblio[]>([]);
     const [bookInfo, setBookInfo] = useState<Biblio>();
     const [searchValue, setSearchValue] = useState("");
-    const [copy, setCopy] = useState<BiblioCopy>();
+    const [member, setMember] = useState<ViewMembersRequest>();
     const [hasSearched, setHasSearched] = useState(false);
     const defaultImage = 'http://localhost:5000/imgs/biblio/semcapa.png';
     const [imageSrc, setImageSrc] = useState(defaultImage);
@@ -67,7 +78,7 @@ const SearchCheckinInput: React.FC<InputProps> = ({ icon }) => {
                     .then((response) => {
                         setBookInfo(response.data.biblio);
                         const imageUrl = response.data.biblio.BiblioMedia?.[0]?.imageUrl;
-                        console.log(copy)
+                        console.log(member);
                         setImageSrc(imageUrl
                             ? `http://localhost:5000/imgs/biblio/${imageUrl}`
                             : defaultImage
@@ -92,14 +103,49 @@ const SearchCheckinInput: React.FC<InputProps> = ({ icon }) => {
         setHasSearched(false);
     };
 
-    const findMember = (biblio: Biblio[] ,barcode_nmbr: string) => {
+    const findMember = (biblio: Biblio[], barcode_nmbr: string) => {
         const copyFinded = biblio[0].biblio_copy.find((copy) => {
             return copy.barcode_nmbr == barcode_nmbr
-        })
+        });
 
-        // console.log('OLHA');
-        // console.log(copyFinded);
-        setCopy(copyFinded);
+        api.get(`/member/detail/${copyFinded?.mbrid}`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        })
+            .then((response) => {
+                setMember(response.data.member);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    };
+
+    const handleCheckIn = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        let msgText = '';
+        let msgType = '';
+
+        try {
+            console.log(searchValue);
+            const response = await api.post('/bibliohist/checkin', {barcode_nmbr: searchValue});
+
+            msgText = response.data.message;
+            msgType = 'success';
+
+            navigate(`/circulation`);
+        } catch (error) {
+            const err = error as AxiosError;
+            console.error(err);
+            if (err.response && err.response.data) {
+                msgText = (err.response.data as { message: string }).message;
+            } else {
+                msgText = 'Erro desconhecido';
+            }
+            msgType = 'error';
+        }
+
+        setFlashMessage(msgText, msgType);
     };
 
     return (
@@ -131,18 +177,27 @@ const SearchCheckinInput: React.FC<InputProps> = ({ icon }) => {
                                 <BookTitle>{bookInfo.title}{bookInfo.title_remainder ? ' - ' + bookInfo.title_remainder : ''}</BookTitle>
                                 <Author>por {bookInfo.author}</Author>
                                 <InfoItems>
-                                    <DateBook><FaUserClock />{book[0].biblio_copy && book[0].biblio_copy.length >= 0 && copy &&
+                                    <DateBook><FaUserClock />{book[0].biblio_copy && book[0].biblio_copy.length >= 0 && member &&
                                         <p>
-                                            {copy.mbrid}
-                                        </p>        
+                                            {member?.first_name + ' ' + member?.last_name}
+                                        </p>
+                                    }
+                                    </DateBook>
+                                    <DateBook><FingerprintIcon />{book[0].biblio_copy && book[0].biblio_copy.length >= 0 && member &&
+                                        <p>
+                                            {member?.barcode_nmbr}
+                                        </p>
                                     }
                                     </DateBook>
                                 </InfoItems>
                             </BookImage>
                             <BookInfo>
-                                <TextContainer>
-                                    <BookTitle>{bookInfo.title}{bookInfo.title_remainder ? ' - ' + bookInfo.title_remainder : ''}</BookTitle>
-                                </TextContainer>
+                                <ObservationContent onSubmit={handleCheckIn}>
+                                    <Title>Devolver o livro</Title>
+                                    <ObservationTitle>Deseja adicionar um observação?</ObservationTitle>
+                                    <ObservationText></ObservationText>
+                                    <ButtonCheckin>Devolver</ButtonCheckin>
+                                </ObservationContent>
                             </BookInfo>
                         </BookSection>)
                 }

@@ -1,3 +1,4 @@
+import { RiFingerprint2Fill } from "react-icons/ri";
 import styled from "styled-components";
 
 interface DropdownProps {
@@ -186,6 +187,7 @@ export const BookInfo = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${(props) => props.theme.colors.secondary};
+  height: fit-content;
 
   > img {
     width: 200px;
@@ -204,6 +206,7 @@ export const Author = styled.div`
 export const DateBook = styled.div`
   display: flex;
   align-items: center;
+  gap: 10px;
   > svg {
     color: ${(props) => props.theme.colors.success};
   }
@@ -213,7 +216,7 @@ export const InfoItems = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
 `;
 
 export const TextContainer = styled.div`
@@ -231,4 +234,48 @@ export const TextContainer = styled.div`
 
 export const BookTitle = styled.div`
   font-size: 1.5rem;
+`;
+
+export const FingerprintIcon = styled(RiFingerprint2Fill)`
+  font-size: 0.8rem;
+  color: ${(props) => props.theme.colors.success};
+
+`
+
+export const ObservationContent = styled.form`
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+`
+export const Title = styled.div`
+  font-size: 1.5rem;
+`
+
+export const ObservationTitle = styled.div`
+  
+`
+
+export const ObservationText = styled.textarea`
+  font-size: 1.1rem;
+  min-height: 200px;
+  background-color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.white};
+  border-radius: 7px;
+  padding: 10px;
+`
+
+export const ButtonCheckin = styled.button`
+  width: 100%;
+  padding: 18px;
+  background-color: ${(props) => props.theme.colors.success};
+  color: #fff;
+  border-radius: 5px;
+
+  &:hover {
+    opacity: 0.9;
+    transition: ease 0.4s all;
+  }
 `;

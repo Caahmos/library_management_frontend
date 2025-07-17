@@ -170,7 +170,7 @@ export const AdminButton = styled(Link)`
 `
 
 export const EditIcon = styled(MdOutlineMore)`
-  color: ${props => props.theme.colors.success}
+  color: ${props => props.theme.colors.success};
 `
 
 export const InfoItems = styled.div`

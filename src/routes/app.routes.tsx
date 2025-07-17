@@ -37,6 +37,7 @@ import PrivateRoutes from "../components/Layouts/PrivateRoutes";
 import BlockedMembers from "../components/Pages/Circulation/Member/BlockedMembers";
 import MemberDetail from "../components/Pages/Circulation/Member/MemberDetail";
 import EditMember from "../components/Pages/Circulation/Member/EditMember";
+import Checkin from "../components/Pages/Circulation/Checkin";
 
 const AppRoutes: React.FC = () => {
 
@@ -76,6 +77,7 @@ const AppRoutes: React.FC = () => {
 
                         <Route element={<PrivateRoutes permission="circ_flg" />}>
                             <Route path="/circulation" element={<Circulation />} />
+                            <Route path="/circulation/checkin" element={<Checkin />} />
 
                             <Route path="/mbrclassify" element={<MemberList />} />
                             <Route path="/mbrclassify/create" element={<CreateMemberType />} />

@@ -2,19 +2,26 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { RiFingerprint2Fill } from "react-icons/ri";
 
-export const Container = styled(Link)`
+export const Container = styled(Link)<{ rankColor?: string }>`
   text-decoration: none;
   color: ${(props) => props.theme.colors.white};
   width: 100%;
   max-width: 1000px;
-  /* border-bottom: 1px solid ${(props) => props.theme.colors.white}; */
-  padding: 15px 0px;
+  padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: 7px;
+
+  background: ${({ rankColor }) =>
+    rankColor
+      ? `linear-gradient(90deg, ${rankColor + '33'} 0%, rgba(0, 0, 0, 0) 70%)`
+      : 'none'};
 `;
+
 export const Content = styled.div`
   display: flex;
+  height: 100%;
 `;
 
 export const Count = styled.div`
@@ -26,21 +33,25 @@ export const Count = styled.div`
 export const Info = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
+  justify-content: center;
 `;
 
 export const Image = styled.div<{ image: string | undefined }>`
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   border-radius: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-image: url(${(props) => props.image});
   background-size: cover;
-  background-color: ${(props) => props.theme.colors.primary};
+  background-color: ${(props) => props.theme.colors.secondary};
   `;
 
-export const Title = styled.div``;
+export const Title = styled.div`
+  font-size: 1.3rem;
+`;
 
 export const Author = styled.div`
   display: flex;

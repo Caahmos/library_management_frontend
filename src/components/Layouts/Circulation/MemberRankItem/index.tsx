@@ -17,10 +17,40 @@ import type { ViewMembersRequest } from "../../../../model/Member/Member/ViewMem
 import api from "../../../../utils/api";
 import type { AxiosError } from 'axios';
 const token = localStorage.getItem("@library_management:token") || "";
+import gold_rank from '../../../../../public/ranks/gold_rank.png';
+import diamond_rank from '../../../../../public/ranks/diamond_rank.png';
+import silver_rank from '../../../../../public/ranks/silver_rank.png';
+import bronze_rank from '../../../../../public/ranks/bronze_rank.png';
+import outline_rank from '../../../../../public/ranks/outline_rank.png';
 
 const MemberRankItem: React.FC<MemberRank> = ({ earliestDate, mbrid, rank, totalBooksBorrowed }) => {
     const [member, setMember] = useState<ViewMembersRequest>();
 
+    const topRanks = [
+        {
+            rank: 1,
+            img: diamond_rank,
+            color: '#5EF1FF'
+        },
+        {
+            rank: 2,
+            img: gold_rank,
+            color: '#FED030'
+        },
+        {
+            rank: 3,
+            img: silver_rank,
+            color: '#E3E7E9'
+        },
+        {
+            rank: 4,
+            img: bronze_rank,
+            color: '#E49050'
+        },
+        {
+            img: outline_rank,
+        }
+    ];
 
     const imagemFormatada = member?.imageUrl
         ? `http://localhost:5000/imgs/member/${member.imageUrl}`
@@ -43,8 +73,11 @@ const MemberRankItem: React.FC<MemberRank> = ({ earliestDate, mbrid, rank, total
 
     return (
         member &&
-        <Container to={`/member/detail/${mbrid}`} key={mbrid}>
+        <Container rankColor={topRanks[rank - 1]?.color} to={`/member/detail/${mbrid}`} key={mbrid}>
             <Content>
+                <Count>
+                    <img src={topRanks[rank - 1]?.img} width={70} />
+                </Count>
                 <Count>
                     <Image image={imagemFormatada} />
                 </Count>

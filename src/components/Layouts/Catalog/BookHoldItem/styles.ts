@@ -66,6 +66,8 @@ export const Item = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 1px solid ${(props) => props.theme.colors.primary};;
+  padding-bottom: 10px;
 `;
 
 interface DueDateProps {

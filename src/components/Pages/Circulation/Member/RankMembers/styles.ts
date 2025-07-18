@@ -15,4 +15,5 @@ export const ListContainer = styled.div`
     justify-content: center;
     align-items: center;
     gap: 10px;
+    padding: 20px;
     `

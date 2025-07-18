@@ -46,9 +46,6 @@ const MemberRankItem: React.FC<MemberRank> = ({ earliestDate, mbrid, rank, total
             rank: 4,
             img: bronze_rank,
             color: '#E49050'
-        },
-        {
-            img: outline_rank,
         }
     ];
 
@@ -76,7 +73,7 @@ const MemberRankItem: React.FC<MemberRank> = ({ earliestDate, mbrid, rank, total
         <Container rankColor={topRanks[rank - 1]?.color} to={`/member/detail/${mbrid}`} key={mbrid}>
             <Content>
                 <Count>
-                    <img src={topRanks[rank - 1]?.img} width={70} />
+                    <img src={topRanks[rank - 1]?.img || outline_rank} width={70} />
                 </Count>
                 <Count>
                     <Image image={imagemFormatada} />

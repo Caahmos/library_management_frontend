@@ -15,7 +15,7 @@ import {
 
 import type { MemberRank } from "../../../../model/Biblio/BiblioReports/MemberRankInterface";
 import type { ViewMembersRequest } from "../../../../model/Member/Member/ViewMembersRequest";
-import BookModel from "../../../../utils/bookModel";
+import BookEmpty from "../../../../utils/BookModel";
 
 import api from "../../../../utils/api";
 import type { AxiosError } from 'axios';
@@ -82,7 +82,7 @@ const MemberRankItem: React.FC<MemberRank> = ({ earliestDate, mbrid, rank, total
                     <Count>
                         {currentRank?.img
                             ? <img src={currentRank.img} width={70} />
-                            : <BookModel />}
+                            : <BookEmpty />}
                     </Count>
                     <Count>
                         <Image image={imagemFormatada} />

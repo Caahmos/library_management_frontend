@@ -50,9 +50,17 @@ const BookModel: React.FC<BookModelProps> = ({ fillColor, rank, ...props }) => (
         fill={fillColor}
       ></path>
     </g>
-    <text>
-      aaaa
-    </text>
+    <text
+    x="8300"
+    y="7600"
+    fill={fillColor}
+    fontSize="3000"
+    fontWeight="bold"
+    textAnchor="middle"
+    dominantBaseline="middle"
+  >
+    {rank}º
+  </text>
   </svg>
 );
 

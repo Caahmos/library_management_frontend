@@ -17,3 +17,17 @@ export const ListContainer = styled.div`
     gap: 10px;
     padding: 20px;
     `
+
+export const ButtonMore = styled.button`
+    padding: 18px;
+    background-color: transparent;
+    color: ${props => props.theme.colors.success};
+    border: 1px solid ${props => props.theme.colors.success};
+    border-radius: 7px;
+    transition: 0.4s all ease-in;
+    
+    &:hover{
+        background-color: ${props => props.theme.colors.success};
+        color: ${props => props.theme.colors.white};
+    }
+`

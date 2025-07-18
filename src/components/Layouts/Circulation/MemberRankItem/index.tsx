@@ -10,7 +10,8 @@ import {
     Image,
     Title,
     Author,
-    FingerprintIcon
+    FingerprintIcon,
+    Points
 } from './styles';
 
 import type { MemberRank } from "../../../../model/Biblio/BiblioReports/MemberRankInterface";
@@ -92,7 +93,7 @@ const MemberRankItem: React.FC<MemberRank> = ({ earliestDate, mbrid, rank, total
                         <Author><FingerprintIcon /> {member.barcode_nmbr}</Author>
                     </Info>
                 </Content>
-                <p>{totalBooksBorrowed} XP</p>
+                <Points>{totalBooksBorrowed} XP</Points>
             </Container>
         )
     );

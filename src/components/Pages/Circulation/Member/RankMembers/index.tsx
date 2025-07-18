@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReturnButton from '../../../../Layouts/ReturnButton';
 
 import {
+    ButtonMore,
     Container,
     ListContainer
 } from './styles';
@@ -30,6 +31,10 @@ const RankMembers: React.FC = () => {
             });
     }, [token, limit]);
 
+    const handleLimit = () => {
+        setLimit((prev) => prev = prev + 30);
+    };
+
     return (
         <Container>
             <ReturnButton />
@@ -41,6 +46,7 @@ const RankMembers: React.FC = () => {
                         ))
                         : <p>Nenhum rank encontrado!</p>
                 }
+                <ButtonMore onClick={handleLimit}>Carregar mais</ButtonMore>
             </ListContainer>
         </Container>
     )

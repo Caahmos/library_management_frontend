@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { RiFingerprint2Fill } from "react-icons/ri";
+import { RiCalendarLine, RiFingerprint2Fill } from "react-icons/ri";
 
 export const Container = styled.div<{ rankColor?: string }>`
   text-decoration: none;
@@ -65,4 +65,14 @@ export const FingerprintIcon = styled(RiFingerprint2Fill)`
   font-size: 0.8rem;
   color: ${(props) => props.theme.colors.success};
 
+`
+
+export const CalendarIcon = styled(RiCalendarLine)`
+  font-size: 1rem;
+  color: ${(props) => props.theme.colors.success};
+`;
+
+export const Points = styled.p`
+  font-size: 1rem;
+  font-weight: bold;
 `

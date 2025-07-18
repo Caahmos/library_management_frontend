@@ -77,12 +77,12 @@ const MemberRankItem: React.FC<MemberRank> = ({ earliestDate, mbrid, rank, total
 
     return (
         member && (
-            <Container rankColor={currentRank?.color} to={`/member/detail/${mbrid}`} key={mbrid}>
+            <Container rankColor={currentRank?.color} key={mbrid}>
                 <Content>
                     <Count>
                         {currentRank?.img
                             ? <img src={currentRank.img} width={70} />
-                            : <BookEmpty />}
+                            : <BookEmpty rank={rank}/>}
                     </Count>
                     <Count>
                         <Image image={imagemFormatada} />
@@ -92,7 +92,7 @@ const MemberRankItem: React.FC<MemberRank> = ({ earliestDate, mbrid, rank, total
                         <Author><FingerprintIcon /> {member.barcode_nmbr}</Author>
                     </Info>
                 </Content>
-                <IoIosArrowForward />
+                <p>{totalBooksBorrowed} XP</p>
             </Container>
         )
     );

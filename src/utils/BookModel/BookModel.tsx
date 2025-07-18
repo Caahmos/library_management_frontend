@@ -2,9 +2,10 @@ import * as React from "react";
 
 export interface BookModelProps extends React.SVGProps<SVGSVGElement> {
   fillColor?: string;
+  rank: number
 }
 
-const BookModel: React.FC<BookModelProps> = ({ fillColor, ...props }) => (
+const BookModel: React.FC<BookModelProps> = ({ fillColor, rank, ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
@@ -49,6 +50,9 @@ const BookModel: React.FC<BookModelProps> = ({ fillColor, ...props }) => (
         fill={fillColor}
       ></path>
     </g>
+    <text>
+      aaaa
+    </text>
   </svg>
 );
 

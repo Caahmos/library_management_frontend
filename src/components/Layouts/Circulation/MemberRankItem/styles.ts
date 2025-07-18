@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { RiFingerprint2Fill } from "react-icons/ri";
 
-export const Container = styled(Link)<{ rankColor?: string }>`
+export const Container = styled.div<{ rankColor?: string }>`
   text-decoration: none;
   color: ${(props) => props.theme.colors.white};
   width: 100%;

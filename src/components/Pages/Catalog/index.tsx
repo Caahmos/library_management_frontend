@@ -10,7 +10,6 @@ import type { Biblio } from "../../../model/Biblio/Biblio/SearchBiblioResponse";
 import Filter from "../../Layouts/Filter";
 import Footer from "../../Layouts/Footer";
 import { useHandleSearch } from "../../../hooks/useHandleSearch";
-import BookItem from "../../Layouts/Admin/BookItem";
 import BookListItem from "../../Layouts/Catalog/BookListItem";
 const Catalog: React.FC = () => {
     const [booksInfo, setBooksInfo] = useState<Biblio[]>();

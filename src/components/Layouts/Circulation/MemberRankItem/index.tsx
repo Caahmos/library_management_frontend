@@ -62,7 +62,7 @@ const MemberRankItem: React.FC<MemberRank> = ({ earliestDate, mbrid, rank, total
         : undefined;
 
     useEffect(() => {
-        api.get(`/member/detail/${mbrid}`, {
+        api.get(`/member/basicdetail/${mbrid}`, {
             headers: {
                 Authorization: `Bearer ${JSON.parse(token)}`
             }
@@ -93,7 +93,7 @@ const MemberRankItem: React.FC<MemberRank> = ({ earliestDate, mbrid, rank, total
                         <Author><FingerprintIcon /> {member.barcode_nmbr}</Author>
                     </Info>
                 </Content>
-                <Points>{totalBooksBorrowed} XP</Points>
+                <Points>{totalBooksBorrowed}0 XP</Points>
             </Container>
         )
     );

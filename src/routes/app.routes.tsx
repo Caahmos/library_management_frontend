@@ -50,6 +50,7 @@ const AppRoutes: React.FC = () => {
                         <Route path="/" element={<Home />} />
                         <Route path="/catalog" element={<Catalog />} />
                         <Route path="/catalog/detail/:id" element={<Detail />} />
+                        <Route path="/member/rank" element={<RankMembers />} />
 
                         <Route element={<PrivateRoutes permission="catalog_flg" />}>
                             <Route path="/catalog/info/:id" element={<InfoBook />} />
@@ -85,7 +86,6 @@ const AppRoutes: React.FC = () => {
                             <Route path="/mbrclassify/edit/:id" element={<EditMemberType />} />
 
                             <Route path="/member/register" element={<CreateMember />} />
-                            <Route path="/member/rank" element={<RankMembers />} />
                             <Route path="/member/edit/:mbrid" element={<EditMember />} />
                             <Route path="/member/addimage/:mbrid" element={<AddMemberImage />} />
                             <Route path="/member/findmember" element={<FindMember />} />

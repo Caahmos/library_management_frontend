@@ -148,7 +148,8 @@ export const Barcode = styled.div`
   gap: 5px;
 `;
 
-export const BookQtd = styled.div`
+export const BookQtd = styled(Link)`
+  text-decoration: none;
   display: flex;
   flex-direction: column;
   gap: 7px;

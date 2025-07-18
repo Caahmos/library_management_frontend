@@ -98,12 +98,13 @@ const MemberDetail: React.FC = () => {
 
             setFlashMessage("Empréstimo realizado com sucesso!", "success");
 
-            api.get(`/bibliohist/viewhists?mbrid=${mbrid}&limit=50`, {
+            api.get(`/bibliohist/viewhists?mbrid=${mbrid}&limit=10`, {
                 headers: {
                     Authorization: `Bearer ${JSON.parse(token)}`
                 }
             })
                 .then((response) => {
+                    console.log(response.data.foundHists);
                     setBookHist(response.data.foundHists);
                 });
 
@@ -269,7 +270,7 @@ const MemberDetail: React.FC = () => {
     }, [token, mbrid]);
 
     useEffect(() => {
-        api.get(`/biblioreports/memberranks?mbrid=${mbrid}&yearsAgo=4`, {
+        api.get(`/biblioreports/memberranks?mbrid=${mbrid}&yearsAgo=3`, {
             headers: {
                 Authorization: `Bearer ${JSON.parse(token)}`
             }
@@ -283,7 +284,7 @@ const MemberDetail: React.FC = () => {
     }, [token, mbrid, bookHist]);
 
     useEffect(() => {
-        api.get(`/bibliohist/viewhists?mbrid=${mbrid}&limit=${50}`, {
+        api.get(`/bibliohist/viewhists?mbrid=${mbrid}&limit=${10}`, {
             headers: {
                 Authorization: `Bearer ${JSON.parse(token)}`
             }
@@ -359,7 +360,7 @@ const MemberDetail: React.FC = () => {
                                         <Barcode>
                                             <FingerprintIcon /><BarcodeText>{member.barcode_nmbr}</BarcodeText>
                                         </Barcode>
-                                        <BookQtd><MedalIcon /><p>{memberRank && memberRank.length > 0 ? memberRank[0].rank + 'º' : 'Sem rank'}</p></BookQtd>
+                                        <BookQtd to={`/member/rank`}><MedalIcon /><p>{memberRank && memberRank.length > 0 ? memberRank[0].rank + 'º' : 'Sem rank'}</p></BookQtd>
                                     </Left>
                                     <Right>
                                         <IconBlocked $block={member.isBlocked || false} />

@@ -38,6 +38,7 @@ import BlockedMembers from "../components/Pages/Circulation/Member/BlockedMember
 import MemberDetail from "../components/Pages/Circulation/Member/MemberDetail";
 import EditMember from "../components/Pages/Circulation/Member/EditMember";
 import Checkin from "../components/Pages/Circulation/Checkin";
+import RankMembers from "../components/Pages/Circulation/Member/RankMembers";
 
 const AppRoutes: React.FC = () => {
 
@@ -84,6 +85,7 @@ const AppRoutes: React.FC = () => {
                             <Route path="/mbrclassify/edit/:id" element={<EditMemberType />} />
 
                             <Route path="/member/register" element={<CreateMember />} />
+                            <Route path="/member/rank" element={<RankMembers />} />
                             <Route path="/member/edit/:mbrid" element={<EditMember />} />
                             <Route path="/member/addimage/:mbrid" element={<AddMemberImage />} />
                             <Route path="/member/findmember" element={<FindMember />} />

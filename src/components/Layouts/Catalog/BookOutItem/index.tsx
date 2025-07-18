@@ -13,11 +13,14 @@ import {
     DaysLate,
     DueDate,
     HistDate,
-    IconLink
+    IconLink,
+    IconGroup,
+    Renewal
 } from './styles';
 import type { ViewHistsRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
 import { FiAlertTriangle, FiCheck } from "react-icons/fi";
 import { TbBookUpload } from "react-icons/tb";
+import { MdOutlineAutorenew } from "react-icons/md";
 
 type Field = {
     key: string;
@@ -27,9 +30,10 @@ type Field = {
 interface BookHistViewItemProps {
     items: ViewHistsRequest[];
     fields: Field[];
+    onRenewal: (barcode_nmbr: string) => void;
 }
 
-const BookOutItem: React.FC<BookHistViewItemProps> = ({ items, fields }) => {
+const BookOutItem: React.FC<BookHistViewItemProps> = ({ items, fields, onRenewal }) => {
     const iconMap: Record<string, JSX.Element> = {
         barcode_nmbr: <BarcodeIcon />,
         due_back_dt: <InfoIcon />,
@@ -103,7 +107,10 @@ const BookOutItem: React.FC<BookHistViewItemProps> = ({ items, fields }) => {
                                     }
                                 </>
                             }
-                            <IconLink to={`/circulation/checkin?barcode_nmbr=${item.biblio_copy.barcode_nmbr}`}><TbBookUpload/> Devolver</IconLink>
+                            <IconGroup>
+                                <IconLink to={`/circulation/checkin?barcode_nmbr=${item.biblio_copy.barcode_nmbr}`}><TbBookUpload/> Devolver</IconLink>
+                                <Renewal onClick={() => { item.biblio_copy.barcode_nmbr && onRenewal(item.biblio_copy.barcode_nmbr) }}><MdOutlineAutorenew/> Renovar</Renewal>
+                            </IconGroup>
                         </Item>
                     ))
                     : <p>Nenhum item foi encontrado</p>

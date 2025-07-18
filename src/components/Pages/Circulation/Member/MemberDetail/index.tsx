@@ -206,6 +206,36 @@ const MemberDetail: React.FC = () => {
             console.error('Erro ao atualizar histórico:', histError);
         }
     };
+    
+    const handleRenewal = async (barcode_nmbr: string) => {
+        try {
+            const response = await api.post(`/bibliohist/renewal/${mbrid}`, {
+                barcode_nmbr
+            }, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            });
+
+            setFlashMessage(response.data.message, "success");
+
+            api.get(`/bibliohist/viewhists?mbrid=${mbrid}&limit=50`, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            })
+                .then((response) => {
+                    setBookHist(response.data.foundHists);
+                });
+
+        } catch (error) {
+            const err = error as AxiosError
+            console.error(err);
+            setFlashMessage(err.response?.data
+                ? (err.response.data as { message: string }).message
+                : 'Erro desconhecido', 'error');
+        }
+    };
 
     useEffect(() => {
         api.get(`/member/detail/${mbrid}`, {
@@ -433,7 +463,7 @@ const MemberDetail: React.FC = () => {
                     </Button3>
                     <MemberContent>
                         <Content>
-                            <CirculationForm type='out' button_text='' onSubmit={handleCheckout} booksHist={booksOut} />
+                            <CirculationForm type='out' button_text='' onSubmit={handleCheckout} booksHist={booksOut} onRenewal={handleRenewal} />
                         </Content>
                         <Content>
                             <CirculationForm type='hld' button_text='' onSubmit={handleHold} holdsHist={bookHolds} onDeleteHold={handleDeleteHold} />

@@ -15,16 +15,18 @@ interface BaseProps {
 interface HldProps extends BaseProps {
   type: 'hld';
   onDeleteHold: (barcode_nmbr: string) => void;
+  onRenewal?: never
 }
 
 interface OutProps extends BaseProps {
   type: 'out';
   onDeleteHold?: never;
+  onRenewal: (barcode_nmbr: string) => void;
 }
 
 type CirculationFormProps = HldProps | OutProps;
 
-const CirculationForm: React.FC<CirculationFormProps> = ({ button_text, onSubmit, type, booksHist, holdsHist, onDeleteHold }) => {
+const CirculationForm: React.FC<CirculationFormProps> = ({ button_text, onSubmit, type, booksHist, holdsHist, onDeleteHold, onRenewal }) => {
   const [barcode, setBarcode] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -69,7 +71,9 @@ const CirculationForm: React.FC<CirculationFormProps> = ({ button_text, onSubmit
           { key: 'barcode_nmbr', label: 'Tombo' },
           { key: 'due_back_dt', label: 'Devolução' },
           { key: 'actions', label: 'Ações' },
-        ]} items={booksHist} />
+        ]} items={booksHist} onRenewal={(barcode) => {
+          onRenewal(barcode);
+        }}/>
       }
     </Container>
   );

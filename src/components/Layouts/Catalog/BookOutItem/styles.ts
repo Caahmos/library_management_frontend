@@ -31,6 +31,7 @@ export const RefundIcon = styled(CgOptions)`
 
 export const Container = styled.div`
   width: 100%;
+  height: fit-content;
   color: ${(props) => props.theme.colors.white};
   margin-top: 12px;
   display: flex;
@@ -39,6 +40,8 @@ export const Container = styled.div`
 `;
 
 export const BookInfo = styled(Link)`
+  height: 100%;
+  justify-content: center;
   display: flex;
   flex-direction: column;
   white-space: nowrap;
@@ -64,6 +67,7 @@ export const Header = styled.div`
 
 export const Item = styled.div`
   width: 100%;
+  height: fit-content;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 `;
@@ -100,10 +104,23 @@ export const Returned = styled.div`
   gap: 5px;
 `;
 
-export const IconLink = styled(Link)`
-  text-decoration: none;
+export const IconGroup = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+`;
+
+export const IconLink = styled(Link)`
+  height: 100%;
+  text-decoration: none;
   display: flex;
   align-items: center;
   color: ${(props) => props.theme.colors.white};
@@ -112,8 +129,27 @@ export const IconLink = styled(Link)`
   > svg {
     color: ${(props) => props.theme.colors.success};
   }
-  
-  &:hover{
+
+  &:hover {
+    color: ${(props) => props.theme.colors.success};
+    transition: 0.2s all ease-in;
+  }
+`;
+
+export const Renewal = styled.div`
+  height: 100%;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  color: ${(props) => props.theme.colors.white};
+  gap: 10px;
+  cursor: pointer;
+
+  > svg {
+    color: ${(props) => props.theme.colors.success};
+  }
+
+  &:hover {
     color: ${(props) => props.theme.colors.success};
     transition: 0.2s all ease-in;
   }

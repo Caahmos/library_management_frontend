@@ -110,7 +110,7 @@ const SearchCheckinInput: React.FC<InputProps> = ({ icon }) => {
     try {
       const { data } = await api.post("/bibliohist/checkin", { barcode_nmbr: searchValue });
       setFlashMessage(data.message, "success");
-      navigate("/circulation");
+      member ? navigate(`/member/detail/${member.mbrid}`) : navigate(`/circulation`);
     } catch (error) {
       const err = error as AxiosError;
       const message = err.message || "Erro desconhecido";

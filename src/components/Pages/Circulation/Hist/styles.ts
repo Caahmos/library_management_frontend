@@ -123,7 +123,7 @@ export const Clean = styled.button`
 export const StyledInput = styled.input`
     width: 100%;
     height: 100%;
-    padding: 18px 18px 18px 40px; 
+    padding: 18px; 
     color: ${props => props.theme.colors.white};
     background-color: ${props => props.theme.colors.primary};
     border-radius: 5px;

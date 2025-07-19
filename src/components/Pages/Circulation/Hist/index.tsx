@@ -100,7 +100,14 @@ const Hist: React.FC = () => {
     };
 
     const removeFilters = () => {
+        setMemberBarcode("");
+        setCopyBarcode("");
+        setBibId("");
+        setStatusCode("");
+        setDue("no");
+        setLimit(50);
 
+        setSearchParams({});
     };
 
     return (

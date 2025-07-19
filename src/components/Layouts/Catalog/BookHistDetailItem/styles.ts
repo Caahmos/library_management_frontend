@@ -64,6 +64,8 @@ export const Header = styled.div`
   padding: 7px;
   color: ${(props) => props.theme.colors.success};
   font-weight: bold;
+
+  
 `;
 
 export const Item = styled.div`

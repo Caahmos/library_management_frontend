@@ -3,6 +3,10 @@ import ReturnButton from '../../../Layouts/ReturnButton';
 import api from '../../../../utils/api';
 
 import {
+    ButtonMore,
+    Check,
+    CheckContainer,
+    CheckLabel,
     Container,
     DataContent,
     FiltersContainer,
@@ -24,7 +28,7 @@ const Hist: React.FC = () => {
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
     const [statusCode, setStatusCode] = useState<string>("");
     const [limit, setLimit] = useState<number>(50);
-    const [due, setDue] = useState<'yes' | 'no'>('no');
+    const [due, setDue] = useState<'yes' | 'no'>('yes');
 
     const fields = [
         { key: 'barcode_nmbr', label: 'Tombo' },
@@ -54,7 +58,7 @@ const Hist: React.FC = () => {
             .catch((err) => {
                 console.error(err);
             });
-    }, [token, memberBarcode, copyBarcode, statusCode, due]);
+    }, [token, memberBarcode, copyBarcode, statusCode, due, limit]);
 
     useEffect(() => {
         api.get(`/bibliohist/viewstatus`, {
@@ -71,14 +75,19 @@ const Hist: React.FC = () => {
             });
     }, [token]);
 
+    const handleLimit = () => {
+        setLimit((prev) => prev = prev + 30);
+    };
+
     return (
         <Container id="top">
             <ReturnButton />
             <FiltersContainer>
                 <FiltersContent>
+                    <Header>Filtrar por:</Header>
                     <StyledInput type='text' placeholder='Código de barras do membro' value={memberBarcode} onChange={(e) => { setMemberBarcode(e.target.value) }} />
                     <StyledInput type='text' placeholder='Tombo' value={copyBarcode} onChange={(e) => { setCopyBarcode(e.target.value) }} />
-                    <Select value={statusCode} onChange={(e) => setStatusCode(e.target.value)}>
+                    <Select value={statusCode} onChange={(e) => setStatusCode(e.target.value)} disabled={due === 'yes'}>
                         <Option value="">Todos os status</Option>
                         {codeStatus?.map((status) => (
                             <Option key={status.code} value={status.code}>
@@ -86,6 +95,21 @@ const Hist: React.FC = () => {
                             </Option>
                         ))}
                     </Select>
+                    <CheckContainer>
+                        <Check
+                            id='adue'
+                            type='checkbox'
+                            checked={due === 'yes'}
+                            onChange={(e) => {
+                                const checked = e.target.checked;
+                                setDue(checked ? 'yes' : 'no');
+                                if (checked) {
+                                    setStatusCode('out');
+                                }
+                            }}
+                        />
+                        <CheckLabel htmlFor='adue'>Atrasados</CheckLabel>
+                    </CheckContainer>
                 </FiltersContent>
                 <DataContent>
                     <Header>
@@ -96,6 +120,7 @@ const Hist: React.FC = () => {
                             <BookHistDetailItem fields={fields} items={bookHist} />
                             : <p>Nenhum histórico encontrado.</p>
                     }
+                    <ButtonMore onClick={handleLimit}>Carregar mais</ButtonMore>
                 </DataContent>
             </FiltersContainer>
         </Container>

@@ -7,11 +7,11 @@ interface ActiveSelect {
 }
 
 export const Container = styled.div`
-    width: 100%;
-    max-width: 1280px;
-    display: flex;
-    flex-direction: column;
-    `;
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  flex-direction: column;
+`;
 
 export const FiltersContainer = styled.div`
   width: 100%;
@@ -19,7 +19,7 @@ export const FiltersContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
-  `;
+`;
 
 export const FiltersContent = styled.div`
   width: 100%;
@@ -28,13 +28,14 @@ export const FiltersContent = styled.div`
   background-color: ${(props) => props.theme.colors.secondary};
   display: grid;
   border-radius: 7px;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 80px 1fr 1fr 1fr 1fr;
   gap: 15px;
 
   @media screen and (max-width: 1000px) {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    grid-template-areas: auto;
   }
-  `;
+`;
 
 export const Filters = styled.div`
   width: 100%;
@@ -44,28 +45,28 @@ export const Filters = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: flex-start;
-  
+
   @media screen and (max-width: 1000px) {
     flex-direction: column;
   }
-`
+`;
 
 export const ClearFiltersIcon = styled(MdFilterListOff)`
   font-size: 1.6rem;
   cursor: pointer;
   transition: 0.4s all ease-in;
 
-  &:hover{
+  &:hover {
     color: ${(props) => props.theme.colors.success};
   }
-`
+`;
 
 export const Text = styled.div`
   color: ${(props) => props.theme.colors.white};
 `;
 
 export const Select = styled.select`
-  padding: 10px;
+  padding: 18px;
   color: ${(props) => props.theme.colors.white};
   background-color: ${(props) => props.theme.colors.primary};
   cursor: pointer;
@@ -91,7 +92,7 @@ export const Select = styled.select`
     background: ${(props) => props.theme.colors.tertiary};
   }
 
-  @media screen and (max-width: 1000px){
+  @media screen and (max-width: 1000px) {
     width: 100%;
   }
 `;
@@ -111,28 +112,43 @@ export const Clean = styled.button`
   background-color: transparent;
   color: ${(props) => props.theme.colors.white};
 
-  &:hover{
+  &:hover {
     color: ${(props) => props.theme.colors.success};
   }
 
   > svg {
     font-size: 1.5rem;
   }
-`
+`;
+
+export const ButtonMore = styled.button`
+  padding: 18px;
+  background-color: transparent;
+  color: ${(props) => props.theme.colors.success};
+  border: 1px solid ${(props) => props.theme.colors.success};
+  border-radius: 7px;
+  transition: 0.4s all ease-in;
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.success};
+    color: ${(props) => props.theme.colors.white};
+  }
+`;
 
 export const StyledInput = styled.input`
-    width: 100%;
-    height: 100%;
-    padding: 18px; 
-    color: ${props => props.theme.colors.white};
-    background-color: ${props => props.theme.colors.primary};
-    border-radius: 5px;
-    border: 1px solid transparent;
-    transition: border 0.3s ease;
+  width: 100%;
+  height: 100%;
+  padding: 18px;
+  color: ${(props) => props.theme.colors.white};
+  background-color: ${(props) => props.theme.colors.primary};
+  border-radius: 5px;
+  border: 1px solid transparent;
+  transition: border 0.3s ease;
 
-    &:hover, &:focus {
-        border: 1px solid ${props => props.theme.colors.success};
-    }
+  &:hover,
+  &:focus {
+    border: 1px solid ${(props) => props.theme.colors.success};
+  }
 `;
 
 export const DataContent = styled.div`
@@ -151,4 +167,29 @@ export const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   color: ${(props) => props.theme.colors.white};
+`;
+
+export const CheckContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: ${(props) => props.theme.colors.white};
+  transition: 0.3s all ease;
+  cursor: pointer;
+
+  &:hover {
+    color: ${(props) => props.theme.colors.success};
+  }
+`;
+
+export const CheckLabel = styled.label`
+  cursor: pointer;
+`;
+
+export const Check = styled.input`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 `;

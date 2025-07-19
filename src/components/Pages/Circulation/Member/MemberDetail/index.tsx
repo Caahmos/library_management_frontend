@@ -67,6 +67,7 @@ import CirculationForm from '../../../../Layouts/Forms/Circulation/CirculationFo
 import type { ViewAllClassifiesRequest } from '../../../../../model/Member/MemberClassifyDM/ViewAllClassifiesRequest';
 import Tag from '../../../../Layouts/Tag';
 import type { ViewHoldsRequest } from '../../../../../model/Biblio/BiblioStatusHist/ViewHoldsRequest';
+import { Header, Seemore } from '../../styles';
 
 const MemberDetail: React.FC = () => {
     const { mbrid } = useParams();
@@ -392,7 +393,10 @@ const MemberDetail: React.FC = () => {
                 <MemberGrid>
                     <Hist>
                         <HistContent>
-                            <Title>Histórico</Title>
+                            <Header>
+                                <p>Histórico</p>
+                                <Seemore to={`/circulation/viewhist?member_barcode=${member?.barcode_nmbr}`}>VER MAIS</Seemore>
+                            </Header>
                             {
                                 bookHist ?
                                     <MiniBookHistItem onDelete={handleDeleteHold} fields={fields} items={bookHist} />
@@ -501,7 +505,7 @@ const MemberDetail: React.FC = () => {
                             </ButtonText>
                         </ButtonRight>
                     </Button2>
-                    <Button3 onClick={() => {mbrid && handleBlock(mbrid)}}>
+                    <Button3 onClick={() => { mbrid && handleBlock(mbrid) }}>
                         <ButtonLeft>
                             <TbLock />
                         </ButtonLeft>

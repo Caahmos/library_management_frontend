@@ -262,6 +262,7 @@ export const Button3 = styled.div`
   display: flex;
   border-radius: 7px;
   padding: 20px;
+  cursor: pointer;
   background-color: ${(props) => props.theme.colors.tertiary};
 `;
 

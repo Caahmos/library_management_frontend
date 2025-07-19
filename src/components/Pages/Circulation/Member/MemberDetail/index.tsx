@@ -117,6 +117,56 @@ const MemberDetail: React.FC = () => {
         }
     };
 
+    const handleBlock = async (mbrid: string) => {
+        try {
+            const response = await api.patch(`/member/block/${mbrid}`, {
+
+            }, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            });
+
+            setFlashMessage("Empréstimo realizado com sucesso!", "success");
+
+            api.get(`/member/detail/${mbrid}`, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            })
+                .then((response) => {
+                    const memberData = response.data.member;
+                    setMember(memberData);
+
+                    if (memberData.imageUrl) {
+                        setMemberImage(`http://localhost:5000/imgs/member/${memberData.imageUrl}`);
+                    };
+
+                    api.get(`/mbrclassifydm/detail/${response.data.member.classification}`, {
+                        headers: {
+                            Authorization: `Bearer ${JSON.parse(token)}`
+                        }
+                    })
+                        .then((response) => {
+                            setMemberClassify(response.data.classify);
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                        });
+                })
+                .catch((err: AxiosError) => {
+                    console.error(err);
+                });
+
+        } catch (error) {
+            const err = error as AxiosError
+            console.error(err);
+            setFlashMessage(err.response?.data
+                ? (err.response.data as { message: string }).message
+                : 'Erro desconhecido', 'error');
+        }
+    };
+
     const handleHold = async (barcode_nmbr: string) => {
         try {
             const response = await api.post(`/bibliohist/hold/${mbrid}`, {
@@ -152,7 +202,7 @@ const MemberDetail: React.FC = () => {
         console.log('Membro ID:', mbrid);
 
         try {
-            
+
             const response = await api.delete(`/bibliohist/deletehold/${mbrid}/${barcode_nmbr}`, {
                 headers: {
                     Authorization: `Bearer ${JSON.parse(token)}`
@@ -195,7 +245,6 @@ const MemberDetail: React.FC = () => {
             }
         }
 
-        // Atualiza o histórico (opcional - remova se não for necessário)
         try {
             const histResponse = await api.get(`/bibliohist/viewhists?mbrid=${mbrid}&limit=50`, {
                 headers: {
@@ -207,7 +256,7 @@ const MemberDetail: React.FC = () => {
             console.error('Erro ao atualizar histórico:', histError);
         }
     };
-    
+
     const handleRenewal = async (barcode_nmbr: string) => {
         try {
             const response = await api.post(`/bibliohist/renewal/${mbrid}`, {
@@ -452,13 +501,13 @@ const MemberDetail: React.FC = () => {
                             </ButtonText>
                         </ButtonRight>
                     </Button2>
-                    <Button3>
+                    <Button3 onClick={() => {mbrid && handleBlock(mbrid)}}>
                         <ButtonLeft>
                             <TbLock />
                         </ButtonLeft>
                         <ButtonRight>
                             <ButtonText>
-                                Bloquear Usuário
+                                {member?.isBlocked ? 'Desbloquear o membro' : 'Bloquear o membro'}
                             </ButtonText>
                         </ButtonRight>
                     </Button3>

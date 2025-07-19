@@ -23,6 +23,7 @@ const Hist: React.FC = () => {
     const [copyBarcode, setCopyBarcode] = useState<string>();
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
     const [statusCode, setStatusCode] = useState<string>("");
+    const [limit, setLimit] = useState<number>(50);
     const [due, setDue] = useState<'yes' | 'no'>('no');
 
     const fields = [
@@ -38,8 +39,8 @@ const Hist: React.FC = () => {
         if (memberBarcode?.trim()) params.append("member_barcode", memberBarcode);
         if (copyBarcode?.trim()) params.append("copy_barcode", copyBarcode);
         if (statusCode?.trim()) params.append("status_cd", statusCode);
+        if (limit) params.append("limit", String(limit));
         if (due) params.append("due", due);
-        params.append("limit", "100");
 
         api.get(`/bibliohist/detailhists?${params.toString()}`, {
             headers: {

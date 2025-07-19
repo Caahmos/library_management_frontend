@@ -24,6 +24,7 @@ export const FiltersContainer = styled.div`
 export const FiltersContent = styled.div`
   width: 100%;
   padding: 15px;
+  height: fit-content;
   background-color: ${(props) => props.theme.colors.secondary};
   display: grid;
   border-radius: 7px;
@@ -65,7 +66,6 @@ export const Text = styled.div`
 
 export const Select = styled.select`
   padding: 10px;
-  height: 100%;
   color: ${(props) => props.theme.colors.white};
   background-color: ${(props) => props.theme.colors.primary};
   cursor: pointer;
@@ -122,8 +122,8 @@ export const Clean = styled.button`
 
 export const StyledInput = styled.input`
     width: 100%;
+    height: 100%;
     padding: 18px 18px 18px 40px; 
-    margin: 3px 0 3px 0;
     color: ${props => props.theme.colors.white};
     background-color: ${props => props.theme.colors.primary};
     border-radius: 5px;

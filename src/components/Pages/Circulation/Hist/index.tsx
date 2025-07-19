@@ -86,7 +86,6 @@ const Hist: React.FC = () => {
                             </Option>
                         ))}
                     </Select>
-                    <StyledInput type='number' placeholder='Código de barras do membro' value={memberBarcode} onChange={(e) => { setMemberBarcode(e.target.value) }} />
                 </FiltersContent>
                 <DataContent>
                     <Header>

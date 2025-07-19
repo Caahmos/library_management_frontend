@@ -54,10 +54,13 @@ const Hist: React.FC = () => {
     }, [searchParams, hasInitialized]);
 
     useEffect(() => {
+        if (!hasInitialized) return;
+
         const params = new URLSearchParams();
 
         if (memberBarcode?.trim()) params.append("member_barcode", memberBarcode);
         if (copyBarcode?.trim()) params.append("copy_barcode", copyBarcode);
+        if (bibId?.trim()) params.append("bibid", bibId); // Adicionei o bibId aos parâmetros
         if (statusCode?.trim()) params.append("status_cd", statusCode);
         if (limit) params.append("limit", String(limit));
         if (due) params.append("due", due);
@@ -74,7 +77,7 @@ const Hist: React.FC = () => {
             .catch((err) => {
                 console.error(err);
             });
-    }, [token, memberBarcode, copyBarcode, statusCode, due, limit]);
+    }, [token, memberBarcode, copyBarcode, bibId, statusCode, due, limit, hasInitialized]);
 
     useEffect(() => {
         api.get(`/bibliohist/viewstatus`, {

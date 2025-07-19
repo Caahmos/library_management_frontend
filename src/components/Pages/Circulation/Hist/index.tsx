@@ -7,6 +7,8 @@ import {
     Check,
     CheckContainer,
     CheckLabel,
+    Clean,
+    ClearFiltersIcon,
     Container,
     DataContent,
     FiltersContainer,
@@ -79,14 +81,18 @@ const Hist: React.FC = () => {
         setLimit((prev) => prev = prev + 30);
     };
 
+    const removeFilters = () => {
+        
+    };
+
     return (
         <Container id="top">
             <ReturnButton />
             <FiltersContainer>
                 <FiltersContent>
                     <Header>Filtrar por:</Header>
-                    <StyledInput type='text' placeholder='Código de barras do membro' value={memberBarcode} onChange={(e) => { setMemberBarcode(e.target.value) }} />
                     <StyledInput type='text' placeholder='Tombo' value={copyBarcode} onChange={(e) => { setCopyBarcode(e.target.value) }} />
+                    <StyledInput type='text' placeholder='Código de barras do membro' value={memberBarcode} onChange={(e) => { setMemberBarcode(e.target.value) }} />
                     <Select value={statusCode} onChange={(e) => setStatusCode(e.target.value)} disabled={due === 'yes'}>
                         <Option value="">Todos os status</Option>
                         {codeStatus?.map((status) => (
@@ -110,6 +116,10 @@ const Hist: React.FC = () => {
                         />
                         <CheckLabel htmlFor='adue'>Atrasados</CheckLabel>
                     </CheckContainer>
+                    <Clean onClick={removeFilters}>
+                        <ClearFiltersIcon title='Remover filtros' />
+                        <span>Limpar Filtros</span>
+                    </Clean>
                 </FiltersContent>
                 <DataContent>
                     <Header>

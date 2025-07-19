@@ -28,7 +28,7 @@ export const FiltersContent = styled.div`
   background-color: ${(props) => props.theme.colors.secondary};
   display: grid;
   border-radius: 7px;
-  grid-template-columns: 80px 1fr 1fr 1fr 1fr;
+  grid-template-columns: 80px 1fr 1fr 1fr 1fr 1fr;
   gap: 15px;
 
   @media screen and (max-width: 1000px) {
@@ -118,6 +118,11 @@ export const Clean = styled.button`
 
   > svg {
     font-size: 1.5rem;
+  }
+
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+    justify-content: center;
   }
 `;
 

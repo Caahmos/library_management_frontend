@@ -33,7 +33,7 @@ const Hist: React.FC = () => {
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
     const [statusCode, setStatusCode] = useState<string>("");
     const [limit, setLimit] = useState<number>(50);
-    const [due, setDue] = useState<'yes' | 'no'>('no');
+    const [due, setDue] = useState<string>('no');
     const [searchParams, setSearchParams] = useSearchParams();
     const [hasInitialized, setHasInitialized] = useState(false);
 
@@ -48,6 +48,7 @@ const Hist: React.FC = () => {
         if (!hasInitialized) {
             setMemberBarcode(searchParams.get("member_barcode") || "");
             setCopyBarcode(searchParams.get("copy_barcode") || "");
+            setDue(searchParams.get("due") || "no");
             setBibId(searchParams.get("bibid") || "");
             setHasInitialized(true);
         }
@@ -60,7 +61,7 @@ const Hist: React.FC = () => {
 
         if (memberBarcode?.trim()) params.append("member_barcode", memberBarcode);
         if (copyBarcode?.trim()) params.append("copy_barcode", copyBarcode);
-        if (bibId?.trim()) params.append("bibid", bibId); // Adicionei o bibId aos parâmetros
+        if (bibId?.trim()) params.append("bibid", bibId);
         if (statusCode?.trim()) params.append("status_cd", statusCode);
         if (limit) params.append("limit", String(limit));
         if (due) params.append("due", due);

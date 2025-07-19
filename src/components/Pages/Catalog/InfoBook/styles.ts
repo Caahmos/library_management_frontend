@@ -13,6 +13,13 @@ export const Header = styled.div`
   flex-direction: column;
 `;
 
+export const HeaderTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: ${(props) => props.theme.colors.white};
+`;
+
 export const Container = styled.div`
   width: 100%;
   color: ${(props) => props.theme.colors.white};

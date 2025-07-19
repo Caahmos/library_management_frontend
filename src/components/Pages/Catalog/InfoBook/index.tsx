@@ -41,6 +41,7 @@ import {
     BookContainer,
     EditIcon,
     Image,
+    HeaderTitle,
 } from './styles';
 import ReturnButton from "../../../Layouts/ReturnButton";
 import type { ViewStatusRequest } from "../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest";
@@ -49,6 +50,7 @@ import type { BiblioField } from "../../../Layouts/Forms/Catalog/EditBookForm";
 import { FaEdit } from "react-icons/fa";
 import type { ViewHistsRequest } from "../../../../model/Biblio/BiblioStatusHist/ViewHistRequest";
 import BookHistItem from "../../../Layouts/Catalog/BookHistItem";
+import { Seemore } from "../../Circulation/styles";
 
 const InfoBook: React.FC = () => {
     const { id } = useParams();
@@ -312,7 +314,10 @@ const InfoBook: React.FC = () => {
                                     <Button to={`/catalog/createcopy/${id}`}>Adicionar Cópia</Button>
                                 </CopyList>
                                 <CopyList>
-                                    <Title>Histórico</Title>
+                                    <HeaderTitle>
+                                        <Title>Histórico</Title>
+                                        <Seemore to={`/circulation/viewhist?bibid=${id}`}>VER MAIS</Seemore>
+                                    </HeaderTitle>
                                     {
                                         bookHist ?
                                             <BookHistItem fields={fields} items={bookHist} />

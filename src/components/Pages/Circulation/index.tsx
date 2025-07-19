@@ -176,7 +176,7 @@ const Circulation: React.FC = () => {
                 <RetangleGrid>
                     <Header>
                         <p>Aluguéis Atrasados</p>
-                        <Seemore to={`/circulation/viewhist`}>VER MAIS</Seemore>
+                        <Seemore to={`/circulation/viewhist?due=yes`}>VER MAIS</Seemore>
                     </Header>
                     
                     {

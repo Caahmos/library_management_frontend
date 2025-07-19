@@ -127,7 +127,7 @@ const MemberDetail: React.FC = () => {
                 }
             });
 
-            setFlashMessage("Empréstimo realizado com sucesso!", "success");
+            setFlashMessage("Alteração de bloqueio realizada com sucesso!", "success");
 
             api.get(`/member/detail/${mbrid}`, {
                 headers: {

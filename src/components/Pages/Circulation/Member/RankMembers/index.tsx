@@ -10,6 +10,7 @@ import type { MemberRank } from '../../../../../model/Biblio/BiblioReports/Membe
 import MemberRankItem from '../../../../Layouts/Circulation/MemberRankItem';
 import api from '../../../../../utils/api';
 import type { AxiosError } from 'axios';
+import MemberRankHeader from '../../../../Layouts/Circulation/MemberRankHeader';
 const token = localStorage.getItem("@library_management:token") || "";
 
 const RankMembers: React.FC = () => {
@@ -39,9 +40,11 @@ const RankMembers: React.FC = () => {
         <Container>
             <ReturnButton />
             <ListContainer>
+                <MemberRankHeader/>
                 {
                     memberRank && memberRank.length >= 0
-                        ? memberRank.map(rank => (
+                        ? 
+                        memberRank.map(rank => (
                             <MemberRankItem earliestDate={rank.earliestDate} mbrid={rank.mbrid} rank={rank.rank} totalBooksBorrowed={rank.totalBooksBorrowed} />
                         ))
                         : <p>Nenhum rank encontrado!</p>

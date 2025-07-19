@@ -29,7 +29,7 @@ import outlined_rank from '../../../../../public/ranks/outlined_rank.svg';
 const token = localStorage.getItem("@library_management:token") || "";
 
 const MemberRankHeader: React.FC = () => {
-    const [member, setMember] = useState<ViewMembersRequest[]>([]);
+    const [memberMap, setMemberMap] = useState<Record<number, ViewMembersRequest>>({});
     const [topRank, setTopRank] = useState<MemberRank[]>([]);
 
     useEffect(() => {
@@ -60,12 +60,10 @@ const MemberRankHeader: React.FC = () => {
                 .then((response) => {
                     const memberData = response.data.member;
 
-                    setMember(prev => {
-                        const alreadyExists = prev?.some(m => m.barcode_nmbr === memberData.barcode_nmbr);
-                        if (alreadyExists) return prev;
-
-                        return [...(prev || []), memberData];
-                    });
+                    setMemberMap(prev => ({
+                        ...prev,
+                        [mbrid]: memberData
+                    }));
                 })
                 .catch((err: AxiosError) => {
                     console.error(err);
@@ -110,22 +108,23 @@ const MemberRankHeader: React.FC = () => {
         <Container>
             <RanksContainer>
                 {
-                    member && member.length == 3 &&
-                    (
-                        <>
-                            {
-                                member.map((member, i) => (
-                                    <MemberContainer $order={topRanks[i].order}>
-                                        <MemberContent $img={topRanks[i].img}>
-                                            <MemberImage $img={editImage(member.imageUrl)}/>
-                                        </MemberContent>
-                                        <MemberText>{member.first_name + ' ' + member.last_name}</MemberText>
-                                        <RankText>{topRank[i].rank}º lugar</RankText>
-                                    </MemberContainer>
-                                ))
-                            }
-                        </>
-                    )
+                    topRank.length === 3 &&
+                    Object.keys(memberMap).length === 3 &&
+                    topRank.map((rank, i) => {
+                        const member = memberMap[rank.mbrid];
+
+                        if (!member) return null;
+
+                        return (
+                            <MemberContainer key={rank.mbrid} $order={topRanks[i].order}>
+                                <MemberContent $img={topRanks[i].img}>
+                                    <MemberImage $img={editImage(member.imageUrl)} />
+                                </MemberContent>
+                                <MemberText>{member.first_name + ' ' + member.last_name}</MemberText>
+                                <RankText>{rank.rank}º lugar</RankText>
+                            </MemberContainer>
+                        );
+                    })
                 }
             </RanksContainer>
             <InfoRank>O XP do ranking é calculado com base na quantidade de livros lidos e na data em que o check-in foi feito.</InfoRank>

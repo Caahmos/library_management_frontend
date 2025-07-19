@@ -16,17 +16,18 @@ export const Container = styled.div`
 export const FiltersContainer = styled.div`
   width: 100%;
   padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   `;
 
 export const FiltersContent = styled.div`
   width: 100%;
   padding: 15px;
   background-color: ${(props) => props.theme.colors.secondary};
-  display: flex;
-  border-radius: 12px;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  display: grid;
+  border-radius: 7px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 15px;
 
   @media screen and (max-width: 1000px) {
@@ -132,4 +133,22 @@ export const StyledInput = styled.input`
     &:hover, &:focus {
         border: 1px solid ${props => props.theme.colors.success};
     }
+`;
+
+export const DataContent = styled.div`
+  width: 100%;
+  padding: 15px;
+  border-radius: 7px;
+  background-color: ${(props) => props.theme.colors.secondary};
+  color: ${(props) => props.theme.colors.white};
+  display: flex;
+  flex-direction: column;
+  min-height: fit-content;
+`;
+
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: ${(props) => props.theme.colors.white};
 `;

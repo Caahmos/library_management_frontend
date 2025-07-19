@@ -4,17 +4,20 @@ import api from '../../../../utils/api';
 
 import {
     Container,
+    DataContent,
     FiltersContainer,
     FiltersContent,
     StyledInput
 } from './styles';
 import type { ViewHistsRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
 import BookHistDetailItem from '../../../Layouts/Catalog/BookHistDetailItem';
+import { Header } from '../styles';
 
 const Hist: React.FC = () => {
     const token = localStorage.getItem("@library_management:token") || "";
     const [bookHist, setBookHist] = useState<ViewHistsRequest[]>();
     const [memberBarcode, setMemberBarcode] = useState<string>();
+    const [copyBarcode, setCopyBarcode] = useState<string>();
     const [due, setDue] = useState<'yes' | 'no'>('no');
 
     const fields = [
@@ -25,7 +28,14 @@ const Hist: React.FC = () => {
     ];
 
     useEffect(() => {
-        api.get(`/bibliohist/detailhists?member_barcode=${memberBarcode}&due=${due}&limit=100`, {
+        const params = new URLSearchParams();
+
+        if (memberBarcode?.trim()) params.append("member_barcode", memberBarcode);
+        if (copyBarcode?.trim()) params.append("copy_barcode", copyBarcode);
+        if (due) params.append("due", due);
+        params.append("limit", "100");
+
+        api.get(`/bibliohist/detailhists?${params.toString()}`, {
             headers: {
                 Authorization: `Bearer ${JSON.parse(token)}`
             }
@@ -37,20 +47,28 @@ const Hist: React.FC = () => {
             .catch((err) => {
                 console.error(err);
             });
-    }, [token, memberBarcode, due]);
+    }, [token, memberBarcode, copyBarcode, due]);
 
     return (
         <Container id="top">
             <ReturnButton />
             <FiltersContainer>
                 <FiltersContent>
-                    <StyledInput type='number' placeholder='Código de barras do membro' value={memberBarcode} onChange={(e) => {setMemberBarcode(e.target.value)}} />
+                    <StyledInput type='text' placeholder='Código de barras do membro' value={memberBarcode} onChange={(e) => { setMemberBarcode(e.target.value) }} />
+                    <StyledInput type='text' placeholder='Tombo' value={copyBarcode} onChange={(e) => { setCopyBarcode(e.target.value) }} />
+                    <StyledInput type='number' placeholder='Código de barras do membro' value={memberBarcode} onChange={(e) => { setMemberBarcode(e.target.value) }} />
+                    <StyledInput type='number' placeholder='Código de barras do membro' value={memberBarcode} onChange={(e) => { setMemberBarcode(e.target.value) }} />
                 </FiltersContent>
-                {
-                    bookHist ?
-                        <BookHistDetailItem fields={fields} items={bookHist} />
-                        : <p>Nenhum histórico encontrado.</p>
-                }
+                <DataContent>
+                    <Header>
+                        Histórico detalhado:
+                    </Header>
+                    {
+                        bookHist ?
+                            <BookHistDetailItem fields={fields} items={bookHist} />
+                            : <p>Nenhum histórico encontrado.</p>
+                    }
+                </DataContent>
             </FiltersContainer>
         </Container>
     )

@@ -23,12 +23,15 @@ import {
     IconBooks,
     IconCategory,
     Title,
-    AsideContent
+    AsideContent,
+    Seemore
 } from './styles';
 import type { ViewHistsRequest } from "../../../model/Biblio/BiblioStatusHist/ViewHistRequest";
 import BookHistViewItem from "../../Layouts/Catalog/BookHistItem";
 import type { ViewMembersRequest } from "../../../model/Member/Member/ViewMembersRequest";
 import MemberItem from "../../Layouts/Circulation/MemberItem";
+import { Filters } from "../../Layouts/Filter/styles";
+import Filter from "../../Layouts/Filter";
 
 export interface StatusCount {
     status: string;
@@ -172,8 +175,10 @@ const Circulation: React.FC = () => {
                 </Square4>
                 <RetangleGrid>
                     <Header>
-                        Aluguéis Atrasados
+                        <p>Aluguéis Atrasados</p>
+                        <Seemore to={`/circulation/viewhist`}>VER MAIS</Seemore>
                     </Header>
+                    
                     {
                         bookHist ?
                             <BookHistViewItem fields={fields} items={bookHist} />

@@ -46,6 +46,7 @@ export const GridContainer = styled.div`
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   color: ${(props) => props.theme.colors.white};
 `;
 
@@ -157,6 +158,18 @@ export const RetangleGrid = styled.div`
   flex-direction: column;
   min-height: fit-content;
 `;
+
+export const Seemore = styled(Link)`
+  padding: 6px 10px 6px 10px;
+  border-radius: 5px;
+  color: ${(props) => props.theme.colors.success};
+  border: 1px solid ${(props) => props.theme.colors.success};
+  cursor: pointer;
+  transition: 0.4s all ease;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-decoration: none;
+`
 
 export const AsideGrid = styled.div`
   grid-area: AG;

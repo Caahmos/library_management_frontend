@@ -118,3 +118,27 @@ export const ArrowIcon = styled(FaArrowUpRightFromSquare)`
   font-size: 0.9rem;
   color: ${(props) => props.theme.colors.success};
 `;
+
+export const Due = styled.div<{$in: string}>`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  color: ${({ $in }) => ($in === 'yes' ? "green" : "")};
+`
+
+export const Returned = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`
+
+export const ReturnedText = styled.div`
+  font-size: 0.8rem;
+  color: green;
+`
+export const ReturnedContent = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`

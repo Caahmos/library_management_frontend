@@ -14,12 +14,16 @@ import {
     BookTitle,
     MemberContent,
     Member,
-    ArrowIcon
+    ArrowIcon,
+    Returned,
+    ReturnedText,
+    ReturnedContent,
+    Due
 } from './styles';
 import type { ViewHistsRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
 import api from '../../../../utils/api';
 import type { ViewStatusRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest';
-import { FiAlertTriangle } from "react-icons/fi";
+import { FiAlertTriangle, FiCheck } from "react-icons/fi";
 
 type Field = {
     key: string;
@@ -107,7 +111,7 @@ const BookHistDetailItem: React.FC<BookHistViewItemProps> = ({ items, fields }) 
                                 <BookTitle>{item.biblio.title}</BookTitle>
                                 <p>{item.biblio_copy.barcode_nmbr}</p>
                             </BookInfo>
-                            <MemberContent to={`/member/detail/${item.mbrid}`}><ArrowIcon/><Member>{item.member.first_name}</Member></MemberContent>
+                            <MemberContent to={`/member/detail/${item.mbrid}`}><ArrowIcon /><Member>{item.member.first_name}</Member></MemberContent>
                             <p>{item.status_cd && styledStatusCode(item.status_cd)}</p>
                             {item.status_cd === 'out' && isOverdue(item.due_back_dt)
                                 ? (
@@ -123,7 +127,16 @@ const BookHistDetailItem: React.FC<BookHistViewItemProps> = ({ items, fields }) 
 
                                 )
                                 :
-                                formatDate(item.due_back_dt)
+                                item.returned_at
+                                    ?
+                                    <Returned>
+                                        <ReturnedText>Devolvido em:</ReturnedText>
+                                        <ReturnedContent>
+                                            <FiCheck style={{ color: 'green' }} /><Due $in='yes'>{formatDate(item.returned_at)}</Due>
+                                        </ReturnedContent>
+                                    </Returned>
+                                    :
+                                    <Due $in='no'>{formatDate(item.due_back_dt)}</Due>
                             }
                         </Item>
                     ))

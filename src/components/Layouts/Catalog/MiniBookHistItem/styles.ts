@@ -102,6 +102,16 @@ export const Due = styled.div<{$in: string}>`
 
 export const Returned = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+`
+
+export const ReturnedText = styled.div`
+  font-size: 0.8rem;
+  color: green;
+`
+export const ReturnedContent = styled.div`
+  display: flex;
   align-items: center;
   gap: 5px;
 `

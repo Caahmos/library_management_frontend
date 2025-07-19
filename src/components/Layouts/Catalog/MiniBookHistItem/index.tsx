@@ -17,7 +17,9 @@ import {
     DeleteHold,
     HoldText,
     HoldInfo,
-    DeleteIcon
+    DeleteIcon,
+    ReturnedText,
+    ReturnedContent
 } from './styles';
 import type { ViewHistsRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
 import api from '../../../../utils/api';
@@ -137,7 +139,12 @@ const MiniBookHistItem: React.FC<BookHistViewItemProps> = ({ items, fields, onDe
                                         :
                                         item.returned_at
                                             ?
-                                            <Returned><FiCheck style={{ color: 'green' }} /><Due $in='yes'>{formatDate(item.returned_at)}</Due></Returned>
+                                            <Returned>
+                                                <ReturnedText>Devolvido em:</ReturnedText>
+                                                <ReturnedContent>
+                                                    <FiCheck style={{ color: 'green' }} /><Due $in='yes'>{formatDate(item.returned_at)}</Due>
+                                                </ReturnedContent>
+                                            </Returned>
                                             :
                                             <Due $in='no'>{formatDate(item.due_back_dt)}</Due>
                                     }

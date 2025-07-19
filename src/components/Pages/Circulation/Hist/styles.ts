@@ -63,14 +63,14 @@ export const Text = styled.div`
   color: ${(props) => props.theme.colors.white};
 `;
 
-export const Select = styled.select<ActiveSelect>`
+export const Select = styled.select`
   padding: 10px;
+  height: 100%;
   color: ${(props) => props.theme.colors.white};
-  background-color: ${(props) =>
-    props.$active ? props.theme.colors.success : props.theme.colors.primary};
+  background-color: ${(props) => props.theme.colors.primary};
   cursor: pointer;
   transition: background-color 0.3s, border 0.3s;
-  border-radius: 4px;
+  border-radius: 7px;
 
   &::-webkit-scrollbar {
     width: 8px;

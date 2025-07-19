@@ -7,17 +7,22 @@ import {
     DataContent,
     FiltersContainer,
     FiltersContent,
+    Option,
+    Select,
     StyledInput
 } from './styles';
 import type { ViewHistsRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
 import BookHistDetailItem from '../../../Layouts/Catalog/BookHistDetailItem';
 import { Header } from '../styles';
+import type { ViewStatusRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest';
 
 const Hist: React.FC = () => {
     const token = localStorage.getItem("@library_management:token") || "";
     const [bookHist, setBookHist] = useState<ViewHistsRequest[]>();
     const [memberBarcode, setMemberBarcode] = useState<string>();
     const [copyBarcode, setCopyBarcode] = useState<string>();
+    const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
+    const [statusCode, setStatusCode] = useState<string>("");
     const [due, setDue] = useState<'yes' | 'no'>('no');
 
     const fields = [
@@ -32,6 +37,7 @@ const Hist: React.FC = () => {
 
         if (memberBarcode?.trim()) params.append("member_barcode", memberBarcode);
         if (copyBarcode?.trim()) params.append("copy_barcode", copyBarcode);
+        if (statusCode?.trim()) params.append("status_cd", statusCode);
         if (due) params.append("due", due);
         params.append("limit", "100");
 
@@ -47,7 +53,22 @@ const Hist: React.FC = () => {
             .catch((err) => {
                 console.error(err);
             });
-    }, [token, memberBarcode, copyBarcode, due]);
+    }, [token, memberBarcode, copyBarcode, statusCode, due]);
+
+    useEffect(() => {
+        api.get(`/bibliohist/viewstatus`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        })
+            .then((response) => {
+                console.log(response.data.statusDescription);
+                setCodeStatus(response.data.statusDescription);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [token]);
 
     return (
         <Container id="top">
@@ -56,7 +77,14 @@ const Hist: React.FC = () => {
                 <FiltersContent>
                     <StyledInput type='text' placeholder='Código de barras do membro' value={memberBarcode} onChange={(e) => { setMemberBarcode(e.target.value) }} />
                     <StyledInput type='text' placeholder='Tombo' value={copyBarcode} onChange={(e) => { setCopyBarcode(e.target.value) }} />
-                    <StyledInput type='number' placeholder='Código de barras do membro' value={memberBarcode} onChange={(e) => { setMemberBarcode(e.target.value) }} />
+                    <Select value={statusCode} onChange={(e) => setStatusCode(e.target.value)}>
+                        <Option value="">Todos os status</Option>
+                        {codeStatus?.map((status) => (
+                            <Option key={status.code} value={status.code}>
+                                {status.description}
+                            </Option>
+                        ))}
+                    </Select>
                     <StyledInput type='number' placeholder='Código de barras do membro' value={memberBarcode} onChange={(e) => { setMemberBarcode(e.target.value) }} />
                 </FiltersContent>
                 <DataContent>

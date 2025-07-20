@@ -42,6 +42,7 @@ const Hist: React.FC = () => {
         { key: 'mbrid', label: 'Membro' },
         { key: 'status_cd', label: 'Status' },
         { key: 'due_back_dt', label: 'Devolução' },
+        { key: 'actions', label: 'Ações' },
     ];
 
     useEffect(() => {

@@ -5,6 +5,7 @@ import { MdInfoOutline } from "react-icons/md";
 import { HiMiniReceiptRefund } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
+import { CgOptions } from "react-icons/cg";
 
 export const BarcodeIcon = styled(FaBarcode)`
   font-size: 1rem;
@@ -46,6 +47,46 @@ export const RefundIcon = styled(HiMiniReceiptRefund)`
   margin-right: 5px;
 `;
 
+export const EmailContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  > svg {
+    font-size: 1.5rem;
+    color: ${(props) => props.theme.colors.white};
+    cursor: pointer;
+    transition: 0.2s all ease-in;
+    
+    &:hover{
+      color: ${(props) => props.theme.colors.success};
+  }
+  }
+`
+
+export const Count = styled.div`
+  position: absolute;
+  top: -5px;
+  left: 15px;
+  width: 20px;
+  height: 20px;
+  font-size: 0.8rem;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${(props) => props.theme.colors.success};
+  color: ${(props) => props.theme.colors.white};
+`
+
+export const ActionsIcon = styled(CgOptions)`
+  font-size: 1rem;
+  color: ${(props) => props.theme.colors.success};
+  margin-right: 5px;
+`;
+
 export const Container = styled.div`
   width: 100%;
   background-color: ${(props) => props.theme.colors.secondary};
@@ -60,7 +101,7 @@ export const Container = styled.div`
 export const Header = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   padding: 7px;
   color: ${(props) => props.theme.colors.success};
   font-weight: bold;
@@ -72,7 +113,7 @@ export const Item = styled.div`
   width: 100%;
   display: grid;
   padding: 7px;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 `;
 
 interface DueDateProps {

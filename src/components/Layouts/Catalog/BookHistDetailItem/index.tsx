@@ -1,4 +1,5 @@
 import React, { useEffect, useState, type JSX } from 'react';
+import useFlashMessage from '../../../../hooks/useFlashMessages';
 import {
     Container,
     Header,
@@ -18,12 +19,16 @@ import {
     Returned,
     ReturnedText,
     ReturnedContent,
-    Due
+    Due,
+    ActionsIcon,
+    EmailContainer,
+    Count
 } from './styles';
 import type { ViewHistsRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
 import api from '../../../../utils/api';
 import type { ViewStatusRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest';
 import { FiAlertTriangle, FiCheck } from "react-icons/fi";
+import { LuMailPlus } from "react-icons/lu";
 
 type Field = {
     key: string;
@@ -33,11 +38,30 @@ type Field = {
 interface BookHistViewItemProps {
     items: ViewHistsRequest[];
     fields: Field[];
+};
+
+interface NotifyLoanRequestBody {
+    first_name: string;
+    last_name: string;
+    email: string;
+    barcode_nmbr: string;
+    status_begin_dt: string;
+    due_back_dt: string;
+    daysLate: number;
+    title: string;
+    bib_barcode: string;
+    hist_id: number;
 }
 
 const BookHistDetailItem: React.FC<BookHistViewItemProps> = ({ items, fields }) => {
+    const [localItems, setLocalItems] = useState<ViewHistsRequest[]>(items);
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
     const token = localStorage.getItem("@library_management:token") || "";
+    const { setFlashMessage } = useFlashMessage();
+
+    useEffect(() => {
+        setLocalItems(items);
+    }, [items]);
 
     const formatDate = (date?: string | Date | null) => {
         if (!date) return '-';
@@ -83,11 +107,44 @@ const BookHistDetailItem: React.FC<BookHistViewItemProps> = ({ items, fields }) 
         return description?.description;
     };
 
+    const sendEmail = ({ first_name, last_name, email, barcode_nmbr, title, bib_barcode, hist_id, daysLate, status_begin_dt, due_back_dt }: NotifyLoanRequestBody) => {
+        api.post('/bibliohist/sendemail', {
+            first_name,
+            last_name,
+            email,
+            barcode_nmbr,
+            title,
+            bib_barcode,
+            hist_id,
+            daysLate,
+            status_begin_dt,
+            due_back_dt
+        }, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        }).then((response) => {
+            console.log('Sucesso ao enviar e-mail!');
+            setLocalItems(prevItems =>
+                prevItems.map(item =>
+                    item.id === String(hist_id)
+                        ? { ...item, emails_sent: (item.emails_sent ?? 0) + 1 }
+                        : item
+                )
+            );
+            setFlashMessage('Sucesso ao enviar o e-mail', 'success')!
+        })
+            .catch((err) => {
+                console.error(err);
+            });
+    };
+
     const iconMap: Record<string, JSX.Element> = {
         barcode_nmbr: <BarcodeIcon />,
         mbrid: <UsersIcon />,
         status_cd: <InfoIcon />,
         due_back_dt: <RefundIcon />,
+        actions: <ActionsIcon />
     };
 
     return (
@@ -104,8 +161,8 @@ const BookHistDetailItem: React.FC<BookHistViewItemProps> = ({ items, fields }) 
                 }
             </Header>
             {
-                items && items.length > 0
-                    ? items.map((item, index) => (
+                localItems && localItems.length > 0
+                    ? localItems.map((item, index) => (
                         <Item key={index}>
                             <BookInfo to={`/catalog/detail/${item.bibid}`}>
                                 <BookTitle>{item.biblio.title}</BookTitle>
@@ -137,6 +194,30 @@ const BookHistDetailItem: React.FC<BookHistViewItemProps> = ({ items, fields }) 
                                     </Returned>
                                     :
                                     <Due $in='no'>{formatDate(item.due_back_dt)}</Due>
+                            }
+                            {
+                                item.status_cd === 'out' && getDaysOverdue(item.due_back_dt) > 0 &&
+                                <EmailContainer>
+                                    <LuMailPlus onClick={() => {
+                                        sendEmail({
+                                            first_name: item.member.first_name ?? '',
+                                            last_name: item.member.last_name ?? '',
+                                            email: item.member.email ?? '',
+                                            barcode_nmbr: item.member.barcode_nmbr ?? '',
+                                            title: item.biblio.title ?? '',
+                                            bib_barcode: item.biblio_copy.barcode_nmbr ?? '',
+                                            hist_id: Number(item.id ?? 0),
+                                            daysLate: getDaysOverdue(item.due_back_dt),
+                                            status_begin_dt: item.status_begin_dt ?? '',
+                                            due_back_dt: item.due_back_dt ?? ''
+                                        });
+                                    }}
+                                    />
+                                    {
+                                        (item.emails_sent ?? 0) >= 1 &&
+                                        <Count>{item.emails_sent}</Count>
+                                    }
+                                </EmailContainer>
                             }
                         </Item>
                     ))

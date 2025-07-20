@@ -17,6 +17,8 @@ export interface ViewHistsRequest {
   member: {
     first_name: string;
     last_name: string;
+    email: string;
+    barcode_nmbr: string;
   };
   biblio: {
     title?: string;
@@ -30,6 +32,7 @@ export interface ViewHistsRequest {
   status_begin_dt?: string;
   due_back_dt?: string;
   returned_at?: string;
+  emails_sent?: number;
 }
 
 export interface ViewHistsSearch {

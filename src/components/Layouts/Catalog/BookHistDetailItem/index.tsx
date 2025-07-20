@@ -198,7 +198,7 @@ const BookHistDetailItem: React.FC<BookHistViewItemProps> = ({ items, fields }) 
                             {
                                 item.status_cd === 'out' && getDaysOverdue(item.due_back_dt) > 0 &&
                                 <EmailContainer>
-                                    <LuMailPlus onClick={() => {
+                                    <LuMailPlus title='Enviar cobrança por email' onClick={() => {
                                         sendEmail({
                                             first_name: item.member.first_name ?? '',
                                             last_name: item.member.last_name ?? '',

@@ -24,6 +24,7 @@ import BookHistDetailItem from '../../../Layouts/Catalog/BookHistDetailItem';
 import { Header } from '../styles';
 import type { ViewStatusRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest';
 import useFlashMessage from '../../../../hooks/useFlashMessages';
+import BookDetailBlockItem from '../../../Layouts/Catalog/BookDetailBlockItem';
 
 interface NotifyLoanRequestBody {
     first_name: string;
@@ -205,12 +206,20 @@ const Hist: React.FC = () => {
                     </Header>
                     {
                         bookHist ?
-                            <BookHistDetailItem
-                                fields={fields}
-                                items={bookHist}
-                                sendEmail={sendEmail}
-                                loadingItemId={loadingItemId}
-                            />
+                            <>
+                                <BookDetailBlockItem
+                                    fields={fields}
+                                    items={bookHist}
+                                    sendEmail={sendEmail}
+                                    loadingItemId={loadingItemId}
+                                />
+                                <BookHistDetailItem
+                                    fields={fields}
+                                    items={bookHist}
+                                    sendEmail={sendEmail}
+                                    loadingItemId={loadingItemId}
+                                />
+                            </>
                             : <p>Nenhum histórico encontrado.</p>
                     }
                     <ButtonMore onClick={handleLimit}>Carregar mais</ButtonMore>

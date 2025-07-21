@@ -16,10 +16,8 @@ export const BarcodeIcon = styled(FaBarcode)`
 export const BookInfo = styled(Link)`
   display: flex;
   flex-direction: column;
-  white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 90%;
+  max-width: 100%;
   text-decoration: none;
   color: ${(props) => props.theme.colors.white};
 `;
@@ -100,32 +98,35 @@ export const Container = styled.div`
   background-color: ${(props) => props.theme.colors.secondary};
   color: ${(props) => props.theme.colors.white};
   margin-top: 20px;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 17px;
   padding: 20px;
+
+  @media screen and (max-width: 1000px) {
+      display: flex;
+  }
 `;
 
 export const Header = styled.div`
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  padding: 7px;
+  display: flex;
+  background-color: ${(props) => props.theme.colors.primary};
+  padding: 10px;
   color: ${(props) => props.theme.colors.success};
   font-weight: bold;
-
+  font-size: 0.8rem;
   
 `;
 
 export const Item = styled.div`
   width: 100%;
-  display: grid;
   padding: 7px;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-
-  @media screen and (max-width: 1000px) {
-    display: none;
-  }
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-bottom: 1px solid ${(props) => props.theme.colors.white};
 `;
 
 interface DueDateProps {

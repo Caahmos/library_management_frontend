@@ -114,7 +114,9 @@ export const Header = styled.div`
   color: ${(props) => props.theme.colors.success};
   font-weight: bold;
 
-  
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 export const Item = styled.div`

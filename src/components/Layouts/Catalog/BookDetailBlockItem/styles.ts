@@ -101,7 +101,6 @@ export const Container = styled.div`
   display: none;
   flex-direction: column;
   gap: 17px;
-  padding: 20px;
 
   @media screen and (max-width: 1000px) {
       display: flex;

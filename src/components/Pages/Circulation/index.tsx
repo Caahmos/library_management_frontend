@@ -65,7 +65,7 @@ const Circulation: React.FC = () => {
         }, []);
 
     useEffect(() => {
-        api.get(`/bibliohist/viewhists?due=yes&limit=100`, {
+        api.get(`/bibliohist/viewhists?due=yes&limit=15`, {
             headers: {
                 Authorization: `Bearer ${JSON.parse(token)}`
             }

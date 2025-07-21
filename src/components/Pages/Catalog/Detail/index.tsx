@@ -61,7 +61,7 @@ const Detail: React.FC = () => {
     }, [id]);
 
     useEffect(() => {
-        api.get(`/biblio/search?method=collection&data=${bookCollection}`, {
+        api.get(`/biblio/search?method=collection&data=${bookCollection}&limit=50`, {
             headers: {
                 Authorization: `Bearer ${JSON.parse(token)}`
             }

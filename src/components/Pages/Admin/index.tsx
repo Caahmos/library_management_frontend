@@ -30,6 +30,7 @@ import {
 } from './styles';
 import BookItem from "../../Layouts/Admin/BookItem";
 import ButtonAdmin from "../../Layouts/Admin/ButtonAdmin";
+import { RiTimerLine } from "react-icons/ri";
 
 const Admin: React.FC = () => {
     const [topBooks, setTopBooks] = useState<TopBooksInterface[]>([]);
@@ -160,6 +161,7 @@ const Admin: React.FC = () => {
                 <ChartGrid1>
                     <Content>
                         <ButtonAdmin icon={<FiBook/>} link="/circulation/balance" text="Acessar Balanço"/>
+                        <ButtonAdmin icon={<RiTimerLine/>} link="/admin/checkoutprivs" text="Gerenciar Limites"/>
                         <ButtonAdmin icon={<FiBell/>} link="/admin/notifications" text="Notificações"/>
                         <ButtonAdmin icon={<FiSettings/>} link="/admin/settings" text="Configurações"/>
                     </Content>

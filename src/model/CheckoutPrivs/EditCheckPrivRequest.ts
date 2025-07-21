@@ -10,7 +10,7 @@ export interface ViewCheckPrivRequest {
     classification: number | string;
     checkout_limit: number
     renewal_limit: number
-    grace_period_day: number;
+    grace_period_days: number;
     material_type_dm: {
         description: string
       },

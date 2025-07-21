@@ -41,6 +41,7 @@ import Checkin from "../components/Pages/Circulation/Checkin";
 import RankMembers from "../components/Pages/Circulation/Member/RankMembers";
 import Hist from "../components/Pages/Circulation/Hist";
 import CheckoutPrivsList from "../components/Pages/Admin/CheckOutPrivsList";
+import EditCheckoutPrivs from "../components/Pages/Admin/EditCheckOutPrivs";
 
 const AppRoutes: React.FC = () => {
 
@@ -78,6 +79,7 @@ const AppRoutes: React.FC = () => {
                             <Route path="/admin/cpass/:id" element={<ChangeAdminPassword />} />
                             <Route path="/admin/adminlist" element={<AdminList />} />
                             <Route path="/admin/checkoutprivs" element={<CheckoutPrivsList />} />
+                            <Route path="/admin/checkoutprivs/edit/:id" element={<EditCheckoutPrivs />} />
                         </Route>
 
                         <Route element={<PrivateRoutes permission="circ_flg" />}>

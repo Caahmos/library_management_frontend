@@ -2,15 +2,11 @@ import React, { useState, useEffect } from 'react';
 import api from '../../../../utils/api';
 import ReturnButton from '../../../Layouts/ReturnButton';
 import GenericItem from '../../../Layouts/Admin/GenericItem';
-import type { ViewAllClassifiesRequest } from '../../../../model/Member/MemberClassifyDM/ViewAllClassifiesRequest';
 import { TbEdit } from "react-icons/tb";
-import { MdDeleteOutline } from "react-icons/md";
 
 import {
     Container,
     List,
-    NewAdmin,
-    NewAdminIcon,
 } from './styles';
 import GenericHeader from '../../../Layouts/Admin/GenericHeader';
 import type { ViewCheckPrivRequest } from '../../../../model/CheckoutPrivs/EditCheckPrivRequest';
@@ -43,14 +39,14 @@ const CheckoutPrivsList: React.FC = () => {
         { key: 'classification', label: 'Tipo de Membro' },
         { key: 'checkout_limit', label: 'Máx. Emprestimos' },
         { key: 'renewal_limit', label: 'Máx. Renovações' },
-        { key: 'grace_period_days', label: 'Dias para bloquear' },
+        { key: 'grace_period_days', label: 'Dias para Bloqueio' },
     ];
 
     const actions = [
         {
             icon: <TbEdit />,
             title: "Editar",
-            to: (item: ViewAllClassifiesRequest) => `/mbrclassify/edit/${item.code}`,
+            to: (item: ViewCheckPrivRequest) => `/admin/checkoutprivs/edit/${item.id}`,
         }
     ];
 

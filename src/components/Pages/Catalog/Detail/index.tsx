@@ -238,13 +238,11 @@ const Detail: React.FC = () => {
                                                 </CopyTitle>
                                                 <CopyStatus>{styledStatusCode(copyInfo.status_cd)}</CopyStatus>
                                                 {
-                                                    copyInfo.status_cd == 'out' ?
+                                                    copyInfo.status_cd == 'out' &&
                                                         <DueDate>
                                                             <DateInfo>Previsão de entrega:</DateInfo>
                                                             <DateDesc>{formatDate(copyInfo.due_back_dt)}</DateDesc>
                                                         </DueDate>
-                                                    :
-                                                    <p></p>
                                                 }
                                             </CopyItem>
                                         ))

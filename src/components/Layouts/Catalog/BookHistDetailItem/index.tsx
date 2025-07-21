@@ -35,11 +35,6 @@ type Field = {
     label: string;
 };
 
-interface BookHistViewItemProps {
-    items: ViewHistsRequest[];
-    fields: Field[];
-};
-
 interface NotifyLoanRequestBody {
     first_name: string;
     last_name: string;
@@ -53,7 +48,14 @@ interface NotifyLoanRequestBody {
     hist_id: number;
 }
 
-const BookHistDetailItem: React.FC<BookHistViewItemProps> = ({ items, fields }) => {
+interface BookHistViewItemProps {
+    items: ViewHistsRequest[];
+    fields: Field[];
+    sendEmail: (data: NotifyLoanRequestBody) => void;
+
+};
+
+const BookHistDetailItem: React.FC<BookHistViewItemProps> = ({ items, fields, sendEmail }) => {
     const [localItems, setLocalItems] = useState<ViewHistsRequest[]>(items);
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
     const token = localStorage.getItem("@library_management:token") || "";
@@ -105,38 +107,6 @@ const BookHistDetailItem: React.FC<BookHistViewItemProps> = ({ items, fields }) 
         });
 
         return description?.description;
-    };
-
-    const sendEmail = ({ first_name, last_name, email, barcode_nmbr, title, bib_barcode, hist_id, daysLate, status_begin_dt, due_back_dt }: NotifyLoanRequestBody) => {
-        api.post('/bibliohist/sendemail', {
-            first_name,
-            last_name,
-            email,
-            barcode_nmbr,
-            title,
-            bib_barcode,
-            hist_id,
-            daysLate,
-            status_begin_dt,
-            due_back_dt
-        }, {
-            headers: {
-                Authorization: `Bearer ${JSON.parse(token)}`
-            }
-        }).then((response) => {
-            console.log('Sucesso ao enviar e-mail!');
-            setLocalItems(prevItems =>
-                prevItems.map(item =>
-                    item.id === String(hist_id)
-                        ? { ...item, emails_sent: (item.emails_sent ?? 0) + 1 }
-                        : item
-                )
-            );
-            setFlashMessage('Sucesso ao enviar o e-mail', 'success')!
-        })
-            .catch((err) => {
-                console.error(err);
-            });
     };
 
     const iconMap: Record<string, JSX.Element> = {

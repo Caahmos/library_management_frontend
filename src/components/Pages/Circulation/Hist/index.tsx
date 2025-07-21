@@ -23,6 +23,20 @@ import type { ViewHistsRequest } from '../../../../model/Biblio/BiblioStatusHist
 import BookHistDetailItem from '../../../Layouts/Catalog/BookHistDetailItem';
 import { Header } from '../styles';
 import type { ViewStatusRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest';
+import useFlashMessage from '../../../../hooks/useFlashMessages';
+
+interface NotifyLoanRequestBody {
+    first_name: string;
+    last_name: string;
+    email: string;
+    barcode_nmbr: string;
+    status_begin_dt: string;
+    due_back_dt: string;
+    daysLate: number;
+    title: string;
+    bib_barcode: string;
+    hist_id: number;
+}
 
 const Hist: React.FC = () => {
     const token = localStorage.getItem("@library_management:token") || "";
@@ -36,6 +50,7 @@ const Hist: React.FC = () => {
     const [due, setDue] = useState<string>('no');
     const [searchParams, setSearchParams] = useSearchParams();
     const [hasInitialized, setHasInitialized] = useState(false);
+    const { setFlashMessage } = useFlashMessage();
 
     const fields = [
         { key: 'barcode_nmbr', label: 'Tombo' },
@@ -100,6 +115,53 @@ const Hist: React.FC = () => {
         setLimit((prev) => prev = prev + 30);
     };
 
+    const sendEmail = ({ first_name, last_name, email, barcode_nmbr, title, bib_barcode, hist_id, daysLate, status_begin_dt, due_back_dt }: NotifyLoanRequestBody) => {
+        api.post('/bibliohist/sendemail', {
+            first_name,
+            last_name,
+            email,
+            barcode_nmbr,
+            title,
+            bib_barcode,
+            hist_id,
+            daysLate,
+            status_begin_dt,
+            due_back_dt
+        }, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        }).then((response) => {
+            console.log('Sucesso ao enviar e-mail!');
+            const params = new URLSearchParams();
+
+            if (memberBarcode?.trim()) params.append("member_barcode", memberBarcode);
+            if (copyBarcode?.trim()) params.append("copy_barcode", copyBarcode);
+            if (bibId?.trim()) params.append("bibid", bibId);
+            if (statusCode?.trim()) params.append("status_cd", statusCode);
+            if (limit) params.append("limit", String(limit));
+            if (due) params.append("due", due);
+
+            api.get(`/bibliohist/detailhists?${params.toString()}`, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            })
+                .then((response) => {
+                    setBookHist(response.data.foundHists);
+                    console.log(response.data.foundHists);
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+                
+            setFlashMessage('Sucesso ao enviar o e-mail', 'success')!
+        })
+            .catch((err) => {
+                console.error(err);
+            });
+    };
+
     const removeFilters = () => {
         setMemberBarcode("");
         setCopyBarcode("");
@@ -153,7 +215,7 @@ const Hist: React.FC = () => {
                     </Header>
                     {
                         bookHist ?
-                            <BookHistDetailItem fields={fields} items={bookHist} />
+                            <BookHistDetailItem fields={fields} items={bookHist} sendEmail={sendEmail} />
                             : <p>Nenhum histórico encontrado.</p>
                     }
                     <ButtonMore onClick={handleLimit}>Carregar mais</ButtonMore>

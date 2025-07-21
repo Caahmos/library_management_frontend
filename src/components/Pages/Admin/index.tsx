@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from "react";
 import type { TopBooksInterface } from "../../../model/Biblio/BiblioReports/TopBooksInterface";
 import type { RentalsInterface } from "../../../model/Biblio/BiblioReports/RentalsInterface";
-import { FiArrowUpRight } from "react-icons/fi";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { FiArrowUpRight, FiBell, FiBook, FiSettings } from "react-icons/fi";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import api from "../../../utils/api";
 
 import {
@@ -24,11 +24,12 @@ import {
     IconBooks,
     IconCategory,
     Title,
-    TooltipEdited,
     AsideContent,
-    GridContainer
+    GridContainer,
+    Content
 } from './styles';
 import BookItem from "../../Layouts/Admin/BookItem";
+import ButtonAdmin from "../../Layouts/Admin/ButtonAdmin";
 
 const Admin: React.FC = () => {
     const [topBooks, setTopBooks] = useState<TopBooksInterface[]>([]);
@@ -157,10 +158,16 @@ const Admin: React.FC = () => {
                     </ResponsiveContainer>
                 </RetangleGrid>
                 <ChartGrid1>
-                    Top Autores
+                    <Content>
+                        <ButtonAdmin icon={<FiBook/>} link="/circulation/balance" text="Acessar Balanço"/>
+                        <ButtonAdmin icon={<FiBell/>} link="/admin/notifications" text="Notificações"/>
+                        <ButtonAdmin icon={<FiSettings/>} link="/admin/settings" text="Configurações"/>
+                    </Content>
                 </ChartGrid1>
                 <ChartGrid2>
-                    Top Categorias
+                    <Content>
+
+                    </Content>
                 </ChartGrid2>
                 <AsideGrid>
                     <AsideContent>

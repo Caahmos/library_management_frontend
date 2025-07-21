@@ -170,15 +170,22 @@ export const AsideContent = styled.div`
   min-height: 500px;
 `;
 
+export const Content = styled.div`
+display: flex;
+flex-direction: column;
+  gap: 20px;
+  border-radius: 7px;
+`;
+
 export const ChartGrid1 = styled.div`
   grid-area: CG1;
   border-radius: 7px;
-  background-color: ${(props) => props.theme.colors.secondary};
+  height: fit-content;
 `;
 export const ChartGrid2 = styled.div`
   grid-area: CG2;
   border-radius: 7px;
-  background-color: ${(props) => props.theme.colors.secondary};
+  height: fit-content;
 `;
 
 export const TooltipEdited = styled(Tooltip)`

@@ -33,7 +33,10 @@ import {
     AdminButton,
     EditIcon,
     InfoItems,
-    BookContainer
+    BookContainer,
+    DueDate,
+    DateInfo,
+    DateDesc
 } from './styles';
 import ReturnButton from "../../../Layouts/ReturnButton";
 import type { ViewStatusRequest } from "../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest";
@@ -124,6 +127,15 @@ const Detail: React.FC = () => {
             });
     }, [id, token, bookCopies]);
 
+    const isOverdue = (dueDateStr?: string | Date | null) => {
+        if (!dueDateStr) return false;
+        const dueDate = new Date(dueDateStr);
+        const today = new Date();
+        dueDate.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
+        return dueDate < today;
+    };
+
     const styledStatusCode = (code: string) => {
         const description = codeStatus.find((item) => {
             return item.code === code
@@ -176,6 +188,11 @@ const Detail: React.FC = () => {
         return 'Páginas';
     };
 
+    const formatDate = (date?: string | Date | null) => {
+        if (!date) return '-';
+        return new Intl.DateTimeFormat('pt-BR').format(new Date(date));
+    };
+
     return (
         <Container id="top">
             <ReturnButton />
@@ -220,7 +237,15 @@ const Detail: React.FC = () => {
                                                     <CopyDescription>{copyInfo.copy_desc || 'Sem descrição'}</CopyDescription>
                                                 </CopyTitle>
                                                 <CopyStatus>{styledStatusCode(copyInfo.status_cd)}</CopyStatus>
-                                                {/* <CopyButtons>Botão</CopyButtons> */}
+                                                {
+                                                    copyInfo.status_cd == 'out' ?
+                                                        <DueDate>
+                                                            <DateInfo>Previsão de entrega:</DateInfo>
+                                                            <DateDesc>{formatDate(copyInfo.due_back_dt)}</DateDesc>
+                                                        </DueDate>
+                                                    :
+                                                    <p></p>
+                                                }
                                             </CopyItem>
                                         ))
                                         : <p>Nenhuma cópia desse livro encontrada.</p>

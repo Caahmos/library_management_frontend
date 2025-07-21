@@ -178,3 +178,18 @@ export const InfoItems = styled.div`
   display: flex;
   gap: 20px;
 `;
+
+export const DueDate = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+`;
+
+export const DateInfo = styled.div`
+
+`;
+
+export const DateDesc = styled.div`
+
+`;

@@ -100,4 +100,5 @@ export const SpinnerLoading = styled.div`
   text-indent: -9999em;
   animation: ${mulShdSpin} 1.1s infinite ease;
   transform: translateZ(0);
+  margin-left: 15px;
 `;

@@ -72,7 +72,6 @@ const Circulation: React.FC = () => {
         })
             .then((response) => {
                 setBookHist(response.data.foundHists);
-                console.log(response.data.foundHists);
             })
             .catch((err) => {
                 console.error(err);
@@ -87,7 +86,6 @@ const Circulation: React.FC = () => {
         })
             .then((response) => {
                 setBooksBalance(response.data.balance);
-                console.log(response.data.balance);
             })
             .catch((err) => {
                 console.error(err);
@@ -102,7 +100,6 @@ const Circulation: React.FC = () => {
         })
             .then((response) => {
                 setMembersBalance(response.data.balance);
-                console.log(response.data.balance);
             })
             .catch((err) => {
                 console.error(err);
@@ -117,7 +114,6 @@ const Circulation: React.FC = () => {
         })
             .then((response) => {
                 setMembers(response.data.members);
-                console.log(response.data.members);
             })
             .catch((err) => {
                 console.error(err);

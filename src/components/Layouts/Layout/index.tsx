@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import Header from '../Header';
 import Aside from '../Aside';
@@ -12,11 +12,14 @@ interface ILayoutProps {
   children: React.ReactNode;
 }
 
+
 const Layout: React.FC<ILayoutProps> = ({ children }) => {
+  const MemoAside = useMemo(() => <Aside />, []);
+
   return (
     <Container>
       <Header />
-      <Aside />
+      {MemoAside}
       <Content>
         {children}
       </Content>

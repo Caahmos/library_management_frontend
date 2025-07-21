@@ -6,6 +6,7 @@ import { ImBooks } from "react-icons/im";
 import { FaBookOpenReader } from "react-icons/fa6";
 import { BiSolidDashboard } from "react-icons/bi";
 import { MdAdminPanelSettings } from "react-icons/md";
+import MotionAccordion from '../MotionAccordion';
 
 import { useTheme } from '../../../hooks/useTheme';
 import { useAuth } from '../../../hooks/useAuth';
@@ -15,7 +16,6 @@ import {
   Container,
   MenuContainer,
   MenuItem,
-  AccordionContent,
   TitleContainer,
   CircleIcon,
   Brand,
@@ -60,6 +60,10 @@ const Aside: React.FC = () => {
     };
   }, [isOpenMenu, open]);
 
+  useEffect(() => {
+    console.log("Aside renderizou");
+  });
+
   return (
     <Container $isopen={isOpenMenu} ref={menuRef}>
       <MenuBox>
@@ -90,14 +94,14 @@ const Aside: React.FC = () => {
                 </CircleIcon>
                 <p>Circulação</p>
               </MenuItem>
-              <AccordionContent $isopen={openIndex === 0}>
+              <MotionAccordion isOpen={openIndex === 0}>
                 <ul>
                   <li><LinkItem to='/circulation/checkin'>Check-in</LinkItem></li>
                   <li><LinkItem to='/member/findmember'>Buscar Membro</LinkItem></li>
                   <li><LinkItem to='/member/register'>Adicionar Membro</LinkItem></li>
                   <li><LinkItem to='/member/blocked'>Membros Bloqueados</LinkItem></li>
                 </ul>
-              </AccordionContent>
+              </MotionAccordion>
             </li>
           )}
 
@@ -110,11 +114,11 @@ const Aside: React.FC = () => {
                   </CircleIcon>
                   <p>Catálogo</p>
                 </MenuItem>
-                <AccordionContent $isopen={openIndex === 1}>
+                <MotionAccordion isOpen={openIndex === 1}>
                   <ul>
                     <li><LinkItem to='/catalog/createbook'>Registrar Livro</LinkItem></li>
                   </ul>
-                </AccordionContent>
+                </MotionAccordion>
               </li>
             )
             : <MenuItem to='/catalog' onClick={() => handleToggle(1)}>
@@ -133,7 +137,7 @@ const Aside: React.FC = () => {
                 </CircleIcon>
                 <p>Admin</p>
               </MenuItem>
-              <AccordionContent $isopen={openIndex === 2}>
+              <MotionAccordion isOpen={openIndex === 2}>
                 <ul>
                   <li><LinkItem to='/admin/adminlist'>Lista de Admins</LinkItem></li>
                   <li><LinkItem to='/mbrclassify'>Tipos de Usuários</LinkItem></li>
@@ -141,7 +145,7 @@ const Aside: React.FC = () => {
                   <li><LinkItem to='/collection'>Tipos de Categorias</LinkItem></li>
                   <li><LinkItem to='/mbrfield'>Campos de Usuários</LinkItem></li>
                 </ul>
-              </AccordionContent>
+              </MotionAccordion>
             </li>
           )}
         </MenuContainer>
@@ -175,4 +179,4 @@ const Aside: React.FC = () => {
   );
 };
 
-export default Aside;
+export default React.memo(Aside);

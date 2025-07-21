@@ -21,11 +21,11 @@ import BookEmpty from "../../../../utils/BookModel";
 import api from "../../../../utils/api";
 import type { AxiosError } from 'axios';
 
-import gold_rank from '../../../../../public/ranks/gold_rank.png';
-import diamond_rank from '../../../../../public/ranks/diamond_rank.png';
-import silver_rank from '../../../../../public/ranks/silver_rank.png';
-import bronze_rank from '../../../../../public/ranks/bronze_rank.png';
-import outlined_rank from '../../../../../public/ranks/outlined_rank.svg';
+import gold_rank from '../../../../assets/ranks/gold_rank.png';
+import diamond_rank from '../../../../assets/ranks/diamond_rank.png';
+import silver_rank from '../../../../assets/ranks/silver_rank.png';
+import bronze_rank from '../../../../assets/ranks/bronze_rank.png';
+import outlined_rank from '../../../../assets/ranks/outlined_rank.svg';
 
 const token = localStorage.getItem("@library_management:token") || "";
 

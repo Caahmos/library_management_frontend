@@ -50,6 +50,7 @@ const Hist: React.FC = () => {
     const [due, setDue] = useState<string>('no');
     const [searchParams, setSearchParams] = useSearchParams();
     const [hasInitialized, setHasInitialized] = useState(false);
+    const [loadingItemId, setLoadingItemId] = useState<number | null>(null);
     const { setFlashMessage } = useFlashMessage();
 
     const fields = [
@@ -115,26 +116,23 @@ const Hist: React.FC = () => {
         setLimit((prev) => prev = prev + 30);
     };
 
-    const sendEmail = ({ first_name, last_name, email, barcode_nmbr, title, bib_barcode, hist_id, daysLate, status_begin_dt, due_back_dt }: NotifyLoanRequestBody) => {
-        api.post('/bibliohist/sendemail', {
-            first_name,
-            last_name,
-            email,
-            barcode_nmbr,
-            title,
-            bib_barcode,
-            hist_id,
-            daysLate,
-            status_begin_dt,
-            due_back_dt
-        }, {
+    const sendEmail = (data: NotifyLoanRequestBody) => {
+        setLoadingItemId(data.hist_id);
+
+        api.post('/bibliohist/sendemail', data, {
             headers: {
                 Authorization: `Bearer ${JSON.parse(token)}`
             }
-        }).then((response) => {
-            console.log('Sucesso ao enviar e-mail!');
-            const params = new URLSearchParams();
+        }).then(() => {
+            setFlashMessage('Sucesso ao enviar o e-mail', 'success')!;
+        }).catch((err) => {
+            console.error(err);
+            setFlashMessage('Erro ao enviar o e-mail', 'error')!;
+        }).finally(() => {
+            setLoadingItemId(null);
 
+            // Recarregar lista atualizada
+            const params = new URLSearchParams();
             if (memberBarcode?.trim()) params.append("member_barcode", memberBarcode);
             if (copyBarcode?.trim()) params.append("copy_barcode", copyBarcode);
             if (bibId?.trim()) params.append("bibid", bibId);
@@ -149,17 +147,9 @@ const Hist: React.FC = () => {
             })
                 .then((response) => {
                     setBookHist(response.data.foundHists);
-                    console.log(response.data.foundHists);
                 })
-                .catch((err) => {
-                    console.error(err);
-                });
-                
-            setFlashMessage('Sucesso ao enviar o e-mail', 'success')!
-        })
-            .catch((err) => {
-                console.error(err);
-            });
+                .catch(console.error);
+        });
     };
 
     const removeFilters = () => {
@@ -215,7 +205,12 @@ const Hist: React.FC = () => {
                     </Header>
                     {
                         bookHist ?
-                            <BookHistDetailItem fields={fields} items={bookHist} sendEmail={sendEmail} />
+                            <BookHistDetailItem
+                                fields={fields}
+                                items={bookHist}
+                                sendEmail={sendEmail}
+                                loadingItemId={loadingItemId}
+                            />
                             : <p>Nenhum histórico encontrado.</p>
                     }
                     <ButtonMore onClick={handleLimit}>Carregar mais</ButtonMore>

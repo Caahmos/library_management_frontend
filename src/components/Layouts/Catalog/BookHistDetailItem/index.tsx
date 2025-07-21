@@ -22,13 +22,15 @@ import {
     Due,
     ActionsIcon,
     EmailContainer,
-    Count
+    Count,
+    SpinnerContainer
 } from './styles';
 import type { ViewHistsRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
 import api from '../../../../utils/api';
 import type { ViewStatusRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest';
 import { FiAlertTriangle, FiCheck } from "react-icons/fi";
 import { LuMailPlus } from "react-icons/lu";
+import { SpinnerLoading } from '../../../../utils/SpinnerLoading';
 
 type Field = {
     key: string;
@@ -49,13 +51,13 @@ interface NotifyLoanRequestBody {
 }
 
 interface BookHistViewItemProps {
+    loadingItemId: number | null;
     items: ViewHistsRequest[];
     fields: Field[];
     sendEmail: (data: NotifyLoanRequestBody) => void;
+}
 
-};
-
-const BookHistDetailItem: React.FC<BookHistViewItemProps> = ({ items, fields, sendEmail }) => {
+const BookHistDetailItem: React.FC<BookHistViewItemProps> = ({ items, fields, sendEmail, loadingItemId }) => {
     const [localItems, setLocalItems] = useState<ViewHistsRequest[]>(items);
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
     const token = localStorage.getItem("@library_management:token") || "";
@@ -166,28 +168,39 @@ const BookHistDetailItem: React.FC<BookHistViewItemProps> = ({ items, fields, se
                                     <Due $in='no'>{formatDate(item.due_back_dt)}</Due>
                             }
                             {
-                                item.status_cd === 'out' && getDaysOverdue(item.due_back_dt) > 0 &&
-                                <EmailContainer>
-                                    <LuMailPlus title='Enviar cobrança por email' onClick={() => {
-                                        sendEmail({
-                                            first_name: item.member.first_name ?? '',
-                                            last_name: item.member.last_name ?? '',
-                                            email: item.member.email ?? '',
-                                            barcode_nmbr: item.member.barcode_nmbr ?? '',
-                                            title: item.biblio.title ?? '',
-                                            bib_barcode: item.biblio_copy.barcode_nmbr ?? '',
-                                            hist_id: Number(item.id ?? 0),
-                                            daysLate: getDaysOverdue(item.due_back_dt),
-                                            status_begin_dt: item.status_begin_dt ?? '',
-                                            due_back_dt: item.due_back_dt ?? ''
-                                        });
-                                    }}
-                                    />
-                                    {
-                                        (item.emails_sent ?? 0) >= 1 &&
-                                        <Count>{item.emails_sent}</Count>
-                                    }
-                                </EmailContainer>
+                                item.status_cd === 'out' && getDaysOverdue(item.due_back_dt) > 0 && (
+                                    <EmailContainer>
+                                        {
+                                            loadingItemId === Number(item.id) ? (
+                                                <SpinnerContainer>
+                                                    <SpinnerLoading />
+                                                </SpinnerContainer>
+                                            ) : (
+                                                <>
+                                                    <LuMailPlus
+                                                        title='Enviar cobrança por email'
+                                                        onClick={() => sendEmail({
+                                                            first_name: item.member.first_name ?? '',
+                                                            last_name: item.member.last_name ?? '',
+                                                            email: item.member.email ?? '',
+                                                            barcode_nmbr: item.member.barcode_nmbr ?? '',
+                                                            title: item.biblio.title ?? '',
+                                                            bib_barcode: item.biblio_copy.barcode_nmbr ?? '',
+                                                            hist_id: Number(item.id ?? 0),
+                                                            daysLate: getDaysOverdue(item.due_back_dt),
+                                                            status_begin_dt: item.status_begin_dt ?? '',
+                                                            due_back_dt: item.due_back_dt ?? ''
+                                                        })}
+                                                    />
+                                                    {
+                                                        (item.emails_sent ?? 0) >= 1 &&
+                                                        <Count>{item.emails_sent}</Count>
+                                                    }
+                                                </>
+                                            )
+                                        }
+                                    </EmailContainer>
+                                )
                             }
                         </Item>
                     ))

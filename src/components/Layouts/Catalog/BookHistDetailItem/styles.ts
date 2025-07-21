@@ -47,6 +47,14 @@ export const RefundIcon = styled(HiMiniReceiptRefund)`
   margin-right: 5px;
 `;
 
+export const SpinnerContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+`
+
 export const EmailContainer = styled.div`
   width: 100%;
   height: 100%;

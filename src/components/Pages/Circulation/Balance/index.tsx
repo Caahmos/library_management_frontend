@@ -20,6 +20,7 @@ import DetailedBalanceItem from '../../../Layouts/Circulation/DetailedBalanceIte
 import type { ViewCollection } from '../../../../model/Collection/ViewCollection';
 import { exportToXLSX } from '../../../Utils/handleExportToXLSX';
 import { RiFileExcel2Line } from "react-icons/ri";
+import DetailedBalanceBlockItem from '../../../Layouts/Circulation/DetailedBalanceBlockItem';
 
 const Balance: React.FC = () => {
     const token = localStorage.getItem("@library_management:token") || "";
@@ -155,9 +156,12 @@ const Balance: React.FC = () => {
                 </FiltersContent>
 
                 <DataContent>
-                    <Header>Histórico detalhado: { statusCount && ( <p>({statusCount} itens encontrados)</p> )}</Header>
+                    <Header>Histórico detalhado: {statusCount && (<p>({statusCount} itens encontrados)</p>)}</Header>
                     {filteredItems.length > 0 ? (
-                        <DetailedBalanceItem fields={fields} items={filteredItems} />
+                        <>
+                            <DetailedBalanceItem fields={fields} items={filteredItems} />
+                            <DetailedBalanceBlockItem fields={fields} items={filteredItems} />
+                        </>
                     ) : (
                         <p>Nenhum histórico encontrado.</p>
                     )}

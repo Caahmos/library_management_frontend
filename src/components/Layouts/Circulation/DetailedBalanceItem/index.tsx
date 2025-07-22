@@ -1,5 +1,4 @@
 import React, { useEffect, useState, type JSX } from 'react';
-import useFlashMessage from '../../../../hooks/useFlashMessages';
 import {
     Container,
     Header,
@@ -29,7 +28,6 @@ const DetailedBalanceItem: React.FC<BookHistViewItemProps> = ({ items, fields })
     const [localItems, setLocalItems] = useState<DetailedItem[]>(items);
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
     const token = localStorage.getItem("@library_management:token") || "";
-    const { setFlashMessage } = useFlashMessage();
 
     useEffect(() => {
         setLocalItems(items);

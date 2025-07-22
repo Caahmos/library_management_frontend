@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ReturnButton from '../../../Layouts/ReturnButton';
-import { useSearchParams, useNavigate } from "react-router-dom";
 import api from '../../../../utils/api';
-import type { InputHTMLAttributes } from "react";
 
 import {
-    ButtonMore,
-    Check,
-    CheckContainer,
-    CheckLabel,
     Clean,
     ClearFiltersIcon,
     Container,
@@ -24,12 +18,14 @@ import useFlashMessage from '../../../../hooks/useFlashMessages';
 import type { DetailedItem } from '../../../../model/Biblio/BiblioStatusHist/DetailedBalance';
 import DetailedBalanceItem from '../../../Layouts/Circulation/DetailedBalanceItem';
 import type { ViewCollection } from '../../../../model/Collection/ViewCollection';
+import { exportToXLSX } from '../../../Utils/handleExportToXLSX';
+import { RiFileExcel2Line } from "react-icons/ri";
 
 const Balance: React.FC = () => {
     const token = localStorage.getItem("@library_management:token") || "";
     const [originalBalance, setOriginalBalance] = useState<DetailedItem[]>([]);
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
-    const [statusCode, setStatusCode] = useState<string>("");
+    const [statusCode, setStatusCode] = useState<string>("out");
     const [collections, setCollections] = useState<ViewCollection[]>([]);
     const [collectionCode, setCollectionCode] = useState<number>();
     const { setFlashMessage } = useFlashMessage();
@@ -94,6 +90,22 @@ const Balance: React.FC = () => {
         setCollectionCode(undefined);
     };
 
+    const handleExportToXLSX = () => {
+        if (filteredItems.length === 0) {
+            setFlashMessage("Nenhum dado para exportar", "error");
+            return;
+        }
+
+        const formattedItems = filteredItems.map(item => ({
+            title: item.biblio?.title || '',
+            category: item.biblio?.collection?.description || '',
+            status_cd: item.status_cd,
+            barcode_nmbr: item.barcode_nmbr,
+        }));
+
+        exportToXLSX(formattedItems, fields, 'acervo-detalhado.xlsx');
+    };
+
     const filteredItems = originalBalance.filter(item => {
         const matchesStatus = statusCode ? item.status_cd === statusCode : true;
         const matchesCollection = collectionCode
@@ -129,6 +141,10 @@ const Balance: React.FC = () => {
                             </Option>
                         ))}
                     </Select>
+                    <Clean onClick={handleExportToXLSX}>
+                        <RiFileExcel2Line />
+                        <span>Exportar para Excel</span>
+                    </Clean>
 
                     <Clean onClick={removeFilters}>
                         <ClearFiltersIcon title='Remover filtros' />

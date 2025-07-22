@@ -18,3 +18,11 @@ export const Content = styled.div`
   transition: 0.4s all ease-in;
   gap: 10px;
 `
+
+export const LoadingContent = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`

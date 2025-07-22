@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import api from "../../../utils/api";
 import {
-    Container
+    Container,
+    LoadingContent
 } from './styles';
 import BooksSection from "../../Layouts/BooksSection";
 import type { Biblio } from "../../../model/Biblio/Biblio/SearchBiblioResponse";
 import RandomBooksSection from "../../Layouts/RandomBooksSection";
 import type { RandomBiblio } from "../../../model/Biblio/Biblio/RandomSearchBiblioResponse";
 import Footer from "../../Layouts/Footer";
+import load from '../../../assets/imgs/load.gif'
 
 const Home: React.FC = () => {
     const [books, setBooks] = useState<Biblio[]>([]);
@@ -54,7 +56,9 @@ const Home: React.FC = () => {
                     <Footer />
                 </>
             ) : (
-                <p>Carregando...</p>
+                <LoadingContent>
+                    <img width={60} src={load} />
+                </LoadingContent>
             )}
         </Container>
     );

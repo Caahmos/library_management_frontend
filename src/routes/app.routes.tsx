@@ -42,6 +42,7 @@ import RankMembers from "../components/Pages/Circulation/Member/RankMembers";
 import Hist from "../components/Pages/Circulation/Hist";
 import CheckoutPrivsList from "../components/Pages/Admin/CheckOutPrivsList";
 import EditCheckoutPrivs from "../components/Pages/Admin/EditCheckOutPrivs";
+import Balance from "../components/Pages/Circulation/Balance";
 
 const AppRoutes: React.FC = () => {
 
@@ -86,6 +87,7 @@ const AppRoutes: React.FC = () => {
                             <Route path="/circulation" element={<Circulation />} />
                             <Route path="/circulation/checkin" element={<Checkin />} />
                             <Route path="/circulation/viewhist" element={<Hist />} />
+                            <Route path="/circulation/balance" element={<Balance />} />
 
                             <Route path="/mbrclassify" element={<MemberList />} />
                             <Route path="/mbrclassify/create" element={<CreateMemberType />} />

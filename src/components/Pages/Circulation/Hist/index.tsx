@@ -132,7 +132,6 @@ const Hist: React.FC = () => {
         }).finally(() => {
             setLoadingItemId(null);
 
-            // Recarregar lista atualizada
             const params = new URLSearchParams();
             if (memberBarcode?.trim()) params.append("member_barcode", memberBarcode);
             if (copyBarcode?.trim()) params.append("copy_barcode", copyBarcode);

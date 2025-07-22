@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "../../../utils/api";
 
 import {
+    ButtonMore,
     Container, Content
 } from './styles';
 
@@ -11,10 +12,11 @@ import Filter from "../../Layouts/Filter";
 import Footer from "../../Layouts/Footer";
 import { useHandleSearch } from "../../../hooks/useHandleSearch";
 import BookListItem from "../../Layouts/Catalog/BookListItem";
+
 const Catalog: React.FC = () => {
     const [booksInfo, setBooksInfo] = useState<Biblio[]>();
     const token = localStorage.getItem("@library_management:token") || "";
-    const { filterData } = useHandleSearch();
+    const { filterData, changeFilter } = useHandleSearch();
 
     useEffect(() => {
         const el = document.getElementById("top");
@@ -52,6 +54,14 @@ const Catalog: React.FC = () => {
             });
     }, [filterData, token]);
 
+    const handleLimit = () => {
+        const newTake = parseInt(filterData.take, 10) + 50;
+        changeFilter({
+            ...filterData,
+            take: String(newTake),
+        });
+    };
+
     return (
         <Container id="top">
             <Filter />
@@ -83,6 +93,7 @@ const Catalog: React.FC = () => {
                             : <span> Nenhum livro encontrado! </span>
                 }
             </Content>
+            <ButtonMore onClick={handleLimit}>Carregar mais</ButtonMore>
             <Footer />
         </Container>
     );

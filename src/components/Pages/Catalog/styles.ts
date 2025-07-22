@@ -26,3 +26,18 @@ export const LoadingContent = styled.div`
     align-items: center;
     justify-content: center;
 `
+
+export const ButtonMore = styled.button`
+  padding: 18px;
+  background-color: transparent;
+  color: ${(props) => props.theme.colors.success};
+  border: 1px solid ${(props) => props.theme.colors.success};
+  border-radius: 7px;
+  transition: 0.4s all ease-in;
+  margin-bottom: 20px;
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.success};
+    color: ${(props) => props.theme.colors.white};
+  }
+`;

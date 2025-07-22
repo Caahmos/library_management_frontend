@@ -26,6 +26,7 @@ const Balance: React.FC = () => {
     const [originalBalance, setOriginalBalance] = useState<DetailedItem[]>([]);
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
     const [statusCode, setStatusCode] = useState<string>("out");
+    const [statusCount, setStatusCount] = useState<number>(0);
     const [collections, setCollections] = useState<ViewCollection[]>([]);
     const [collectionCode, setCollectionCode] = useState<number>();
     const { setFlashMessage } = useFlashMessage();
@@ -65,6 +66,7 @@ const Balance: React.FC = () => {
         })
             .then((response) => {
                 setOriginalBalance(response.data.balance.detailed);
+                setStatusCount(response.data.balance.statusCount);
             })
             .catch((err) => {
                 console.error(err);
@@ -86,8 +88,8 @@ const Balance: React.FC = () => {
     }, [token]);
 
     const removeFilters = () => {
-        setStatusCode("");
-        setCollectionCode(undefined);
+        setStatusCode("out");
+        setCollectionCode(0);
     };
 
     const handleExportToXLSX = () => {
@@ -153,7 +155,7 @@ const Balance: React.FC = () => {
                 </FiltersContent>
 
                 <DataContent>
-                    <Header>Histórico detalhado:</Header>
+                    <Header>Histórico detalhado: { statusCount && ( <p>({statusCount} itens encontrados)</p> )}</Header>
                     {filteredItems.length > 0 ? (
                         <DetailedBalanceItem fields={fields} items={filteredItems} />
                     ) : (

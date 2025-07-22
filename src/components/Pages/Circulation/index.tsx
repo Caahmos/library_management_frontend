@@ -50,7 +50,7 @@ export interface MemberBalance {
     recent: number;
 }
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#F27052', '#d62a2a', '#A28DFF', '#00B3AD'];
+const COLORS = ['#0088FE', '#F27052', '#FFBB28', '#00C49F', '#d62a2a', '#A28DFF', '#00B3AD'];
 
 const Circulation: React.FC = () => {
     const [bookHist, setBookHist] = useState<ViewHistsRequest[]>();

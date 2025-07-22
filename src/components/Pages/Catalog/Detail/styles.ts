@@ -125,11 +125,10 @@ margin: 20px 0 20px 0;
 
 export const CopyItem = styled.li`
   justify-content: space-between;
-  height: 100%;
   align-items: center;
   margin-bottom: 15px;
   border-radius: 7px;
-  padding: 10px 20px;
+  padding: 25px;
   list-style: none;
   background-color: ${(props) => props.theme.colors.secondary};
   display: flex;

@@ -36,7 +36,7 @@ const Admin: React.FC = () => {
     const [topBooks, setTopBooks] = useState<TopBooksInterface[]>([]);
     const [rentals, setRentals] = useState<RentalsInterface[]>([]);
     const [filteredRentals, setFilteredRentals] = useState<RentalsInterface[]>([]);
-    const [selectedYear, setSelectedYear] = useState<number>(2024);
+    const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
     const token = localStorage.getItem("@library_management:token") || ""
 
     useEffect(() => {

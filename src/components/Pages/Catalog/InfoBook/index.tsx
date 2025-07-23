@@ -88,7 +88,6 @@ const InfoBook: React.FC = () => {
                 );
                 setSubfieldsDescriptions(response.data.subfieldsDescriptions);
                 setBookFields(response.data.biblio.biblio_field);
-                console.log(response.data.biblio.biblio_field)
             })
             .catch((err) => {
                 console.error(err.response.data.message);
@@ -131,7 +130,6 @@ const InfoBook: React.FC = () => {
         })
             .then((response) => {
                 setBookHist(response.data.foundHists);
-                console.log(response.data.foundHists);
             })
             .catch((err) => {
                 console.error(err);
@@ -230,7 +228,7 @@ const InfoBook: React.FC = () => {
 
 
     return (
-        <Container id="top" onClick={() => { console.log(bookCopies), console.log(subfieldsDescriptions) }}>
+        <Container id="top">
             <ReturnButton />
             {bookInfo && bookInfo.BiblioMedia ? (
                 <>

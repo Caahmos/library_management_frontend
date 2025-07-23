@@ -77,7 +77,7 @@ interface DueDateProps {
   overdue: boolean;
 }
 
-export const DueDate = styled.p<DueDateProps>`
+export const DueDate = styled.div<DueDateProps>`
   color: ${({ overdue, theme }) => (overdue ? "red" : theme.colors.white)};
   font-weight: ${({ overdue }) => (overdue ? "bold" : "normal")};
   display: flex;

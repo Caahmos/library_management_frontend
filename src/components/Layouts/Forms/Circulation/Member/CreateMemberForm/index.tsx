@@ -83,7 +83,6 @@ const CreateMemberForm: React.FC<IMemberForm> = ({
           };
         });
 
-      console.log(extraFields);
       setMemberFields(extraFields);
     }
   }, [memberData]);
@@ -159,7 +158,6 @@ const CreateMemberForm: React.FC<IMemberForm> = ({
       member_fields: undefined
     };
 
-    console.log(finalData);
     handleSubmit(finalData);
   };
 

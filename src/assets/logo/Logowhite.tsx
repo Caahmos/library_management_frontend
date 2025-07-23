@@ -8,7 +8,6 @@ const Logowhite: React.FC<React.SVGProps<SVGElement>> = () => {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="120"
-            height="auto"
             xmlSpace="preserve"
             fillRule="evenodd"
             clipRule="evenodd"

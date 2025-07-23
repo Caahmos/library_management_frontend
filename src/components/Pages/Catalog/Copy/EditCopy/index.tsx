@@ -32,7 +32,6 @@ const EditCopy: React.FC = () => {
             }
         })
             .then((response) => {
-                console.log(response);
                 setBookCopies(response.data.copy);
             })
             .catch((err) => {
@@ -50,7 +49,7 @@ const EditCopy: React.FC = () => {
                 setBook(respose.data.biblio)
             })
             .catch((err) => {
-                console.log(err)
+                console.error(err)
             })
 
     }, [bookCopies, id, bibid, token]);
@@ -79,7 +78,6 @@ const EditCopy: React.FC = () => {
     };
 
     const handleOnSubmit = async (formCopy: RegisterCopyRequest) => {
-        console.log(formCopy);
 
         let msgText = '';
         let msgType = '';
@@ -105,7 +103,7 @@ const EditCopy: React.FC = () => {
     }
 
     return (
-        <Container onClick={() => { console.log(bookCopies) }}>
+        <Container>
             <ReturnButton />
             <FormContainer>
                 <CreateCopyForm type="editar" button_text='Adicionar Cópia' copyData={bookCopies} biblioData={book} statusData={codeStatus} handleSubmit={handleOnSubmit} />

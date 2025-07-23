@@ -59,10 +59,6 @@ const Aside: React.FC = () => {
     };
   }, [isOpenMenu, open]);
 
-  useEffect(() => {
-    console.log("Aside renderizou");
-  });
-
   return (
     <Container $isopen={isOpenMenu} ref={menuRef}>
       <MenuBox>

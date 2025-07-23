@@ -38,7 +38,7 @@ const Header: React.FC = () => {
         setBooks(response.data.biblios);
       })
       .catch((err) => {
-        console.log(err)
+        console.error(err)
       })
   }, [searchText, method]);
 

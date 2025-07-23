@@ -101,7 +101,6 @@ const MemberDetail: React.FC = () => {
                 }
             })
                 .then((response) => {
-                    console.log(response.data.foundHists);
                     setBookHist(response.data.foundHists);
                 });
 
@@ -195,8 +194,6 @@ const MemberDetail: React.FC = () => {
     };
 
     const handleDeleteHold = async (barcode_nmbr: string) => {
-        console.log('Deletando hold para barcode:', barcode_nmbr);
-        console.log('Membro ID:', mbrid);
 
         try {
 
@@ -218,10 +215,7 @@ const MemberDetail: React.FC = () => {
                 }
             });
 
-            console.log('Resposta da API após deletar:', holdsResponse.data);
-
             const updatedHolds = holdsResponse.data.foundHist || [];
-            console.log('Holds atualizados:', updatedHolds);
 
             setBookHolds(updatedHolds);
 
@@ -351,7 +345,6 @@ const MemberDetail: React.FC = () => {
         })
             .then((response) => {
                 setBooksOut(response.data.foundHists);
-                console.log(response.data.foundHists);
             })
             .catch((err) => {
                 console.error(err);

@@ -90,7 +90,6 @@ const Hist: React.FC = () => {
         })
             .then((response) => {
                 setBookHist(response.data.foundHists);
-                console.log(response.data.foundHists);
             })
             .catch((err) => {
                 console.error(err);
@@ -104,7 +103,6 @@ const Hist: React.FC = () => {
             }
         })
             .then((response) => {
-                console.log(response.data.statusDescription);
                 setCodeStatus(response.data.statusDescription);
             })
             .catch((err) => {

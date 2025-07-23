@@ -1,6 +1,6 @@
 import React from "react";
 import LoginForm from "../../../Layouts/Forms/Auth/LoginForm";
-import { AppAuthor, Container, Content, Copyright, FooterContainer, GithubIcon, Left, Right, Sign } from './styles';
+import { AppAuthor, Container, Copyright, FooterContainer, GithubIcon, Left, Right, Sign } from './styles';
 import type { LoginStaffRequest } from "../../../../model/Staff/LoginStaffRequest";
 import { useAuth } from "../../../../hooks/useAuth";
 import OutlinedLogo from "../../../../assets/logo/OutlinedLogo";

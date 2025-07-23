@@ -26,7 +26,6 @@ const AddMemberImage: React.FC = () => {
       }
     })
       .then((response) => {
-        console.log(response.data.member);
         setMember(response.data.member);
       })
       .catch((err) => {

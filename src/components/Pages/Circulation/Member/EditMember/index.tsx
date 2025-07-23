@@ -28,7 +28,6 @@ const EditMember: React.FC = () => {
       }
     })
       .then(res => {
-        console.log(res.data.member);
         setMemberData(res.data.member);
       })
       .catch((err: AxiosError) => {

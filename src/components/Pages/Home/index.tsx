@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import api from "../../../utils/api";
 import {
     Container,
-    LoadingContent
+    LoadingContent,
+    Padding
 } from './styles';
 import BooksSection from "../../Layouts/BooksSection";
 import type { Biblio } from "../../../model/Biblio/Biblio/SearchBiblioResponse";
@@ -10,6 +11,7 @@ import RandomBooksSection from "../../Layouts/RandomBooksSection";
 import type { RandomBiblio } from "../../../model/Biblio/Biblio/RandomSearchBiblioResponse";
 import Footer from "../../Layouts/Footer";
 import load from '../../../assets/imgs/load.gif'
+import BannerCarousel from "../../Layouts/BannerCarousel";
 
 const Home: React.FC = () => {
     const [books, setBooks] = useState<Biblio[]>([]);
@@ -47,12 +49,13 @@ const Home: React.FC = () => {
 
     return (
         <Container>
+            <BannerCarousel/>
             {books.length > 0 && randomBooks.length > 0 ? (
-                <>
+                <Padding>
                     <BooksSection collection="" biblioData={books} title="Novidades na biblioteca" />
                     <RandomBooksSection randomBiblios={randomBooks} />
                     <Footer />
-                </>
+                </Padding>
             ) : (
                 <LoadingContent>
                     <img width={60} src={load} />

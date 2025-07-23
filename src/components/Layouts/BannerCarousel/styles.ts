@@ -32,7 +32,11 @@ export const SlideContent = styled.div<{$img: string}>`
   background-position: right center;
   background-repeat: no-repeat;
   width: 100%;
-  height: 100%;
+  min-height: 500px;
+
+  @media screen and (max-width: 800px){
+    background-image: none;
+  }
 `;
 
 export const TextSection = styled.div`

@@ -8,6 +8,7 @@ import {
     Copyright,
     AppAuthor,
 } from './styles';
+import Logo from '../../../assets/logo/Logo';
 
 const Footer: React.FC = () => {
     return (
@@ -17,7 +18,7 @@ const Footer: React.FC = () => {
                 </p>
             </Content>
             <Sign>
-                <p>Library App - Livros e Documentos</p>
+                <Logo/>
                 <Copyright>
                     <span>©Todos os diretos reservados - </span><AppAuthor href='https://github.com/Caahmos'><GithubIcon/><span> Cauã Morales</span></AppAuthor>
                 </Copyright>

@@ -14,7 +14,7 @@ interface ILoginForm {
     handleSubmit(data: LoginStaffRequest): void;
 }
 
-const LoginForm: React.FC<ILoginForm> = ({handleSubmit, button_text}) => {
+const LoginForm: React.FC<ILoginForm> = ({ handleSubmit, button_text }) => {
     const [loginData, setLoginData] = useState<LoginStaffRequest>({} as LoginStaffRequest);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,9 +33,10 @@ const LoginForm: React.FC<ILoginForm> = ({handleSubmit, button_text}) => {
     return (
         <Container onSubmit={handleOnSubmit}>
             <Title>
-                Entrar
+                Para acessar o <b>Lybup, realize o login abaixo</b>
             </Title>
             <InputForm
+                label="Nome de usuário"
                 name="username"
                 id="username"
                 placeholder="Seu nome de usuário!"
@@ -44,6 +45,7 @@ const LoginForm: React.FC<ILoginForm> = ({handleSubmit, button_text}) => {
                 icon={<FaUser />}
             />
             <InputForm
+                label="Senha"
                 name="password"
                 id="password"
                 placeholder="Sua senha!"

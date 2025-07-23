@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import {
   IoBook, IoLogOutOutline, IoClose
 } from "react-icons/io5";
-import { ImBooks } from "react-icons/im";
 import { FaBookOpenReader } from "react-icons/fa6";
 import { BiSolidDashboard } from "react-icons/bi";
 import { MdAdminPanelSettings } from "react-icons/md";
@@ -26,11 +25,11 @@ import {
   Profile,
   User,
   Button,
-  Logo,
   CloseMenuButton
 } from './styles';
 
 import ThemeChanger from '../ThemeChanger';
+import Logo from '../../../assets/logo/Logo';
 
 const Aside: React.FC = () => {
   const { isOpenMenu, open } = useMenu();
@@ -68,7 +67,7 @@ const Aside: React.FC = () => {
     <Container $isopen={isOpenMenu} ref={menuRef}>
       <MenuBox>
         <Brand>
-          <Logo><ImBooks /> Library</Logo>
+          <Logo/>
           <CloseMenuButton onClick={open}>
             <IoClose />
           </CloseMenuButton>

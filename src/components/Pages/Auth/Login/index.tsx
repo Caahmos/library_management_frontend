@@ -1,8 +1,9 @@
 import React from "react";
 import LoginForm from "../../../Layouts/Forms/Auth/LoginForm";
-import { Container } from './styles';
+import { Container, Left, Right } from './styles';
 import type { LoginStaffRequest } from "../../../../model/Staff/LoginStaffRequest";
 import { useAuth } from "../../../../hooks/useAuth";
+import OutlinedLogo from "../../../../assets/logo/OutlinedLogo";
 
 const Login: React.FC = () => {
     const {signIn} = useAuth();
@@ -13,7 +14,11 @@ const Login: React.FC = () => {
 
     return (
         <Container>
-            <LoginForm handleSubmit={loginStaff} button_text="Entrar"/>
+            <Left></Left>
+            <Right>
+                <LoginForm handleSubmit={loginStaff} button_text="Entrar"/>
+                <div style={{ position: "absolute", zIndex: 1}}><OutlinedLogo/></div>
+            </Right>
         </Container>
     );
 }

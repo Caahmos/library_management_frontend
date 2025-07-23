@@ -40,3 +40,8 @@ export const StyledInput = styled.input`
         border: 1px solid ${props => props.theme.colors.success};
     }
 `;
+
+export const Label = styled.label`
+  text-align: left;
+  margin-bottom: 5px;
+`

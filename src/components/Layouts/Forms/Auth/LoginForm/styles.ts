@@ -10,12 +10,14 @@ export const Container = styled.form`
   padding: 30px;
   background-color: ${(props) => props.theme.colors.secondary};
   border-radius: 5px;
-  -webkit-box-shadow: 42px 35px 58px -36px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 42px 35px 58px -36px rgba(0, 0, 0, 0.9);
-  box-shadow: 42px 35px 58px -36px rgba(0, 0, 0, 0.9);
+  box-shadow: 2px -1px 49px -1px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 2px -1px 49px -1px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 2px -1px 49px -1px rgba(0, 0, 0, 0.3);
+  color: ${(props) => props.theme.colors.white};
+  z-index: 5;
 `;
 
-export const Title = styled.h2`
+export const Title = styled.p`
   font-size: 1.4em;
   color: ${(props) => props.theme.colors.white};
   margin-bottom: 20px;
@@ -26,11 +28,13 @@ export const Button = styled.button`
   padding: 18px;
   background-color: ${(props) => props.theme.colors.success};
   color: #fff;
-  border-radius: 12px;
+  border-radius: 7px;
   margin-top: 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  transition: ease 0.2s all;
 
   &:hover {
-    opacity: 0.9;
-    transition: ease 0.4s all;
+    background-color: ${(props) => props.theme.colors.success + '8a'};
   }
 `;

@@ -10,7 +10,7 @@ export const Container = styled.aside<MenuToggle>`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 30px;
+  padding: 20px;
   background-color: ${(props) => props.theme.colors.primary};
   transition: width 0.3s;
   box-shadow: 18px 10px 44px 2px rgba(0,0,0,0.15);

@@ -48,8 +48,8 @@ const ThemeProvider: React.FC<IThemeProviderProps> = ({ children }) => {
         if (savedTheme) {
             return JSON.parse(savedTheme);
         } else {
-            localStorage.setItem('@library_management:theme', JSON.stringify(light));
-            return light;
+            localStorage.setItem('@library_management:theme', JSON.stringify(dark));
+            return dark;
         }
     });
 

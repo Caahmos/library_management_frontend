@@ -43,7 +43,9 @@ export const Right = styled.div`
 `;
 
 export const FooterContainer = styled.footer`
-    width: 80%;
+    min-width: 550px;
+    width: 100%;
+    max-width: 80%;
     color: ${ props => props.theme.colors.white };
     display: flex;
     justify-content: center;

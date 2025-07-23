@@ -20,7 +20,6 @@ const RankMembers: React.FC = () => {
     useEffect(() => {
         api.get(`/biblioreports/memberranks?yearsAgo=3&limit=${limit}`)
             .then((response) => {
-                console.log(response.data.ranks);
                 setMemberRank(response.data.ranks);
             })
             .catch((err: AxiosError) => {
@@ -38,7 +37,7 @@ const RankMembers: React.FC = () => {
             <ListContainer>
                 <MemberRankHeader/>
                 {
-                    memberRank && memberRank.length >= 0
+                    memberRank && memberRank.length > 0
                         ? 
                         memberRank.map(rank => (
                             <MemberRankItem earliestDate={rank.earliestDate} mbrid={rank.mbrid} rank={rank.rank} totalBooksBorrowed={rank.totalBooksBorrowed} />

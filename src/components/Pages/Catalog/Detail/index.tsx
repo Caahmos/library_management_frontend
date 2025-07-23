@@ -42,7 +42,7 @@ import type { ViewStatusRequest } from "../../../../model/Biblio/BiblioStatusHis
 import BooksSection from "../../../Layouts/BooksSection";
 import Footer from "../../../Layouts/Footer";
 import { useAuth } from '../../../../hooks/useAuth';
-
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Detail: React.FC = () => {
     const { id } = useParams();
@@ -51,7 +51,7 @@ const Detail: React.FC = () => {
     const [bookInfo, setBookInfo] = useState<Biblio>();
     const [bookCopies, setBookCopies] = useState<Copies[]>([]);
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
-    const defaultImage = 'http://localhost:5000/imgs/biblio/semcapa.png';
+    const defaultImage = `${apiUrl}/imgs/biblio/semcapa.png`;
     const [imageSrc, setImageSrc] = useState(defaultImage);
     const token = localStorage.getItem("@library_management:token") || "";
     const { userData } = useAuth();
@@ -86,7 +86,7 @@ const Detail: React.FC = () => {
                 setBookInfo(response.data.biblio);
                 const imageUrl = response.data.biblio.BiblioMedia?.[0]?.imageUrl;
                 setImageSrc(imageUrl
-                    ? `http://localhost:5000/imgs/biblio/${imageUrl}`
+                    ? `${apiUrl}/imgs/biblio/${imageUrl}`
                     : defaultImage
                 );
                 setBookCollection(response.data.collection.description);

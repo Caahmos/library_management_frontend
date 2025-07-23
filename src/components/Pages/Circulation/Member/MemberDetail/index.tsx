@@ -65,6 +65,7 @@ import type { ViewAllClassifiesRequest } from '../../../../../model/Member/Membe
 import Tag from '../../../../Layouts/Tag';
 import type { ViewHoldsRequest } from '../../../../../model/Biblio/BiblioStatusHist/ViewHoldsRequest';
 import { Header, Seemore } from '../../styles';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const MemberDetail: React.FC = () => {
     const { mbrid } = useParams();
@@ -135,7 +136,7 @@ const MemberDetail: React.FC = () => {
                     setMember(memberData);
 
                     if (memberData.imageUrl) {
-                        setMemberImage(`http://localhost:5000/imgs/member/${memberData.imageUrl}`);
+                        setMemberImage(`${apiUrl}/imgs/member/${memberData.imageUrl}`);
                     };
 
                     api.get(`/mbrclassifydm/detail/${response.data.member.classification}`, {
@@ -289,7 +290,7 @@ const MemberDetail: React.FC = () => {
                 setMember(memberData);
 
                 if (memberData.imageUrl) {
-                    setMemberImage(`http://localhost:5000/imgs/member/${memberData.imageUrl}`);
+                    setMemberImage(`${apiUrl}/imgs/member/${memberData.imageUrl}`);
                 };
 
                 api.get(`/mbrclassifydm/detail/${response.data.member.classification}`, {

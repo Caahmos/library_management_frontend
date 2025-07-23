@@ -21,10 +21,12 @@ interface BookCard {
     rank?: number;
   }
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const BookSearch: React.FC<BookCard> = ({title, author, id, img, rank}) => {
     const { close } = useHandleSearch();
 
-    const imagemFormatada = `http://localhost:5000/imgs/biblio/${img}`;
+    const imagemFormatada = `${apiUrl}/imgs/biblio/${img}`;
 
     return (
         <Container key={id} to={`/catalog/detail/${id}`} onClick={() => { close() }}>

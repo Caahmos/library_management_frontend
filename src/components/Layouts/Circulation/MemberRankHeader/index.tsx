@@ -23,6 +23,7 @@ import silver_rank from '../../../../assets/ranks/silver_rank.png';
 import bronze_rank from '../../../../assets/ranks/bronze_rank.png';
 
 const token = localStorage.getItem("@library_management:token") || "";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const MemberRankHeader: React.FC = () => {
     const [memberMap, setMemberMap] = useState<Record<number, ViewMembersRequest>>({});
@@ -96,7 +97,7 @@ const MemberRankHeader: React.FC = () => {
 
     const editImage = (img: string | undefined) => {
         return img
-            ? `http://localhost:5000/imgs/member/${img}`
+            ? `${apiUrl}/imgs/member/${img}`
             : undefined;
     }
 

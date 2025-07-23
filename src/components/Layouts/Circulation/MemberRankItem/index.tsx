@@ -25,6 +25,7 @@ import silver_rank from '../../../../assets/ranks/silver_rank.png';
 import bronze_rank from '../../../../assets/ranks/bronze_rank.png';
 
 const token = localStorage.getItem("@library_management:token") || "";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const MemberRankItem: React.FC<MemberRank> = ({ mbrid, rank, totalBooksBorrowed }) => {
     const [member, setMember] = useState<ViewMembersRequest>();
@@ -55,7 +56,7 @@ const MemberRankItem: React.FC<MemberRank> = ({ mbrid, rank, totalBooksBorrowed 
     const currentRank = topRanks.find((r) => r.rank === rank);
 
     const imagemFormatada = member?.imageUrl
-        ? `http://localhost:5000/imgs/member/${member.imageUrl}`
+        ? `${apiUrl}/imgs/member/${member.imageUrl}`
         : undefined;
 
     useEffect(() => {

@@ -36,13 +36,15 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ReactNode;
 }
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const SearchCheckinInput: React.FC<InputProps> = ({ icon }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const urlBarcode = searchParams.get("barcode_nmbr");
   const [searchValue, setSearchValue] = useState("");
   const [bookInfo, setBookInfo] = useState<Biblio>();
   const [member, setMember] = useState<ViewMembersRequest>();
-  const [imageSrc, setImageSrc] = useState("http://localhost:5000/imgs/biblio/semcapa.png");
+  const [imageSrc, setImageSrc] = useState(`${apiUrl}/imgs/biblio/semcapa.png`);
   const { setFlashMessage } = useFlashMessage();
   const navigate = useNavigate();
   const token = localStorage.getItem("@library_management:token") || "";
@@ -72,7 +74,7 @@ const SearchCheckinInput: React.FC<InputProps> = ({ icon }) => {
 
       setBookInfo(data.biblio);
       const imageUrl = data.biblio.BiblioMedia?.[0]?.imageUrl;
-      setImageSrc(imageUrl ? `http://localhost:5000/imgs/biblio/${imageUrl}` : imageSrc);
+      setImageSrc(imageUrl ? `${apiUrl}/imgs/biblio/${imageUrl}` : imageSrc);
     } catch (err) {
       console.error(err);
     }

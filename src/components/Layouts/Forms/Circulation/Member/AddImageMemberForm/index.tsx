@@ -10,6 +10,8 @@ interface AddImageMemberFormProps {
   handleSubmit(imageFile: File): void;
 }
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const AddImageMemberForm: React.FC<AddImageMemberFormProps> = ({ button_text, handleSubmit }) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -41,7 +43,7 @@ const AddImageMemberForm: React.FC<AddImageMemberFormProps> = ({ button_text, ha
 
       <div style={{ marginTop: 16 }}>
         <img
-          src={preview || 'http://localhost:5000/imgs/biblio/semcapa.png'}
+          src={preview || `${apiUrl}/imgs/biblio/semcapa.png`}
           alt="Preview"
           style={{ width: 200, height: 'auto', borderRadius: 8 }}
         />

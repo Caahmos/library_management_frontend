@@ -16,9 +16,11 @@ interface BookCard {
   rank?: number;
 }
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const BookCard: React.FC<BookCard> = ({img, title, author, rank, id}) => {
 
-  const imagemFormatada = `http://localhost:5000/imgs/biblio/${img}`;
+  const imagemFormatada = `${apiUrl}/imgs/biblio/${img}`;
 
   return (
     <Container to={`/catalog/biblio/detail/${id}`}>

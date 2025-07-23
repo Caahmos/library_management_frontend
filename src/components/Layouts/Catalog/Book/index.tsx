@@ -23,11 +23,13 @@ interface BookCard {
   order: 'block' | 'inline';
 }
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const Book: React.FC<BookCard> = ({ img, title, author, rank, id }) => {
   const { userData } = useAuth();
-  const defaultImage = 'http://localhost:5000/imgs/biblio/semcapa.png';
+  const defaultImage = `${apiUrl}/imgs/biblio/semcapa.png`;
   const imagemFormatada = img
-    ? `http://localhost:5000/imgs/biblio/${img}`
+    ? `${apiUrl}/imgs/biblio/${img}`
     : defaultImage;
 
   const imageSrc = imagemFormatada;

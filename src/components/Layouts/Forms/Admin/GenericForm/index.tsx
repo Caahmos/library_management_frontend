@@ -24,6 +24,8 @@ interface GenericEditFormProps<T> {
   isCreate?: boolean;
 }
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 function GenericForm<T extends Record<string, any>>({
   title,
   fields,
@@ -139,7 +141,7 @@ function GenericForm<T extends Record<string, any>>({
             />
             {previewImages[field.name as string] || img && (
               <img
-                src={previewImages[field.name as string] || `http://localhost:5000/imgs/material/${img}`}
+                src={previewImages[field.name as string] || `${apiUrl}/imgs/material/${img}`}
                 alt="Pré-visualização"
                 style={{ maxWidth: "200px", marginTop: "10px", borderRadius: "8px" }}
               />

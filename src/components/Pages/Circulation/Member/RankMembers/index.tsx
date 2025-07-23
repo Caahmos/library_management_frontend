@@ -18,11 +18,7 @@ const RankMembers: React.FC = () => {
     const [limit, setLimit] = useState<number>(30);
 
     useEffect(() => {
-        api.get(`/biblioreports/memberranks?yearsAgo=3&limit=${limit}`, {
-            headers: {
-                Authorization: `Bearer ${JSON.parse(token)}`
-            }
-        })
+        api.get(`/biblioreports/memberranks?yearsAgo=3&limit=${limit}`)
             .then((response) => {
                 console.log(response.data.ranks);
                 setMemberRank(response.data.ranks);

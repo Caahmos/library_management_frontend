@@ -5,7 +5,7 @@ export interface BookModelProps extends React.SVGProps<SVGSVGElement> {
   rank: number
 }
 
-const BookModel: React.FC<BookModelProps> = ({ fillColor, rank, ...props }) => (
+const BookModel: React.FC<BookModelProps> = ({ fillColor, rank }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"

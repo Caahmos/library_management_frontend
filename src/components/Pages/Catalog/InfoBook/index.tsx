@@ -54,8 +54,6 @@ import { Seemore } from "../../Circulation/styles";
 
 const InfoBook: React.FC = () => {
     const { id } = useParams();
-    const [books, setBooks] = useState<Biblio[]>([]);
-    const [bookCollection, setBookCollection] = useState<string>("");
     const [bookInfo, setBookInfo] = useState<Biblio>();
     const [bookHist, setBookHist] = useState<ViewHistsRequest[]>();
     const [bookFields, setBookFields] = useState<BiblioField[]>();
@@ -63,11 +61,6 @@ const InfoBook: React.FC = () => {
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
     const [subfieldsDescriptions, setSubfieldsDescriptions] = useState<string[]>();
     const [confirmDelete, setConfirmDelete] = useState("");
-    const [isDeleting, setIsDeleting] = useState(false);
-    const [formCopy, setFormCopy] = useState({
-        barcode_nmbr: '',
-        copy_desc: '',
-    });
     const defaultImage = 'http://localhost:5000/imgs/biblio/semcapa.png';
     const [imageSrc, setImageSrc] = useState(defaultImage);
     const token = localStorage.getItem("@library_management:token") || "";
@@ -79,21 +72,6 @@ const InfoBook: React.FC = () => {
         const el = document.getElementById("top");
         el?.scrollIntoView({ behavior: "smooth" });
     }, [id]);
-
-    useEffect(() => {
-        api.get(`/biblio/search?method=collection&data=${bookCollection}`, {
-            headers: {
-                Authorization: `Bearer ${JSON.parse(token)}`
-            }
-        })
-            .then((respose) => {
-                setBooks(respose.data.biblios)
-            })
-            .catch((err) => {
-                console.log(err.response.data.message)
-            })
-
-    }, [id, token, bookCollection, bookInfo]);
 
     useEffect(() => {
         api.get(`/biblio/detail/${id}`, {
@@ -109,7 +87,6 @@ const InfoBook: React.FC = () => {
                     : defaultImage
                 );
                 setSubfieldsDescriptions(response.data.subfieldsDescriptions);
-                setBookCollection(response.data.collection.description);
                 setBookFields(response.data.biblio.biblio_field);
                 console.log(response.data.biblio.biblio_field)
             })
@@ -275,7 +252,7 @@ const InfoBook: React.FC = () => {
                             <BookInfo>
                                 <TextContainer>
                                     <Content>
-                                        {combinedSubfields.map((field, index) => (
+                                        {combinedSubfields.map((field) => (
                                             <InfoItem key={field.id}>
                                                 <Tag>{field.title}</Tag>
                                                 <Data>{field.field_data}</Data>

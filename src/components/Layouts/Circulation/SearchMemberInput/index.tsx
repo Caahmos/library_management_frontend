@@ -25,9 +25,7 @@ const SearchMemberInput: React.FC<InputProps> = ({ icon }) => {
     const [searchValue, setSearchValue] = useState("");
     const [method, setMethod] = useState("name");
     const [hasSearched, setHasSearched] = useState(false);
-    const [token, setToken] = useState(
-        localStorage.getItem("@library_management:token") || ""
-    );
+    const token = localStorage.getItem("@library_management:token") || "";
 
     useEffect(() => {
         api.get(`/member/search?method=${method}&data=${searchValue}&limit=${25}`, {

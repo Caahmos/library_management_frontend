@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import api from '../../../../utils/api';
 import useFlashMessage from '../../../../hooks/useFlashMessages';
 import { useNavigate } from 'react-router-dom';
@@ -15,9 +15,6 @@ import type { RegisterStaffRequest } from '../../../../model/Staff/RegisterStaff
 const CreateAdmin: React.FC = () => {
     const navigate = useNavigate();
     const {setFlashMessage} = useFlashMessage();
-    const [token, setToken] = useState(
-        localStorage.getItem("@library_management:token") || ""
-    );
 
     const createNewAdmin = async (newAdminData: RegisterStaffRequest) => {
         let msgText = '';

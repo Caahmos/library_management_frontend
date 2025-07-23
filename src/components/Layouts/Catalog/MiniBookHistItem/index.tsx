@@ -1,4 +1,4 @@
-import React, { useEffect, useState, type JSX } from 'react';
+import React, { type JSX } from 'react';
 import {
     Container,
     Header,
@@ -22,10 +22,7 @@ import {
     ReturnedContent
 } from './styles';
 import type { ViewHistsRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
-import api from '../../../../utils/api';
-import type { ViewStatusRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest';
 import { FiAlertTriangle } from "react-icons/fi";
-import type { Biblio } from '../../../../model/Biblio/Biblio/SearchBiblioResponse';
 import { FiCheck } from "react-icons/fi";
 
 type Field = {
@@ -40,8 +37,6 @@ interface BookHistViewItemProps {
 }
 
 const MiniBookHistItem: React.FC<BookHistViewItemProps> = ({ items, fields, onDelete }) => {
-    const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
-    const token = localStorage.getItem("@library_management:token") || "";
 
     const formatDate = (date?: string | Date | null) => {
         if (!date) return '-';
@@ -63,28 +58,6 @@ const MiniBookHistItem: React.FC<BookHistViewItemProps> = ({ items, fields, onDe
         const today = new Date();
         const diffTime = today.getTime() - dueDate.getTime();
         return Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    };
-
-    useEffect(() => {
-        api.get(`/bibliohist/viewstatus`, {
-            headers: {
-                Authorization: `Bearer ${JSON.parse(token)}`
-            }
-        })
-            .then((response) => {
-                setCodeStatus(response.data.statusDescription);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, []);
-
-    const styledStatusCode = (code: string) => {
-        const description = codeStatus.find((item) => {
-            return item.code === code;
-        });
-
-        return description?.description;
     };
 
     const iconMap: Record<string, JSX.Element> = {

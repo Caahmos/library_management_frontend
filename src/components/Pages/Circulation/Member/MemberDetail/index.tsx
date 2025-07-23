@@ -3,14 +3,13 @@ import { AxiosError } from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReturnButton from '../../../../Layouts/ReturnButton';
 import useFlashMessage from '../../../../../hooks/useFlashMessages';
-import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { RiImageAddLine, RiAdminLine } from "react-icons/ri";
 import { TbUserEdit } from "react-icons/tb";
 import { FiPhone } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa6";
-import { TbLock, TbLockOpen } from "react-icons/tb";
+import { TbLock } from "react-icons/tb";
 
 import {
     Container,
@@ -26,7 +25,6 @@ import {
     Barcode,
     BookQtd,
     FingerprintIcon,
-    UserIcon,
     BarcodeText,
     Name,
     Text,
@@ -45,7 +43,6 @@ import {
     ButtonLeft,
     ButtonRight,
     ButtonText,
-    Title,
     InfoCards,
     Card,
     CardLeft,
@@ -80,7 +77,6 @@ const MemberDetail: React.FC = () => {
     const [memberImage, setMemberImage] = useState('');
     const token = localStorage.getItem("@library_management:token") || "";
     const { setFlashMessage } = useFlashMessage();
-    const navigate = useNavigate();
 
     useEffect(() => {
         const el = document.getElementById("top");
@@ -89,7 +85,7 @@ const MemberDetail: React.FC = () => {
 
     const handleCheckout = async (barcode_nmbr: string) => {
         try {
-            const response = await api.post(`/bibliohist/checkout/${mbrid}`, {
+            await api.post(`/bibliohist/checkout/${mbrid}`, {
                 barcode_nmbr
             }, {
                 headers: {
@@ -120,7 +116,7 @@ const MemberDetail: React.FC = () => {
 
     const handleBlock = async (mbrid: string) => {
         try {
-            const response = await api.patch(`/member/block/${mbrid}`, {
+            await api.patch(`/member/block/${mbrid}`, {
 
             }, {
                 headers: {

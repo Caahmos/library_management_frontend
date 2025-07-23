@@ -1,12 +1,11 @@
 import React from "react";
-import type { ListBooksInterface, TopBooksInterface } from "../../../../model/Biblio/BiblioReports/TopBooksInterface";
+import type { ListBooksInterface } from "../../../../model/Biblio/BiblioReports/TopBooksInterface";
 import { IoIosArrowForward } from "react-icons/io";
 
 import {
     Container,
     Info,
     Content,
-    Rank,
     Title,
     Author,
 } from './styles';

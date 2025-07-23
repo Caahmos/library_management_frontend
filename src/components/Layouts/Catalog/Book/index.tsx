@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Container,
   Content,
@@ -23,18 +23,14 @@ interface BookCard {
   order: 'block' | 'inline';
 }
 
-const Book: React.FC<BookCard> = ({ img, title, author, rank, id, order }) => {
+const Book: React.FC<BookCard> = ({ img, title, author, rank, id }) => {
   const { userData } = useAuth();
   const defaultImage = 'http://localhost:5000/imgs/biblio/semcapa.png';
   const imagemFormatada = img
     ? `http://localhost:5000/imgs/biblio/${img}`
     : defaultImage;
 
-  const [imageSrc, setImageSrc] = useState(imagemFormatada);
-
-  const handleImageError = () => {
-    setImageSrc(defaultImage);
-  };
+  const imageSrc = imagemFormatada;
 
   return (
     <Container>

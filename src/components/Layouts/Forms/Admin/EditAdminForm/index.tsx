@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Title, Button, DeleteButton } from "./styles";
 import InputForm from "../../Input/index";
 import SwitchComponent from "../../SwitchComponent";
@@ -43,12 +43,6 @@ const EditAdminForm: React.FC<IEditAdminForm> = ({ button_text, handleSubmit, ad
 
     handleDelete();
   }
-
-  const getCurrentValue = <K extends keyof EditStaffRequest>(field: K): EditStaffRequest[K] => {
-    return field in modifiedFields 
-      ? modifiedFields[field]! 
-      : adminInfo[field as keyof SeeStaffs] as EditStaffRequest[K];
-  };
 
   return (
     <Container onSubmit={handleOnSubmit}>

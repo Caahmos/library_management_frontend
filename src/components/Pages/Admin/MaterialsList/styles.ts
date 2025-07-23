@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { FaUsersCog } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { ImBooks } from "react-icons/im";
 

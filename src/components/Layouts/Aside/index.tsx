@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  IoBook, IoSettingsSharp, IoLogOutOutline, IoClose
+  IoBook, IoLogOutOutline, IoClose
 } from "react-icons/io5";
 import { ImBooks } from "react-icons/im";
 import { FaBookOpenReader } from "react-icons/fa6";
@@ -37,7 +37,7 @@ const Aside: React.FC = () => {
   const { signOut, userData } = useAuth();
   const { theme, changeTheme } = useTheme();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [selectTheme, setSelectTheme] = useState(theme.title === 'dark');
+  const selectTheme = theme.title === 'dark';
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   const handleToggle = (index: number) => {

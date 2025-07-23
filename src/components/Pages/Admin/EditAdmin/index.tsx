@@ -19,9 +19,7 @@ const EditAdmin: React.FC = () => {
     const navigate = useNavigate();
     const { setFlashMessage } = useFlashMessage();
     const [adminInfo, setAdminInfo] = useState<SeeStaffs>({} as SeeStaffs);
-    const [token, setToken] = useState(
-        localStorage.getItem("@library_management:token") || ""
-    );
+    const token = localStorage.getItem("@library_management:token") || ""
 
     useEffect(() => {
         api.get(`/staff/detail/${id}`, {

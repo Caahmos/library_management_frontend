@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReturnButton from '../../../Layouts/ReturnButton';
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import api from '../../../../utils/api';
-import type { InputHTMLAttributes } from "react";
 
 import {
     ButtonMore,

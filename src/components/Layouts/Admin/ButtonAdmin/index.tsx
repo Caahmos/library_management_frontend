@@ -3,10 +3,7 @@ import { IoIosArrowForward } from "react-icons/io";
 
 import {
     Container,
-    Count,
-    Info,
     Content,
-    Rank,
     Title
 } from './styles';
 

@@ -37,9 +37,7 @@ const Admin: React.FC = () => {
     const [rentals, setRentals] = useState<RentalsInterface[]>([]);
     const [filteredRentals, setFilteredRentals] = useState<RentalsInterface[]>([]);
     const [selectedYear, setSelectedYear] = useState<number>(2024);
-    const [token, setToken] = useState(
-        localStorage.getItem("@library_management:token") || ""
-    );
+    const token = localStorage.getItem("@library_management:token") || ""
 
     useEffect(() => {
         api.get('/biblioreports/topbooks', {
@@ -69,7 +67,7 @@ const Admin: React.FC = () => {
             })
     }, []);
 
-    const filteredRentalsFunction = useMemo(() => {
+    useMemo(() => {
         const filtered = rentals.filter((rental) => {
 
             const rentalYear = rental.month.slice(0, 4);

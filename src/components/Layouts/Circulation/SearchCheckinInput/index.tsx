@@ -7,8 +7,6 @@ import {
   StyledInputContainer,
   StyledInput,
   IconWrapper,
-  CloseButton,
-  SelectMethod,
   InputContainer,
   ResultsContainer,
   Button,
@@ -17,7 +15,6 @@ import {
   BookImage,
   BookTitle,
   Image,
-  TextContainer,
   Author,
   DateBook,
   FingerprintIcon,
@@ -43,7 +40,6 @@ const SearchCheckinInput: React.FC<InputProps> = ({ icon }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const urlBarcode = searchParams.get("barcode_nmbr");
   const [searchValue, setSearchValue] = useState("");
-  const [book, setBook] = useState<Biblio[]>([]);
   const [bookInfo, setBookInfo] = useState<Biblio>();
   const [member, setMember] = useState<ViewMembersRequest>();
   const [imageSrc, setImageSrc] = useState("http://localhost:5000/imgs/biblio/semcapa.png");
@@ -60,7 +56,6 @@ const SearchCheckinInput: React.FC<InputProps> = ({ icon }) => {
       const foundBook = data.biblios?.[0];
       if (!foundBook) return;
 
-      setBook(data.biblios);
       setSearchValue(barcode);
       await fetchBookDetail(foundBook.bibid);
       await fetchMember(data.biblios, barcode);

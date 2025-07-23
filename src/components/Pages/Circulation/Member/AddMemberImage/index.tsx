@@ -9,7 +9,6 @@ import {
   Container,
   FormContainer
 } from './styles';
-import type { RegisterMemberRequest } from '../../../../../model/Member/Member/RegisterMemberRequest';
 import AddImageMemberForm from '../../../../Layouts/Forms/Circulation/Member/AddImageMemberForm';
 import type { ViewMembersRequest } from '../../../../../model/Member/Member/ViewMembersRequest';
 
@@ -69,7 +68,7 @@ const AddMemberImage: React.FC = () => {
     <Container>
       <ReturnButton />
       <FormContainer>
-        <AddImageMemberForm button_text='Adicionar Imagem' handleSubmit={handleImageUpload} />
+        <AddImageMemberForm button_text={`Adicionar Imagem de ${member?.first_name}`} handleSubmit={handleImageUpload} />
       </FormContainer>
     </Container>
   )

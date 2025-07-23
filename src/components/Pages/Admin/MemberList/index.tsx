@@ -4,7 +4,6 @@ import ReturnButton from '../../../Layouts/ReturnButton';
 import GenericItem from '../../../Layouts/Admin/GenericItem';
 import type { ViewAllClassifiesRequest } from '../../../../model/Member/MemberClassifyDM/ViewAllClassifiesRequest';
 import { TbEdit } from "react-icons/tb";
-import { MdDeleteOutline } from "react-icons/md";
 
 import {
     Container,

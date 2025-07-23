@@ -14,9 +14,7 @@ import load from '../../../assets/imgs/load.gif'
 const Home: React.FC = () => {
     const [books, setBooks] = useState<Biblio[]>([]);
     const [randomBooks, setRandomBooks] = useState<RandomBiblio[]>([]);
-    const [token, setToken] = useState(
-        localStorage.getItem("@library_management:token") || ""
-    );
+    const token = localStorage.getItem("@library_management:token") || ""
 
     useEffect(() => {
         api.get('/biblio/search?limit=100', {

@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import type { TopBooksInterface } from "../../../../model/Biblio/BiblioReports/TopBooksInterface";
-import { IoIosArrowForward } from "react-icons/io";
 
 import {
     Container,
@@ -25,11 +23,10 @@ import gold_rank from '../../../../assets/ranks/gold_rank.png';
 import diamond_rank from '../../../../assets/ranks/diamond_rank.png';
 import silver_rank from '../../../../assets/ranks/silver_rank.png';
 import bronze_rank from '../../../../assets/ranks/bronze_rank.png';
-import outlined_rank from '../../../../assets/ranks/outlined_rank.svg';
 
 const token = localStorage.getItem("@library_management:token") || "";
 
-const MemberRankItem: React.FC<MemberRank> = ({ earliestDate, mbrid, rank, totalBooksBorrowed }) => {
+const MemberRankItem: React.FC<MemberRank> = ({ mbrid, rank, totalBooksBorrowed }) => {
     const [member, setMember] = useState<ViewMembersRequest>();
 
     const topRanks = [

@@ -1,11 +1,6 @@
 import { MdFilterListOff } from "react-icons/md";
 import styled from "styled-components";
 
-interface ActiveSelect {
-  isOpen?: boolean;
-  $active?: boolean;
-}
-
 export const Container = styled.div`
   width: 100%;
   max-width: 1280px;

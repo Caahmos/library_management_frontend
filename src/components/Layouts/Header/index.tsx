@@ -14,15 +14,13 @@ import {
 import SearchInput from '../Forms/SearchInput';
 
 const Header: React.FC = () => {
-  const { isOpenMenu, open } = useMenu();
+  const { open } = useMenu();
   const { changeOpen, isOpen, searchText, changeSearchText, method, setMethod } = useHandleSearch();
 
   const [books, setBooks] = useState<Biblio[]>([]);
-  const [token, setToken] = useState(
-    localStorage.getItem("@library_management:token") || ""
-  );
+  const token = localStorage.getItem("@library_management:token") || ""
 
-  const handleIsOpen = useMemo(() => {
+  useMemo(() => {
     changeOpen(searchText);
   }, [searchText]);
 

@@ -1,6 +1,6 @@
 import api from '../../../../../utils/api';
 import { AxiosError } from 'axios';
-import React, { useState } from 'react';
+import React from 'react';
 import ReturnButton from '../../../../Layouts/ReturnButton';
 import useFlashMessage from '../../../../../hooks/useFlashMessages';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +15,6 @@ import CreateMemberForm from '../../../../Layouts/Forms/Circulation/Member/Creat
 const CreateMember: React.FC = () => {
     const navigate = useNavigate();
     const { setFlashMessage } = useFlashMessage();
-    const [mbrid, setMbrid] = useState<number | null>(null);
 
     const handleOnSubmit = async (memberData: RegisterMemberRequest) => {
         let msgText = '';
@@ -26,7 +25,6 @@ const CreateMember: React.FC = () => {
             const data = response.data;
             const newMbrid = data.registeredMember.mbrid;
 
-            setMbrid(newMbrid);
             console.log("Novo membro cadastrado:", data);
 
             msgText = data.message;

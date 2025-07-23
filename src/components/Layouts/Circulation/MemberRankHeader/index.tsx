@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import type { TopBooksInterface } from "../../../../model/Biblio/BiblioReports/TopBooksInterface";
-import { IoIosArrowForward } from "react-icons/io";
 
 import {
     Container,
@@ -15,7 +13,6 @@ import {
 
 import type { MemberRank } from "../../../../model/Biblio/BiblioReports/MemberRankInterface";
 import type { ViewMembersRequest } from "../../../../model/Member/Member/ViewMembersRequest";
-import BookEmpty from "../../../../utils/BookModel";
 
 import api from "../../../../utils/api";
 import type { AxiosError } from 'axios';
@@ -24,7 +21,6 @@ import gold_rank from '../../../../assets/ranks/gold_rank.png';
 import diamond_rank from '../../../../assets/ranks/diamond_rank.png';
 import silver_rank from '../../../../assets/ranks/silver_rank.png';
 import bronze_rank from '../../../../assets/ranks/bronze_rank.png';
-import outlined_rank from '../../../../assets/ranks/outlined_rank.svg';
 
 const token = localStorage.getItem("@library_management:token") || "";
 

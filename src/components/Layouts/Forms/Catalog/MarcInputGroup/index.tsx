@@ -1,5 +1,4 @@
 import React from "react";
-import InputForm from "../../Input/index";
 
 interface MarcField {
   tag: string;

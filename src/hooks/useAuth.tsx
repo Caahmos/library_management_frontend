@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import type { LoginStaffRequest } from "../model/Staff/LoginStaffRequest";
 import type { LoginStaffResponse } from "../model/Staff/LoginStaffResponse";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import api from "../utils/api";
 import useFlashMessage from "./useFlashMessages";
 import { useNavigate } from "react-router-dom";

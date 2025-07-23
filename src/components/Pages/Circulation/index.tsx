@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { FiArrowUpRight } from "react-icons/fi";
 import api from "../../../utils/api";
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, BarChart, Bar, XAxis, YAxis } from 'recharts';
 
 import {
     Container,
@@ -22,7 +22,6 @@ import {
     IconUsers,
     IconBooks,
     IconCategory,
-    Title,
     AsideContent,
     Seemore
 } from './styles';
@@ -30,8 +29,6 @@ import type { ViewHistsRequest } from "../../../model/Biblio/BiblioStatusHist/Vi
 import BookHistViewItem from "../../Layouts/Catalog/BookHistItem";
 import type { ViewMembersRequest } from "../../../model/Member/Member/ViewMembersRequest";
 import MemberItem from "../../Layouts/Circulation/MemberItem";
-import { Filters } from "../../Layouts/Filter/styles";
-import Filter from "../../Layouts/Filter";
 
 export interface StatusCount {
     status: string;
@@ -199,7 +196,7 @@ const Circulation: React.FC = () => {
                                         <Cell key={`cell-${entry.status}`} fill={COLORS[index % COLORS.length]} />
                                     ))}
                                 </Pie>
-                                <Tooltip formatter={(value: any, name: any, props: any) => {
+                                <Tooltip formatter={(value: any, _unused: any, props: any) => {
                                     const translations: Record<string, string> = {
                                         in: "Disponível",
                                         out: "Emprestado",

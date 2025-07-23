@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../../utils/api";
 import useFlashMessage from "../../../../hooks/useFlashMessages";
@@ -11,7 +11,6 @@ import type { ViewAllClassifiesRequest } from "../../../../model/Member/MemberCl
 const CreateMemberType: React.FC = () => {
     const navigate = useNavigate();
     const { setFlashMessage } = useFlashMessage();
-    const token = localStorage.getItem("@library_management:token") || "";
 
     const handleEdit = async (newClassifyData: ViewAllClassifiesRequest) => {
         let msgText = "";

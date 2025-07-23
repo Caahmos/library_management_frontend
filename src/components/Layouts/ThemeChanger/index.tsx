@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import { useTheme } from '../../../hooks/useTheme';
 import { FaMoon, FaSun } from "react-icons/fa6";
 
@@ -13,7 +12,7 @@ interface IThemeChanger {
     theme: boolean;
 }
 
-const ThemeChanger: React.FC<IThemeChanger> = ({ theme }) => {
+const ThemeChanger: React.FC<IThemeChanger> = () => {
     const {themeIcon} = useTheme();
 
     return (

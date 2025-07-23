@@ -3,7 +3,6 @@ import {
   Container,
   Info,
   Image as ImageEdit,
-  ImageBook,
   Title,
   Author,
   Rating

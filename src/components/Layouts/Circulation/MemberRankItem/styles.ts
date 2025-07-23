@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { RiCalendarLine, RiFingerprint2Fill } from "react-icons/ri";
 
 export const Container = styled.div<{ rankColor?: string }>`

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../../../utils/api';
 import useFlashMessage from '../../../../hooks/useFlashMessages';
@@ -17,9 +17,6 @@ const ChangeAdminPassword: React.FC = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { setFlashMessage } = useFlashMessage();
-    const [token, setToken] = useState(
-        localStorage.getItem("@library_management:token") || ""
-    );
 
     const newAdminPassword = async (changeAdminPassword: ChangeStaffPasswordRequest) => {
         let msgText = '';

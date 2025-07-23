@@ -19,10 +19,6 @@ interface RandomBiblios {
   randomBiblios: RandomBiblio[]
 }
 
-interface IFilter {
-  collection?: string;
-}
-
 const RandomBooksSection: React.FC<RandomBiblios> = ({ randomBiblios }) => {
   const navigate = useNavigate();
   const { changeFilter } = useHandleSearch();

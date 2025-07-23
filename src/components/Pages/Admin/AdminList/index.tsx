@@ -23,9 +23,7 @@ import {
 
 const AdminList: React.FC = () => {
     const [admins, setAdmins] = useState<SeeStaffs[]>([]);
-    const [token, setToken] = useState(
-        localStorage.getItem("@library_management:token") || ""
-    );
+    const token = localStorage.getItem("@library_management:token") || ""
 
     useEffect(() => {
         api.get('/staff/viewstaffs', {

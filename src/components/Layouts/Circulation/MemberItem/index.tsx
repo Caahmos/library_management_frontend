@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import type { TopBooksInterface } from "../../../../model/Biblio/BiblioReports/TopBooksInterface";
+import React from "react";
 import { IoIosArrowForward } from "react-icons/io";
 
 import {

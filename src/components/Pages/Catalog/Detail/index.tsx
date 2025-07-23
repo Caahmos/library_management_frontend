@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, type JSX } from "react";
+import React, { useState, useEffect, type JSX } from "react";
 import { useParams } from "react-router-dom";
 import type { Biblio } from "../../../../model/Biblio/Biblio/SearchBiblioResponse";
 import type { Copies } from "../../../../model/Biblio/BiblioCopy/Copies";
@@ -29,7 +29,6 @@ import {
     CopyNumber,
     CopyDescription,
     CopyStatus,
-    CopyButtons,
     AdminButton,
     EditIcon,
     InfoItems,
@@ -52,7 +51,6 @@ const Detail: React.FC = () => {
     const [bookInfo, setBookInfo] = useState<Biblio>();
     const [bookCopies, setBookCopies] = useState<Copies[]>([]);
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
-    const [subfieldsDescriptions, setSubfieldsDescriptions] = useState<string[]>();
     const defaultImage = 'http://localhost:5000/imgs/biblio/semcapa.png';
     const [imageSrc, setImageSrc] = useState(defaultImage);
     const token = localStorage.getItem("@library_management:token") || "";
@@ -91,7 +89,6 @@ const Detail: React.FC = () => {
                     ? `http://localhost:5000/imgs/biblio/${imageUrl}`
                     : defaultImage
                 );
-                setSubfieldsDescriptions(response.data.subfieldsDescriptions);
                 setBookCollection(response.data.collection.description);
             })
             .catch((err) => {
@@ -126,15 +123,6 @@ const Detail: React.FC = () => {
                 console.error(err);
             });
     }, [id, token, bookCopies]);
-
-    const isOverdue = (dueDateStr?: string | Date | null) => {
-        if (!dueDateStr) return false;
-        const dueDate = new Date(dueDateStr);
-        const today = new Date();
-        dueDate.setHours(0, 0, 0, 0);
-        today.setHours(0, 0, 0, 0);
-        return dueDate < today;
-    };
 
     const styledStatusCode = (code: string) => {
         const description = codeStatus.find((item) => {

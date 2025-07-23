@@ -49,13 +49,15 @@ const Home: React.FC = () => {
 
     return (
         <Container>
-            <BannerCarousel/>
             {books.length > 0 && randomBooks.length > 0 ? (
-                <Padding>
-                    <BooksSection collection="" biblioData={books} title="Novidades na biblioteca" />
-                    <RandomBooksSection randomBiblios={randomBooks} />
-                    <Footer />
-                </Padding>
+                <>
+                    <BannerCarousel />
+                    <Padding>
+                        <BooksSection collection="" biblioData={books} title="Novidades na biblioteca" />
+                        <RandomBooksSection randomBiblios={randomBooks} />
+                        <Footer />
+                    </Padding>
+                </>
             ) : (
                 <LoadingContent>
                     <img width={60} src={load} />

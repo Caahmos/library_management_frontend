@@ -43,7 +43,7 @@ export const TextSection = styled.div`
   height: 100%;
   padding: 60px;
   width: 50%;
-  color: white;
+  color: ${props => props.theme.colors.white};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -71,7 +71,7 @@ export const Button = styled(Link)`
   width: fit-content;
   border-radius: 7px;
   background-color: ${props => props.theme.colors.success};
-  color: ${props => props.theme.colors.white};
+  color: #fff;
   display: flex;
   align-items: center;
   gap: 5px;

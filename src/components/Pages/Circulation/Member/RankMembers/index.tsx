@@ -11,14 +11,18 @@ import MemberRankItem from '../../../../Layouts/Circulation/MemberRankItem';
 import api from '../../../../../utils/api';
 import type { AxiosError } from 'axios';
 import MemberRankHeader from '../../../../Layouts/Circulation/MemberRankHeader';
-const token = localStorage.getItem("@library_management:token") || "";
 
 const RankMembers: React.FC = () => {
     const [memberRank, setMemberRank] = useState<MemberRank[]>();
     const [limit, setLimit] = useState<number>(30);
+    const token = localStorage.getItem("@library_management:token") || "";
 
     useEffect(() => {
-        api.get(`/biblioreports/memberranks?yearsAgo=3&limit=${limit}`)
+        api.get(`/biblioreports/memberranks?yearsAgo=3&limit=${limit}`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        })
             .then((response) => {
                 setMemberRank(response.data.ranks);
             })
@@ -35,10 +39,10 @@ const RankMembers: React.FC = () => {
         <Container>
             <ReturnButton />
             <ListContainer>
-                <MemberRankHeader/>
+                <MemberRankHeader />
                 {
                     memberRank && memberRank.length > 0
-                        ? 
+                        ?
                         memberRank.map(rank => (
                             <MemberRankItem earliestDate={rank.earliestDate} mbrid={rank.mbrid} rank={rank.rank} totalBooksBorrowed={rank.totalBooksBorrowed} />
                         ))

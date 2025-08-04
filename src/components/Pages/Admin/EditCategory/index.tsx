@@ -16,11 +16,19 @@ const EditCategory: React.FC = () => {
     const token = localStorage.getItem("@library_management:token") || "";
 
     useEffect(() => {
-        api.get(`/collection/detail/${id}`, {
-            headers: { Authorization: `Bearer ${JSON.parse(token)}` }
-        })
+        api
+            .get(`/collection/detail/${id}`, {
+                headers: { Authorization: `Bearer ${JSON.parse(token)}` },
+            })
             .then((response) => {
-                setCollectionData(response.data.collection);
+                const original = response.data.collection;
+                const [color1, color2] = original.colors?.split(",") || ["", ""];
+
+                setCollectionData({
+                    ...original,
+                    color1,
+                    color2,
+                });
             })
             .catch((err) => {
                 console.error(err);
@@ -87,6 +95,8 @@ const EditCategory: React.FC = () => {
                         { name: "description", label: "Descrição", type: "text", placeholder: "Ex: Aluno" },
                         { name: "days_due_back", label: "Dias para Devolução", type: "number", placeholder: "Ex: 1" },
                         { name: "daily_late_fee", label: "Multa Diária", type: "number", placeholder: "Ex: 0" },
+                        { name: "color1", label: "Cor 1", type: "color", placeholder: "Cor 1" },
+                        { name: "color2", label: "Cor 2", type: "color", placeholder: "Cor 2" }
                     ]}
                     data={collectionData}
                     button_text="Salvar Alterações"

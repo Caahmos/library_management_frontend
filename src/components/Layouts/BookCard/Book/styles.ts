@@ -4,11 +4,12 @@ import type { LinkProps } from "react-router-dom";
 
 export const Container = styled(Link)<LinkProps>`
   width: 180px;
-  min-height: 330px;
+  min-height: 250px;
   display: flex;
   flex-direction: column;
   text-align: center;
   justify-content: space-between;
+  gap: 20px;
   cursor: grab;
   padding: 12px;
   border: 2px solid ${(props) => props.theme.colors.primary};
@@ -66,6 +67,7 @@ export const Author = styled.span`
 export const Info = styled.div`
   display: flex;
   flex-direction: column;
+  justify-self: flex-start;
 `
 
 export const Rating = styled.span`

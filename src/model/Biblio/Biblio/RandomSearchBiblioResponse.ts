@@ -11,6 +11,10 @@ export interface Biblio {
     author: string;
     responsibility_stmt: string;
     material_cd: number;
+    collection: {
+      description: string;
+      colors: string;
+    }
     collection_cd: number;
     call_nmbr1: string;
     call_nmbr2: string;

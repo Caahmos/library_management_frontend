@@ -47,6 +47,8 @@ const CreateCategory: React.FC = () => {
                         { name: "description", label: "Descrição", type: "text", placeholder: "Ex: Aluno" },
                         { name: "days_due_back", label: "Dias para Devolução", type: "number", placeholder: "Ex: 1" },
                         { name: "daily_late_fee", label: "Multa dia de Atraso", type: "number", placeholder: "Ex: 0" },
+                        { name: "color1", label: "Cor 1", type: "color", placeholder: "Cor 1"},
+                        { name: "color2", label: "Cor 2", type: "color", placeholder: "Cor 2"},
                     ]}
                     data={{} as ViewCollection}
                     button_text="Salvar"

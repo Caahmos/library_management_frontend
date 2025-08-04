@@ -53,6 +53,8 @@ const BooksSection: React.FC<BooksSectionProps> = ({ biblioData, title, collecti
                   author={biblio.author}
                   img={biblio.BiblioMedia && biblio.BiblioMedia[0]?.imageUrl || 'semcapa.png'}
                   rank={biblio.BiblioMedia && biblio.BiblioMedia[0]?.rank || 0}
+                  category={biblio.collection?.description}
+                  colors={biblio.collection?.colors}
                 />
               </StyledSlide>
             ))

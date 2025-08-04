@@ -1,10 +1,10 @@
 import { useState, useCallback } from "react";
-import type {FormEvent, ChangeEvent} from 'react';
+import type { FormEvent, ChangeEvent } from "react";
 import { Container, Title, Button, DeleteButton } from "./styles";
 import InputForm from "../../Input";
 import SwitchComponent from "../../SwitchComponent";
 
-type FieldType = "text" | "switch" | "number" | "file";
+type FieldType = "text" | "switch" | "number" | "file" | "color";
 
 type Field<T> = {
   name: keyof T;
@@ -25,6 +25,11 @@ interface GenericEditFormProps<T> {
 }
 
 const apiUrl = import.meta.env.VITE_API_URL;
+
+const isBasicInputType = (
+  type: FieldType
+): type is "text" | "number" | "color" =>
+  ["text", "number", "color"].includes(type);
 
 function GenericForm<T extends Record<string, any>>({
   title,
@@ -116,7 +121,73 @@ function GenericForm<T extends Record<string, any>>({
       <Title>{title}</Title>
 
       {fields.map((field) =>
-        field.type === "text" || field.type === "number" ? (
+        field.type === "color" ? (
+          <div
+            key={String(field.name)}
+            style={{
+              marginBottom: "1rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
+            }}
+          >
+            <label
+              htmlFor={String(field.name)}
+              style={{ fontWeight: "600", userSelect: "none" }}
+            >
+              {field.label}:
+            </label>
+
+            <input
+              id={String(field.name)}
+              name={String(field.name)}
+              type="color"
+              value={
+                formData[field.name] !== undefined
+                  ? String(formData[field.name])
+                  : data[field.name]
+                    ? String(data[field.name])
+                    : "#000000"
+              }
+              onChange={handleInputChange}
+              style={{
+                width: "70%",
+                height: "53px",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+                background: "none",
+                appearance: "none",
+                padding: 0,
+              }}
+              title={
+                formData[field.name] !== undefined
+                  ? String(formData[field.name])
+                  : data[field.name]
+                    ? String(data[field.name])
+                    : "Sem cor selecionada"
+              }
+            />
+
+            <button
+              type="button"
+              onClick={() =>
+                setFormData((prev) => ({ ...prev, [field.name]: null }))
+              }
+              title="Remover cor"
+              style={{
+                background: "transparent",
+                border: "none",
+                fontSize: "1.25rem",
+                color: "#f00",
+                cursor: "pointer",
+                lineHeight: 1,
+              }}
+            >
+              ×
+            </button>
+          </div>
+        ) : isBasicInputType(field.type) ? (
           <InputForm
             key={String(field.name)}
             name={String(field.name)}
@@ -139,11 +210,18 @@ function GenericForm<T extends Record<string, any>>({
               type="file"
               onChange={handleInputChange}
             />
-            {previewImages[field.name as string] || img && (
+            {(previewImages[field.name as string] || img) && (
               <img
-                src={previewImages[field.name as string] || `${apiUrl}/imgs/material/${img}`}
+                src={
+                  previewImages[field.name as string] ||
+                  `${apiUrl}/imgs/material/${img}`
+                }
                 alt="Pré-visualização"
-                style={{ maxWidth: "200px", marginTop: "10px", borderRadius: "8px" }}
+                style={{
+                  maxWidth: "200px",
+                  marginTop: "10px",
+                  borderRadius: "8px",
+                }}
               />
             )}
           </div>

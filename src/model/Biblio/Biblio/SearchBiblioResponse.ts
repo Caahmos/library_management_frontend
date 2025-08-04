@@ -29,6 +29,7 @@ export interface Biblio {
     biblio_field?: BiblioField[];
     collection?: {
         description?: string
+        colors?: string
     };
 }
 

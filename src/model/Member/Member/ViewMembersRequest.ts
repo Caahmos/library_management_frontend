@@ -12,4 +12,5 @@ export interface ViewMembersRequest {
     mbrid: number
     imageUrl?: string
     isBlocked?: boolean
+    blocked_until?: string
 }

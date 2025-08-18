@@ -360,7 +360,14 @@ export const ButtonRight = styled.div`
   width: 100%;
   color: ${(props) => props.theme.colors.white};
   display: flex;
-  font-weight: bold;
+  flex-direction: column;
 `;
 
-export const ButtonText = styled.div``;
+export const ButtonText = styled.p`
+    font-weight: bold;
+`;
+
+export const BlockedUntil = styled.p`
+    font-weight: none;
+    font-size: 0.8rem;
+`;

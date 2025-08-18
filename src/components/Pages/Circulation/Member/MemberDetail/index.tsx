@@ -54,7 +54,8 @@ import {
     MedalIcon,
     CalendarIcon,
     NameDisplay,
-    IconBlocked
+    IconBlocked,
+    BlockedUntil
 } from './styles';
 import type { ViewMembersRequest } from '../../../../../model/Member/Member/ViewMembersRequest';
 import type { ViewHistsRequest } from '../../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
@@ -501,8 +502,19 @@ const MemberDetail: React.FC = () => {
                         </ButtonLeft>
                         <ButtonRight>
                             <ButtonText>
-                                {member?.isBlocked ? 'Desbloquear o membro' : 'Bloquear o membro'}
+                                {member?.isBlocked
+                                    ? <p>Desbloquear o membro</p>
+                                    : 'Bloquear o membro'
+                                }
                             </ButtonText>
+                            {
+                                member?.isBlocked &&
+                                <BlockedUntil>  
+                                    bloqueado até: {
+                                        formatDate(member.blocked_until)
+                                    }
+                                </BlockedUntil>
+                            }
                         </ButtonRight>
                     </Button3>
                     <MemberContent>

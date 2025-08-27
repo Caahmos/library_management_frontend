@@ -5,7 +5,9 @@ import {
 import { FaBookOpenReader } from "react-icons/fa6";
 import { BiSolidDashboard } from "react-icons/bi";
 import { MdAdminPanelSettings } from "react-icons/md";
+import { motion, AnimatePresence } from "framer-motion";
 import MotionAccordion from '../MotionAccordion';
+import { useMediaQuery } from 'react-responsive';
 
 import { useTheme } from '../../../hooks/useTheme';
 import { useAuth } from '../../../hooks/useAuth';
@@ -38,6 +40,7 @@ const Aside: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const selectTheme = theme.title === 'dark';
   const menuRef = useRef<HTMLDivElement | null>(null);
+  const isMobile = useMediaQuery({ maxWidth: 1000 });
 
   const handleToggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -50,23 +53,35 @@ const Aside: React.FC = () => {
       }
     }
 
-    if (isOpenMenu) {
+    if (isMobile && isOpenMenu) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isOpenMenu, open]);
+  }, [isOpenMenu, open, isMobile]);
 
-  return (
-    <Container $isopen={isOpenMenu} ref={menuRef}>
+  // Render sempre visível para desktop
+  const renderAsideContent = (
+    <Container
+      ref={menuRef}
+      $isopen={isMobile ? isOpenMenu : true} // true para desktop
+      as={isMobile ? motion.aside : undefined}
+      initial={isMobile ? { x: "-100%" } : undefined}
+      animate={isMobile ? { x: 0 } : undefined}
+      exit={isMobile ? { x: "-100%" } : undefined}
+      transition={isMobile ? { duration: 0.3, ease: "easeInOut" } : undefined}
+      style={{ position: !isMobile ? 'relative' : undefined }}
+    >
       <MenuBox>
         <Brand>
-          <Logo/>
-          <CloseMenuButton onClick={open}>
-            <IoClose />
-          </CloseMenuButton>
+          <Logo />
+          {isMobile && (
+            <CloseMenuButton onClick={open}>
+              <IoClose />
+            </CloseMenuButton>
+          )}
         </Brand>
 
         <MenuContainer>
@@ -171,6 +186,36 @@ const Aside: React.FC = () => {
         </Profile>
       </UserBox>
     </Container>
+  );
+
+  return (
+    <>
+      {isMobile && (
+        <AnimatePresence>
+          {isOpenMenu && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              style={{
+                position: "fixed",
+                inset: 0,
+                backgroundColor: "rgba(0,0,0,0.5)",
+                zIndex: 9998
+              }}
+              onClick={open}
+            />
+          )}
+        </AnimatePresence>
+      )}
+
+      {isMobile ? (
+        <AnimatePresence>{isOpenMenu && renderAsideContent}</AnimatePresence>
+      ) : (
+        renderAsideContent
+      )}
+    </>
   );
 };
 

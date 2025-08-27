@@ -43,11 +43,13 @@ import Hist from "../components/Pages/Circulation/Hist";
 import CheckoutPrivsList from "../components/Pages/Admin/CheckOutPrivsList";
 import EditCheckoutPrivs from "../components/Pages/Admin/EditCheckOutPrivs";
 import Balance from "../components/Pages/Circulation/Balance";
+import BlackDiv from "../components/Layouts/BlackDiv";
 
 const AppRoutes: React.FC = () => {
 
     return (
         <MenuProvider>
+            <BlackDiv />
             <HandleSearchProvider>
                 <Layout>
                     <Routes>

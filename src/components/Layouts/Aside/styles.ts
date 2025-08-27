@@ -1,34 +1,28 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 interface MenuToggle {
   $isopen: boolean;
 }
 
-export const Container = styled.aside<MenuToggle>`
+export const Container = styled(motion.aside)<MenuToggle>`
   grid-area: AS;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   padding: 20px;
   background-color: ${(props) => props.theme.colors.primary};
-  transition: width 0.3s;
   box-shadow: 18px 10px 44px 2px rgba(0,0,0,0.15);
-  -webkit-box-shadow: 18px 10px 44px 2px rgba(0,0,0,0.15);
-  -moz-box-shadow: 18px 10px 44px 2px rgba(0,0,0,0.15);
   z-index: 9999;
 
   @media (max-width: 1000px) {
     position: fixed;
-    width: 0;
+    top: 0;
     left: 0;
     bottom: 0;
-
     width: 260px;
-
-    display: ${(props) => (props.$isopen ? "inline-block" : "none")};
-    height: ${(props) => (props.$isopen ? "100vh" : "none")};
-    overflow: hidden;
+    height: 100dvh;
   }
 `;
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-    height: 100vh;
+    height: 100dvh;
     display: grid;
     grid-template-columns: 260px auto;
     grid-template-rows: 80px auto;

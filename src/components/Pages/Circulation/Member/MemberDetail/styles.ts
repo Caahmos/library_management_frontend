@@ -371,3 +371,54 @@ export const BlockedUntil = styled.p`
     font-weight: none;
     font-size: 0.8rem;
 `;
+
+export const DeleteContent = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  > p {
+    color: ${(props) => props.theme.colors.white};
+  }
+`
+
+export const DeleteInput = styled.input`
+  width: 450px;
+  padding: 20px;
+  margin-bottom: 10px;
+  color: ${(props) => props.theme.colors.white};
+  border: 1px solid ${(props) => props.theme.colors.white};
+  background-color: ${(props) => props.theme.colors.secondary};
+  border-radius: 7px;
+  transition: border 0.3s ease;
+
+  &:hover,
+  &:focus {
+    border: 1px solid ${(props) => props.theme.colors.warning};
+  }
+
+  @media (max-width: 1000px) {
+    width: 100%;
+  }
+`;
+
+export const DeleteButton = styled.button`
+  width: 100%;
+  padding: 20px;
+  color: #fff;
+  border: 1px solid ${(props) => props.theme.colors.warning};
+  background-color: ${(props) => props.theme.colors.warning};
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 7px;
+  transition: 0.4s ease;
+  
+  &:hover {
+    color: ${(props) => props.theme.colors.warning};
+    background-color: ${(props) => props.theme.colors.primary};
+  }
+`;

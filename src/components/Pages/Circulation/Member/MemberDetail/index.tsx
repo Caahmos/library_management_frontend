@@ -10,6 +10,7 @@ import { TbUserEdit } from "react-icons/tb";
 import { FiPhone } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa6";
 import { TbLock } from "react-icons/tb";
+import { useAuth } from '../../../../../hooks/useAuth';
 
 import {
     Container,
@@ -55,7 +56,10 @@ import {
     CalendarIcon,
     NameDisplay,
     IconBlocked,
-    BlockedUntil
+    BlockedUntil,
+    DeleteContent,
+    DeleteInput,
+    DeleteButton
 } from './styles';
 import type { ViewMembersRequest } from '../../../../../model/Member/Member/ViewMembersRequest';
 import type { ViewHistsRequest } from '../../../../../model/Biblio/BiblioStatusHist/ViewHistRequest';
@@ -66,6 +70,7 @@ import type { ViewAllClassifiesRequest } from '../../../../../model/Member/Membe
 import Tag from '../../../../Layouts/Tag';
 import type { ViewHoldsRequest } from '../../../../../model/Biblio/BiblioStatusHist/ViewHoldsRequest';
 import { Header, Seemore } from '../../styles';
+import { Title } from '../../../Catalog/InfoBook/styles';
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const MemberDetail: React.FC = () => {
@@ -76,8 +81,10 @@ const MemberDetail: React.FC = () => {
     const [member, setMember] = useState<ViewMembersRequest>();
     const [memberClassify, setMemberClassify] = useState<ViewAllClassifiesRequest>();
     const [memberRank, setMemberRank] = useState<MemberRank[]>();
+    const [confirmDelete, setConfirmDelete] = useState("");
     const [memberImage, setMemberImage] = useState('');
     const token = localStorage.getItem("@library_management:token") || "";
+    const { userData } = useAuth();
     const { setFlashMessage } = useFlashMessage();
 
     useEffect(() => {
@@ -367,6 +374,62 @@ const MemberDetail: React.FC = () => {
             });
     }, [token, mbrid, bookHist]);
 
+    const handleForcedUnlockMember = async () => {
+
+        if (confirmDelete !== 'desbloquear membro') {
+            setFlashMessage('Digite exatamente "desbloquear membro" para confirmar.', 'error');
+            return;
+        }
+
+        try {
+            await api.patch(`/member/block/${mbrid}?force=true`, {
+
+            }, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            });
+
+            setFlashMessage("Alteração de bloqueio realizada com sucesso!", "success");
+
+            api.get(`/member/detail/${mbrid}`, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            })
+                .then((response) => {
+                    const memberData = response.data.member;
+                    setMember(memberData);
+
+                    if (memberData.imageUrl) {
+                        setMemberImage(`${apiUrl}/imgs/member/${memberData.imageUrl}`);
+                    };
+
+                    api.get(`/mbrclassifydm/detail/${response.data.member.classification}`, {
+                        headers: {
+                            Authorization: `Bearer ${JSON.parse(token)}`
+                        }
+                    })
+                        .then((response) => {
+                            setMemberClassify(response.data.classify);
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                        });
+                })
+                .catch((err: AxiosError) => {
+                    console.error(err);
+                });
+
+        } catch (error) {
+            const err = error as AxiosError
+            console.error(err);
+            setFlashMessage(err.response?.data
+                ? (err.response.data as { message: string }).message
+                : 'Erro desconhecido', 'error');
+        }
+    };
+
     const formatDate = (date?: string | Date | null) => {
         if (!date) return '-';
         return new Intl.DateTimeFormat('pt-BR').format(new Date(date));
@@ -509,7 +572,7 @@ const MemberDetail: React.FC = () => {
                             </ButtonText>
                             {
                                 member?.isBlocked &&
-                                <BlockedUntil>  
+                                <BlockedUntil>
                                     bloqueado até: {
                                         formatDate(member.blocked_until)
                                     }
@@ -524,6 +587,28 @@ const MemberDetail: React.FC = () => {
                         <Content>
                             <CirculationForm type='hld' button_text='' onSubmit={handleHold} holdsHist={bookHolds} onDeleteHold={handleDeleteHold} />
                         </Content>
+                        {
+                            member?.isBlocked && userData?.admin_flg &&
+                            <DeleteContent>
+                                <Title>Desbloqueio de Membro</Title>
+                                <p>
+                                    Digite <strong style={{ color: confirmDelete === "desbloquear membro" ? "#2ecc71" : "inherit" }}>
+                                        "desbloquear membro"
+                                    </strong> para habilitar o desbloqueio:
+                                </p>
+                                <DeleteInput
+                                    type="text"
+                                    value={confirmDelete}
+                                    onChange={(e) => setConfirmDelete(e.target.value)}
+                                    placeholder='Digite exatamente: desbloquear membro'
+                                />
+                                <DeleteButton
+                                    onClick={handleForcedUnlockMember}
+                                >
+                                    Confirmar Desbloqueio
+                                </DeleteButton>
+                            </DeleteContent>
+                        }
                     </MemberContent>
                 </MemberGrid>
             </MemberContainer>

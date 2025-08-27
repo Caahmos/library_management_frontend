@@ -176,6 +176,7 @@ export const BookContent = styled.div`
 
 export const Title = styled.p`
   font-size: 2rem;
+  color: ${(props) => props.theme.colors.white};
 `;
 
 export const CopyList = styled.ul`

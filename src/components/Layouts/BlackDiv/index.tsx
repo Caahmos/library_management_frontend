@@ -1,25 +1,30 @@
-import {
-    Container
-} from './styles';
+import { Container } from './styles';
 import { useMenu } from '../../../hooks/useOpenMenu';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useMediaQuery } from 'react-responsive';
+import { useEffect } from 'react';
 
 const BlackDiv = () => {
-    const { isOpenMenu } = useMenu();
+  const { isOpenMenu, open } = useMenu();
+  const isMobile = useMediaQuery({ maxWidth: 1000 });
 
-    return (
-        <AnimatePresence>
-            {
-                isOpenMenu &&
-                <Container
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                />
-            }
-        </AnimatePresence>
-    )
+  useEffect(() => {
+    open();
+  }, [isMobile]);
+
+  return (
+    <AnimatePresence>
+      {isOpenMenu && isMobile && (
+        <Container
+          as={motion.div}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        />
+      )}
+    </AnimatePresence>
+  );
 };
 
 export default BlackDiv;

@@ -18,7 +18,7 @@ import useFlashMessage from '../../../../hooks/useFlashMessages';
 import type { DetailedItem } from '../../../../model/Biblio/BiblioStatusHist/DetailedBalance';
 import DetailedBalanceItem from '../../../Layouts/Circulation/DetailedBalanceItem';
 import type { ViewCollection } from '../../../../model/Collection/ViewCollection';
-import { exportToXLSX } from '../../../Utils/handleExportToXLSX';
+import { exportToExcel } from '../../../Utils/handleExportToXLSX';
 import { RiFileExcel2Line } from "react-icons/ri";
 import DetailedBalanceBlockItem from '../../../Layouts/Circulation/DetailedBalanceBlockItem';
 
@@ -106,7 +106,7 @@ const Balance: React.FC = () => {
             barcode_nmbr: item.barcode_nmbr,
         }));
 
-        exportToXLSX(formattedItems, fields, 'acervo-detalhado.xlsx');
+        exportToExcel(formattedItems, fields, 'acervo-detalhado.xlsx');
     };
 
     const filteredItems = originalBalance.filter(item => {

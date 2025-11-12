@@ -15,7 +15,10 @@ interface ILoginForm {
 }
 
 const LoginForm: React.FC<ILoginForm> = ({ handleSubmit, button_text }) => {
-    const [loginData, setLoginData] = useState<LoginStaffRequest>({} as LoginStaffRequest);
+    const [loginData, setLoginData] = useState<LoginStaffRequest>({
+        username: "aluno",
+        password: "!123456a"
+    });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;

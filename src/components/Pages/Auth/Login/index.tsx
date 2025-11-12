@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LoginForm from "../../../Layouts/Forms/Auth/LoginForm";
 import { AppAuthor, Container, Copyright, FooterContainer, GithubIcon, Left, Right, Sign } from './styles';
 import type { LoginStaffRequest } from "../../../../model/Staff/LoginStaffRequest";
@@ -6,13 +6,19 @@ import { useAuth } from "../../../../hooks/useAuth";
 import OutlinedLogo from "../../../../assets/logo/OutlinedLogo";
 import students from '../../../../assets/imgs/students.png';
 import Logowhite from "../../../../assets/logo/Logowhite";
+import useFlashMessage from "../../../../hooks/useFlashMessages";
 
 const Login: React.FC = () => {
     const { signIn } = useAuth();
+    const { setFlashMessage } = useFlashMessage();
 
     const loginStaff = (data: LoginStaffRequest) => {
         signIn(data);
     };
+
+    useEffect(() => {
+        setFlashMessage('Tudo pronto! O usuário e a senha do aluno já estão preenchidos, é só entrar!', 'success');
+    }, [])
 
     return (
         <Container>

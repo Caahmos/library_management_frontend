@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReturnButton from '../../../Layouts/ReturnButton';
 import { useSearchParams } from "react-router-dom";
 import api from '../../../../utils/api';
+import { useNavigate } from 'react-router-dom';
 
 import {
     ButtonMore,
@@ -24,6 +25,7 @@ import { Header } from '../styles';
 import type { ViewStatusRequest } from '../../../../model/Biblio/BiblioStatusHist/ViewStatusRequest';
 import useFlashMessage from '../../../../hooks/useFlashMessages';
 import BookDetailBlockItem from '../../../Layouts/Catalog/BookDetailBlockItem';
+import { RiFileExcel2Line } from 'react-icons/ri';
 
 interface NotifyLoanRequestBody {
     first_name: string;
@@ -52,6 +54,7 @@ const Hist: React.FC = () => {
     const [hasInitialized, setHasInitialized] = useState(false);
     const [loadingItemId, setLoadingItemId] = useState<number | null>(null);
     const { setFlashMessage } = useFlashMessage();
+    const navigate = useNavigate();
 
     const fields = [
         { key: 'barcode_nmbr', label: 'Tombo' },
@@ -191,6 +194,14 @@ const Hist: React.FC = () => {
                         />
                         <CheckLabel htmlFor='adue'>Atrasados</CheckLabel>
                     </CheckContainer>
+                    {
+                        due === 'yes' && (
+                            <Clean onClick={() => navigate('/circulation/overduetoxlsx')}>
+                                <RiFileExcel2Line />
+                                <span>Exportar para Excel</span>
+                            </Clean>
+                        )
+                    }
                     <Clean onClick={removeFilters}>
                         <ClearFiltersIcon title='Remover filtros' />
                         <span>Limpar Filtros</span>

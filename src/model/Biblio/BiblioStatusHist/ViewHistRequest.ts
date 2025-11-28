@@ -19,6 +19,8 @@ export interface ViewHistsRequest {
     last_name: string;
     email: string;
     barcode_nmbr: string;
+    home_phone?: string;
+    work_phone?: string;
   };
   biblio: {
     title?: string;

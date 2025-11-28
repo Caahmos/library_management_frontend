@@ -152,6 +152,44 @@ const Hist: React.FC = () => {
         });
     };
 
+    const sendWhatsapp = (phone: string, data: NotifyLoanRequestBody) => {
+        setLoadingItemId(data.hist_id);
+
+        api.post(`/whatsapp/sendmessage/${phone}`, data, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        })
+            .then(() => {
+                setFlashMessage('Mensagem enviada via WhatsApp com sucesso!', 'success')!;
+            })
+            .catch((err) => {
+                console.error(err);
+                setFlashMessage(err.response.data.message, 'error')!;
+            })
+            .finally(() => {
+                setLoadingItemId(null);
+
+                const params = new URLSearchParams();
+                if (memberBarcode?.trim()) params.append("member_barcode", memberBarcode);
+                if (copyBarcode?.trim()) params.append("copy_barcode", copyBarcode);
+                if (bibId?.trim()) params.append("bibid", bibId);
+                if (statusCode?.trim()) params.append("status_cd", statusCode);
+                if (limit) params.append("limit", String(limit));
+                if (due) params.append("due", due);
+
+                api.get(`/bibliohist/detailhists?${params.toString()}`, {
+                    headers: {
+                        Authorization: `Bearer ${JSON.parse(token)}`
+                    }
+                })
+                    .then((response) => {
+                        setBookHist(response.data.foundHists);
+                    })
+                    .catch(console.error);
+            });
+    };
+
     const removeFilters = () => {
         setMemberBarcode("");
         setCopyBarcode("");
@@ -218,12 +256,14 @@ const Hist: React.FC = () => {
                                     fields={fields}
                                     items={bookHist}
                                     sendEmail={sendEmail}
+                                    sendWhatsapp={sendWhatsapp}
                                     loadingItemId={loadingItemId}
                                 />
                                 <BookHistDetailItem
                                     fields={fields}
                                     items={bookHist}
                                     sendEmail={sendEmail}
+                                    sendWhatsapp={sendWhatsapp}
                                     loadingItemId={loadingItemId}
                                 />
                             </>

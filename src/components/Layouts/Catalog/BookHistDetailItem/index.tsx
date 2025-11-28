@@ -30,6 +30,9 @@ import type { ViewStatusRequest } from '../../../../model/Biblio/BiblioStatusHis
 import { FiAlertTriangle, FiCheck } from "react-icons/fi";
 import { LuMailPlus } from "react-icons/lu";
 import { SpinnerLoading } from '../../../../utils/SpinnerLoading';
+import { FaWhatsapp } from 'react-icons/fa';
+import normalizePhone from '../../../../utils/normalizePhone';
+import useFlashMessage from '../../../../hooks/useFlashMessages';
 
 type Field = {
     key: string;
@@ -41,6 +44,8 @@ interface NotifyLoanRequestBody {
     last_name: string;
     email: string;
     barcode_nmbr: string;
+    home_phone?: string;
+    work_phone?: string;
     status_begin_dt: string;
     due_back_dt: string;
     daysLate: number;
@@ -54,12 +59,14 @@ interface BookHistViewItemProps {
     items: ViewHistsRequest[];
     fields: Field[];
     sendEmail: (data: NotifyLoanRequestBody) => void;
+    sendWhatsapp: (phone: string, data: NotifyLoanRequestBody) => void;
 }
 
-const BookHistDetailItem: React.FC<BookHistViewItemProps> = ({ items, fields, sendEmail, loadingItemId }) => {
+const BookHistDetailItem: React.FC<BookHistViewItemProps> = ({ items, fields, sendEmail, sendWhatsapp, loadingItemId }) => {
     const [localItems, setLocalItems] = useState<ViewHistsRequest[]>(items);
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
     const token = localStorage.getItem("@library_management:token") || "";
+    const { setFlashMessage } = useFlashMessage();
 
     useEffect(() => {
         setLocalItems(items);
@@ -69,6 +76,16 @@ const BookHistDetailItem: React.FC<BookHistViewItemProps> = ({ items, fields, se
         if (!date) return '-';
         return new Intl.DateTimeFormat('pt-BR').format(new Date(date));
     };
+
+    function getValidWhatsappNumber(item: ViewHistsRequest): string | null {
+        const home = normalizePhone(item.member.home_phone as string);
+        const work = normalizePhone(item.member.work_phone as string);
+
+        if (home) return home;
+        if (work) return work;
+
+        return null;
+    }
 
     const isOverdue = (dueDateStr?: string | Date | null) => {
         if (!dueDateStr) return false;
@@ -167,37 +184,87 @@ const BookHistDetailItem: React.FC<BookHistViewItemProps> = ({ items, fields, se
                             }
                             {
                                 item.status_cd === 'out' && getDaysOverdue(item.due_back_dt) > 0 && (
-                                    <EmailContainer>
-                                        {
-                                            loadingItemId === Number(item.id) ? (
-                                                <SpinnerContainer>
-                                                    <SpinnerLoading />
-                                                </SpinnerContainer>
-                                            ) : (
-                                                <>
-                                                    <LuMailPlus
-                                                        title='Enviar cobrança por email'
-                                                        onClick={() => sendEmail({
-                                                            first_name: item.member.first_name ?? '',
-                                                            last_name: item.member.last_name ?? '',
-                                                            email: item.member.email ?? '',
-                                                            barcode_nmbr: item.member.barcode_nmbr ?? '',
-                                                            title: item.biblio.title ?? '',
-                                                            bib_barcode: item.biblio_copy.barcode_nmbr ?? '',
-                                                            hist_id: Number(item.id ?? 0),
-                                                            daysLate: getDaysOverdue(item.due_back_dt),
-                                                            status_begin_dt: item.status_begin_dt ?? '',
-                                                            due_back_dt: item.due_back_dt ?? ''
-                                                        })}
-                                                    />
-                                                    {
-                                                        (item.emails_sent ?? 0) >= 1 &&
-                                                        <Count>{item.emails_sent}</Count>
-                                                    }
-                                                </>
-                                            )
-                                        }
-                                    </EmailContainer>
+                                    <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                                        <EmailContainer>
+                                            {
+                                                loadingItemId === Number(item.id) ? (
+                                                    <SpinnerContainer>
+                                                        <SpinnerLoading />
+                                                    </SpinnerContainer>
+                                                ) : (
+                                                    <>
+                                                        <LuMailPlus
+                                                            title='Enviar cobrança por email'
+                                                            onClick={() => {
+                                                                sendEmail({
+                                                                    first_name: item.member.first_name ?? '',
+                                                                    last_name: item.member.last_name ?? '',
+                                                                    email: item.member.email ?? '',
+                                                                    barcode_nmbr: item.member.barcode_nmbr ?? '',
+                                                                    title: item.biblio.title ?? '',
+                                                                    bib_barcode: item.biblio_copy.barcode_nmbr ?? '',
+                                                                    hist_id: Number(item.id ?? 0),
+                                                                    daysLate: getDaysOverdue(item.due_back_dt),
+                                                                    status_begin_dt: item.status_begin_dt ?? '',
+                                                                    due_back_dt: item.due_back_dt ?? ''
+                                                                })
+                                                            }}
+                                                        />
+                                                        {
+                                                            (item.emails_sent ?? 0) >= 1 &&
+                                                            <Count>{item.emails_sent}</Count>
+                                                        }
+                                                    </>
+                                                )
+                                            }
+                                        </EmailContainer>
+                                        <EmailContainer>
+                                            {
+                                                loadingItemId === Number(item.id) ? (
+                                                    <SpinnerContainer>
+                                                        <SpinnerLoading />
+                                                    </SpinnerContainer>
+                                                ) : (
+                                                    <>
+                                                        <FaWhatsapp
+                                                            title='Enviar cobrança por whatsapp'
+                                                            onClick={() => {
+                                                                const phone = getValidWhatsappNumber(item);
+
+                                                                if (!phone) {
+                                                                    setFlashMessage("Nenhum número de celular válido encontrado!", "error");
+                                                                    return;
+                                                                }
+
+                                                                sendWhatsapp(
+                                                                    phone,
+                                                                    {
+                                                                        first_name: item.member.first_name ?? '',
+                                                                        last_name: item.member.last_name ?? '',
+                                                                        email: item.member.email ?? '',
+                                                                        barcode_nmbr: item.member.barcode_nmbr ?? '',
+                                                                        title: item.biblio.title ?? '',
+                                                                        bib_barcode: item.biblio_copy.barcode_nmbr ?? '',
+                                                                        hist_id: Number(item.id ?? 0),
+                                                                        daysLate: getDaysOverdue(item.due_back_dt),
+                                                                        status_begin_dt: item.status_begin_dt ?? '',
+                                                                        due_back_dt: item.due_back_dt ?? '',
+                                                                        home_phone: item.member.home_phone ?? '',
+                                                                        work_phone: item.member.work_phone ?? ''
+                                                                    }
+                                                                );
+                                                            }}
+                                                        />
+
+                                                        {/* {
+                                                            (item.emails_sent ?? 0) >= 1 &&
+                                                            <Count>{item.emails_sent}</Count>
+                                                        } */}
+                                                    </>
+                                                )
+                                            }
+                                        </EmailContainer>
+                                    </div>
                                 )
                             }
                         </Item>

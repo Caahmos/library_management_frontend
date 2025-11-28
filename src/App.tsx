@@ -4,6 +4,7 @@ import { AuthProvider } from './hooks/useAuth';
 import Routes from './routes';
 import { useTheme } from './hooks/useTheme';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { WhatsappProvider } from './hooks/useWhatsapp';
 
 function App() {
   const { theme } = useTheme();
@@ -12,8 +13,10 @@ function App() {
       <ThemeProvider theme={theme}>
         <Router>
           <AuthProvider>
-            <GlobalStyles />
-            <Routes />
+            <WhatsappProvider>
+              <GlobalStyles />
+              <Routes />
+            </WhatsappProvider>
           </AuthProvider>
         </Router>
       </ThemeProvider>

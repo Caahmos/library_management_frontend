@@ -31,6 +31,7 @@ import {
 import BookItem from "../../Layouts/Admin/BookItem";
 import ButtonAdmin from "../../Layouts/Admin/ButtonAdmin";
 import { RiFileExcel2Line, RiTimerLine } from "react-icons/ri";
+import { FaWhatsapp } from "react-icons/fa6";
 
 const Admin: React.FC = () => {
     const [topBooks, setTopBooks] = useState<TopBooksInterface[]>([]);
@@ -158,16 +159,16 @@ const Admin: React.FC = () => {
                 </RetangleGrid>
                 <ChartGrid1>
                     <Content>
-                        <ButtonAdmin icon={<FiBook/>} link="/circulation/balance" text="Acessar Balanço"/>
-                        <ButtonAdmin icon={<RiFileExcel2Line />} link="/circulation/overduetoxlsx" text="Exportar Atrasados"/>
-                        <ButtonAdmin icon={<RiTimerLine/>} link="/admin/checkoutprivs" text="Gerenciar Limites"/>
-                        <ButtonAdmin icon={<FiBell/>} link="/admin/notifications" text="Notificações"/>
-                        <ButtonAdmin icon={<FiSettings/>} link="/admin/settings" text="Configurações"/>
+                        <ButtonAdmin icon={<FiBook />} link="/circulation/balance" text="Acessar Balanço" />
+                        <ButtonAdmin icon={<RiFileExcel2Line />} link="/circulation/overduetoxlsx" text="Exportar Atrasados" />
+                        <ButtonAdmin icon={<RiTimerLine />} link="/admin/checkoutprivs" text="Gerenciar Limites" />
+                        <ButtonAdmin icon={<FiBell />} link="/admin/notifications" text="Notificações" />
+                        <ButtonAdmin icon={<FiSettings />} link="/admin/settings" text="Configurações" />
                     </Content>
                 </ChartGrid1>
                 <ChartGrid2>
                     <Content>
-
+                        <ButtonAdmin icon={<FaWhatsapp />} link="/admin/whatsapp" text="Configurar Whatsapp" />
                     </Content>
                 </ChartGrid2>
                 <AsideGrid>

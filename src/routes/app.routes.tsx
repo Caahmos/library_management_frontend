@@ -45,6 +45,7 @@ import EditCheckoutPrivs from "../components/Pages/Admin/EditCheckOutPrivs";
 import Balance from "../components/Pages/Circulation/Balance";
 import BlackDiv from "../components/Layouts/BlackDiv";
 import OverdueXlsx from "../components/Pages/Circulation/OverdueXlsx";
+import WhatsappSettings from "../components/Pages/Admin/WhatsappSettings";
 
 const AppRoutes: React.FC = () => {
 
@@ -78,6 +79,7 @@ const AppRoutes: React.FC = () => {
 
                         <Route element={<PrivateRoutes permission="admin_flg" />}>
                             <Route path="/admin" element={<Admin />} />
+                            <Route path="/admin/whatsapp" element={<WhatsappSettings />} />
                             <Route path="/admin/createadmin" element={<CreateAdmin />} />
                             <Route path="/admin/editadmin/:id" element={<EditAdmin />} />
                             <Route path="/admin/cpass/:id" element={<ChangeAdminPassword />} />

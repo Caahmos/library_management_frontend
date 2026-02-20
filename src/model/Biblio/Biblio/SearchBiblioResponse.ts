@@ -10,6 +10,7 @@ export interface Biblio {
     title_remainder: string;
     author: string;
     responsibility_stmt: string;
+    barcode_nmbr: string;
     material_cd: number;
     collection_cd: number;
     call_nmbr1: string;

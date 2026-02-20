@@ -51,12 +51,15 @@ import { FaEdit } from "react-icons/fa";
 import type { ViewHistsRequest } from "../../../../model/Biblio/BiblioStatusHist/ViewHistRequest";
 import BookHistItem from "../../../Layouts/Catalog/BookHistItem";
 import { Seemore } from "../../Circulation/styles";
+import type { ViewAllHoldsRequest } from "../../../../model/Biblio/BiblioStatusHist/ViewHoldsRequest";
+import BookHoldItems from "../../../Layouts/Catalog/BookHoldItems";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const InfoBook: React.FC = () => {
     const { id } = useParams();
     const [bookInfo, setBookInfo] = useState<Biblio>();
     const [bookHist, setBookHist] = useState<ViewHistsRequest[]>();
+    const [bookHolds, setBookHolds] = useState<ViewAllHoldsRequest[]>();
     const [bookFields, setBookFields] = useState<BiblioField[]>();
     const [bookCopies, setBookCopies] = useState<Copies[]>([]);
     const [codeStatus, setCodeStatus] = useState<ViewStatusRequest[]>([]);
@@ -136,6 +139,75 @@ const InfoBook: React.FC = () => {
                 console.error(err);
             });
     }, [id, token]);
+
+    useEffect(() => {
+        api.get(`/bibliohist/viewholds?bibid=${id}`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        })
+            .then((response) => {
+                setBookHolds(response.data.foundHist);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [id, token]);
+
+    const handleDeleteHold = async (mbrid: number, barcode_nmbr: string) => {
+
+        try {
+            console.log(mbrid, barcode_nmbr);
+            const response = await api.delete(`/bibliohist/deletehold/${mbrid}/${barcode_nmbr}`, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            });
+
+            setFlashMessage(response.data.message, "success");
+
+            setBookHolds(prev =>
+                prev?.filter(hold => hold.biblio_copy.barcode_nmbr !== barcode_nmbr) || []
+            );
+
+            const holdsResponse = await api.get(`/bibliohist/viewholds?bibid=${id}`, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            });
+
+            const updatedHolds = holdsResponse.data.foundHist || [];
+
+            setBookHolds(updatedHolds);
+
+        } catch (error) {
+            const err = error as AxiosError;
+            console.error('Erro ao deletar hold:', err);
+
+            try {
+                const freshResponse = await api.get(`/bibliohist/viewholds?bibid=${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${JSON.parse(token)}`
+                    }
+                });
+                setBookHolds(freshResponse.data.foundHist || []);
+            } catch (fetchError) {
+                console.error('Erro ao buscar holds atualizados:', fetchError);
+                setBookHolds([]);
+            }
+        }
+
+        try {
+            const histResponse = await api.get(`/bibliohist/viewhists?bibid=${id}&limit=50`, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            });
+            setBookHist(histResponse.data.foundHists || []);
+        } catch (histError) {
+            console.error('Erro ao atualizar histórico:', histError);
+        }
+    };
 
     const styledStatusCode = (code: string) => {
         const description = codeStatus.find((item) => {
@@ -227,6 +299,12 @@ const InfoBook: React.FC = () => {
         { key: 'due_back_dt', label: 'Devolução' },
     ];
 
+    const holdfields = [
+        { key: 'holdid', label: 'Posição' },
+        { key: 'first_name', label: 'Nome' },
+        { key: 'actions', label: 'Ações' },
+    ];
+
 
     return (
         <Container id="top">
@@ -298,6 +376,16 @@ const InfoBook: React.FC = () => {
                                         bookHist ?
                                             <BookHistItem fields={fields} items={bookHist} />
                                             : <p>Nenhum histórico encontrado.</p>
+                                    }
+                                </CopyList>
+                                <CopyList>
+                                    <HeaderTitle>
+                                        <Title>Reservas</Title>
+                                    </HeaderTitle>
+                                    {
+                                        bookHolds ?
+                                            <BookHoldItems holdFields={holdfields} items={bookHolds} onDeleteHold={handleDeleteHold} />
+                                            : <p>Nenhuma reserva encontrada.</p>
                                     }
                                 </CopyList>
                                 <DeleteContent>

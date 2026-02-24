@@ -63,6 +63,7 @@ const EditCheckoutPrivs: React.FC = () => {
                         { name: "checkout_limit", label: "Máx. de Empréstimos", type: "number", placeholder: "2" },
                         { name: "renewal_limit", label: "Máx de Renovações", type: "number", placeholder: "5" },
                         { name: "grace_period_days", label: "Dias para Bloqueio", type: "number", placeholder: "3" },
+                        { name: "days_due_back", label: "Dias para Devolução", type: "number", placeholder: "14" },
                     ]}
                     data={checkPrivs}
                     button_text="Salvar Alterações"

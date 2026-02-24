@@ -1,20 +1,22 @@
 export interface EditCheckPrivRequest {
-    checkout_limit?: number
-    renewal_limit?: number
-    grace_period_day?: number;
+  checkout_limit?: number
+  days_due_back?: number
+  renewal_limit?: number
+  grace_period_day?: number;
 }
 
 export interface ViewCheckPrivRequest {
-    id: number;
-    material_cd: number | string;
-    classification: number | string;
-    checkout_limit: number
-    renewal_limit: number
-    grace_period_days: number;
-    material_type_dm: {
-        description: string
-      },
-      mbr_classify_dm: {
-        description: string
-      }
+  id: number;
+  material_cd: number | string;
+  classification: number | string;
+  checkout_limit: number
+  days_due_back: number
+  renewal_limit: number
+  grace_period_days: number;
+  material_type_dm: {
+    description: string
+  },
+  mbr_classify_dm: {
+    description: string
+  }
 }

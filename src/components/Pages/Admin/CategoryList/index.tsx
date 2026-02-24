@@ -34,7 +34,6 @@ const CategoryList: React.FC = () => {
 
     const fields = [
         { key: 'description', label: 'Descrição' },
-        { key: 'days_due_back', label: 'Dias para Devolução' },
         { key: 'daily_late_fee', label: 'Multa Diária' }
     ];
 

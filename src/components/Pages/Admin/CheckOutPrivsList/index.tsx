@@ -25,7 +25,8 @@ const CheckoutPrivsList: React.FC = () => {
                 const updated = response.data.checkprivs.map((value: ViewCheckPrivRequest) => ({
                     ...value,
                     classification: value.mbr_classify_dm.description,
-                    material_cd: value.material_type_dm.description
+                    material_cd: value.material_type_dm.description,
+                    days_due_back: value.days_due_back
                 }));
                 setCheckPrivs(updated);
             })
@@ -40,6 +41,7 @@ const CheckoutPrivsList: React.FC = () => {
         { key: 'checkout_limit', label: 'Máx. Emprestimos' },
         { key: 'renewal_limit', label: 'Máx. Renovações' },
         { key: 'grace_period_days', label: 'Dias para Bloqueio' },
+        { key: 'days_due_back', label: 'Dias para Devolução' },
     ];
 
     const actions = [
